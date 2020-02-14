@@ -1,5 +1,4 @@
 // file      : xsd/cxx/xml/qualified-name.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_XML_QUALIFIED_NAME_HXX

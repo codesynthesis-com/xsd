@@ -1,5 +1,4 @@
 // file      : xsd/cxx/xml/char-utf8.txx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #include <xsd/cxx/config.hxx> // XSD_CXX11

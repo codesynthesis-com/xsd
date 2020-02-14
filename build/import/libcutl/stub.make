@@ -1,5 +1,4 @@
 # file      : build/import/libcutl/stub.make
-# copyright : Copyright (c) 2009-2012 Code Synthesis Tools CC
 # license   : MIT; see accompanying LICENSE file
 
 $(call include-once,$(scf_root)/import/libcutl/configuration-rules.make,$(dcf_root))

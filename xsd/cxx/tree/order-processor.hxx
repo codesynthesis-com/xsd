@@ -1,5 +1,4 @@
 // file      : xsde/cxx/tree/order-processor.hxx
-// copyright : Copyright (c) 2006-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef CXX_TREE_ORDER_PROCESSOR_HXX

@@ -1,5 +1,4 @@
 # file      : build/configuration.make
-# copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 $(call include-once,$(scf_root)/configuration-rules.make,$(dcf_root))

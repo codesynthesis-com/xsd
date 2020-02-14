@@ -1,5 +1,4 @@
 // file      : tests/cxx/tree/encoding/char/utf-8/driver.cxx
-// copyright : Copyright (c) 2006-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 // Test UTF-8 encoding.

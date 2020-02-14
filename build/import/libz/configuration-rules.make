@@ -1,5 +1,4 @@
 # file      : build/import/libz/configuration-rules.make
-# copyright : Copyright (c) 2009 Boris Kolpackov
 # license   : GNU GPL v2; see accompanying LICENSE file
 
 $(dcf_root)/import/libz/configuration-dynamic.make: | $(dcf_root)/import/libz/.

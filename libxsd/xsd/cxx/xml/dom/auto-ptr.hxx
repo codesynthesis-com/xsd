@@ -1,5 +1,4 @@
 // file      : xsd/cxx/xml/dom/auto-ptr.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_XML_DOM_AUTO_PTR_HXX

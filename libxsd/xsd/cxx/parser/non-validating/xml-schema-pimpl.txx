@@ -1,5 +1,4 @@
 // file      : xsd/cxx/parser/non-validating/xml-schema-pimpl.txx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #include <limits>

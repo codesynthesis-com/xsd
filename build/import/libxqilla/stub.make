@@ -1,5 +1,4 @@
 # file      : build/import/libxqilla/stub.make
-# copyright : Copyright (c) 2005-2009 Boris Kolpackov
 # license   : GNU GPL v2; see accompanying LICENSE file
 
 $(call include-once,$(scf_root)/import/libxqilla/configuration-rules.make,$(dcf_root))

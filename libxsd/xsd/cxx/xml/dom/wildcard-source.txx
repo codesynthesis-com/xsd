@@ -1,5 +1,4 @@
 // file      : xsd/cxx/xml/dom/wildcard-source.txx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #include <xercesc/util/XMLUniDefs.hpp> // chLatin_L, etc

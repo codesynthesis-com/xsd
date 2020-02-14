@@ -1,5 +1,4 @@
 // file      : xsd/cxx/parser/validating/inheritance-map.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_PARSER_VALIDATING_INHERITANCE_MAP_HXX

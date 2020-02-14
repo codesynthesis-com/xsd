@@ -1,5 +1,4 @@
 // file      : xsd/cxx/xml/std-memory-manager.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_XML_STD_MEMORY_MANAGER_HXX

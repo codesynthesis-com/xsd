@@ -1,6 +1,5 @@
 @echo off
 rem file      : examples/test.bat
-rem copyright : Copyright (c) 2013-2017 Code Synthesis Tools CC
 rem license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 setlocal

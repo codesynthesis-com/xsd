@@ -1,5 +1,4 @@
 // file      : xsd/type-map/lexer.cxx
-// copyright : Copyright (c) 2007-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #include <iostream>

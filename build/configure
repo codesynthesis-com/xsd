@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
 # file      : build/configure
-# copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 # $1  out file

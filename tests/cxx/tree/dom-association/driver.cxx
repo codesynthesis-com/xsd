@@ -1,5 +1,4 @@
 // file      : tests/cxx/tree/dom-association/driver.cxx
-// copyright : Copyright (c) 2006-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 // Test DOM association/ownership.

@@ -1,5 +1,4 @@
 # file      : examples/build/xsd/common.make
-# copyright : Copyright (c) 2006-2017 Code Synthesis Tools CC
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 XSD := $(shell if test -x $(root)/../bin/xsd; \

@@ -1,5 +1,4 @@
 # file      : build/import/libxqilla/configuration-rules.make
-# copyright : Copyright (c) 2005-2009 Boris Kolpackov
 # license   : GNU GPL v2; see accompanying LICENSE file
 
 $(dcf_root)/import/libxqilla/configuration-dynamic.make: | $(dcf_root)/import/libxqilla/.

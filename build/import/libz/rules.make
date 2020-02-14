@@ -1,5 +1,4 @@
 # file      : build/import/libz/rules.make
-# copyright : Copyright (c) 2009 Boris Kolpackov
 # license   : GNU GPL v2; see accompanying LICENSE file
 
 $(dcf_root)/import/libz/%: root := $(libz_root)

@@ -1,5 +1,4 @@
 // file      : xsd/cxx/tree/xdr-stream-common.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_TREE_XDR_STREAM_COMMON_HXX

@@ -1,5 +1,4 @@
 # file      : build/import/libcutl/configuration-rules.make
-# copyright : Copyright (c) 2009-2012 Code Synthesis Tools CC
 # license   : MIT; see accompanying LICENSE file
 
 $(dcf_root)/import/libcutl/configuration-dynamic.make: | $(dcf_root)/import/libcutl/.

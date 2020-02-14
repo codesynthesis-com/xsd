@@ -1,5 +1,4 @@
 // file      : xsd/type-map/lexer.hxx
-// copyright : Copyright (c) 2007-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_TYPE_MAP_LEXER_HXX

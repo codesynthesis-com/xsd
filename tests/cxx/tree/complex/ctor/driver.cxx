@@ -1,5 +1,4 @@
 // file      : tests/cxx/tree/complex/ctor/driver.cxx
-// copyright : Copyright (c) 2006-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 // Test generation of varous complex type constructors.

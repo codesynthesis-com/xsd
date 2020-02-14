@@ -1,5 +1,4 @@
 # file      : build/import/libace/configuration-rules.make
-# copyright : Copyright (c) 2005-2009 Boris Kolpackov
 # license   : GNU GPL v2; see accompanying LICENSE file
 
 $(dcf_root)/import/libace/configuration-dynamic.make: | $(dcf_root)/import/libace/.

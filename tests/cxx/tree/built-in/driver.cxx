@@ -1,5 +1,4 @@
 // file      : tests/cxx/tree/built-in/driver.cxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 // Test built-in type mapping.

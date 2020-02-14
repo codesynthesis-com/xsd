@@ -1,5 +1,4 @@
 // file      : xsd/cxx/tree/stream-source.cxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #include <cxx/tree/stream-source.hxx>

@@ -1,5 +1,4 @@
 // file      : xsd/cxx/parser/xml-schema.hxx
-// copyright : Copyright (c) 2005-2017 Code Synthesis Tools CC
 // license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
 #ifndef XSD_CXX_PARSER_XML_SCHEMA_HXX
