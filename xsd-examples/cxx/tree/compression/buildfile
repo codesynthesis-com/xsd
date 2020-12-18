@@ -1,0 +1,24 @@
+# file      : cxx/tree/compression/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+import libs += libz%lib{z}
+
+./: exe{driver} doc{README} file{library.xml.gz}
+
+exe{driver}: {hxx cxx}{* -library} {hxx ixx cxx}{library} $libs testscript
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{library}>: xsd{library} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std    \
+       --generate-inline        \
+       --generate-serialization \
+       --generate-ostream       \
+       --output-dir $out_base   \
+       $path($<[0])
+}}

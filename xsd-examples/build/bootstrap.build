@@ -1,0 +1,9 @@
+# file      : build/bootstrap.build
+# license   : not copyrighted - public domain
+
+project = xsd-examples
+
+using version
+using config
+using dist
+using test

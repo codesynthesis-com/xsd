@@ -1,0 +1,27 @@
+# file      : cxx/tree/custom/wildcard/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -wildcard} {hxx ixx cxx}{wildcard} $libs
+
+exe{driver}: xml{wildcard}: test.input = true
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{wildcard}>: xsd{wildcard} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std                           \
+       --generate-inline                               \
+       --generate-serialization                        \
+       --generate-ostream                              \
+       --custom-type data=/data_base                   \
+       --hxx-epilogue '#include "wildcard-custom.hxx"' \
+       --output-dir $out_base                          \
+       $path($<[0])
+}}

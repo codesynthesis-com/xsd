@@ -1,0 +1,31 @@
+# file      : cxx/parser/generated/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx ixx cxx}{library-pskel}  \
+             {hxx     cxx}{library-pimpl}  \
+             {        cxx}{library-driver} \
+             $libs
+
+exe{driver}: xml{library}: test.input = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{library-pskel}                      \
+ {hxx     cxx}{library-pimpl}                      \
+ {        cxx}{library-driver}>: xsd{library} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --generate-print-impl     \
+       --generate-test-driver    \
+       --force-overwrite         \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

@@ -1,0 +1,24 @@
+# file      : cxx/tree/caching/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -library} {hxx ixx cxx}{library} $libs
+
+exe{driver}: xml{library}: test.input = true
+exe{driver}: xsd{library}: test.input = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{library}>: xsd{library} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std  \
+       --generate-inline      \
+       --output-dir $out_base \
+       $path($<[0])
+}}

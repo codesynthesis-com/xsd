@@ -1,0 +1,550 @@
+// file      : xsd/cxx/options.cli
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+include <cstddef>; // std::size_t
+
+include <xsd/types.hxx>; // NarrowString, NarrowStrings
+
+include <xsd/cxx/option-types.hxx>;
+
+include <xsd/options.cli>;
+
+namespace CXX
+{
+  class options: ::options = 0
+  {
+    // Language.
+    //
+    cxx_version --std = cxx_version::cxx98
+    {
+      "<version>",
+      "Specify the C++ standard that the generated code should conform to.
+       Valid values are \cb{c++98} (default) and \cb{c++11}.
+
+       The C++ standard affects various aspects of the generated code that
+       are discussed in more detail in various mapping-specific
+       documentation. Overall, when C++11 is selected, the generated
+       code relies on the move semantics and uses \cb{std::unique_ptr}
+       instead of deprecated \cb{std::auto_ptr}.
+
+       When the C++11 mode is selected, you normally don't need to
+       perform any extra steps other than enable C++11 in your C++
+       compiler, if required. The XSD compiler will automatically
+       add the necessary macro defines to the generated header files
+       that will switch the header-only XSD runtime library (\cb{libxsd})
+       to the C++11 mode. However, if you include any of the XSD runtime
+       headers directly in your application (normally you just include
+       the generated headers), then you will need to define the
+       \cb{XSD_CXX11} macro for your entire project."
+    };
+
+    // Character type and encoding.
+    //
+    NarrowString --char-type = "char"
+    {
+      "<type>",
+      "Generate code using the provided character <type> instead of the
+       default \cb{char}. Valid values are \cb{char} and \cb{wchar_t}."
+    };
+
+    NarrowString --char-encoding
+    {
+      "<enc>",
+      "Specify the character encoding that should be used in the generated
+       code. Valid values for the \cb{char} character type are \cb{utf8}
+       (default), \cb{iso8859-1}, \cb{lcp} (Xerces-C++ local code page),
+       and \cb{custom}. If you pass \cb{custom} as the value then you will
+       need to include the transcoder implementation header for your
+       encoding at the beginning of the generated header files (see the
+       \cb{--hxx-prologue} option).
+
+       For the \cb{wchar_t} character type the only valid value is \cb{auto}
+       and the encoding is automatically selected between UTF-16 and
+       UTF-32/UCS-4, depending on the \cb{wchar_t} type size."
+    };
+
+    // Output options.
+    //
+    NarrowString --output-dir
+    {
+      "<dir>",
+      "Write generated files to <dir> instead of the current directory."
+    };
+
+    bool --generate-inline
+    {
+      "Generate simple functions inline. This option triggers creation of
+       the inline file."
+    };
+
+    // Extern XML Schema.
+    //
+    bool --generate-xml-schema
+    {
+      "Generate a C++ header file as if the schema being compiled defines the
+       XML Schema namespace. For the C++/Tree mapping, the resulting file will
+       contain definitions for all XML Schema built-in types. For the
+       C++/Parser mapping, the resulting file will contain definitions for
+       all the parser skeletons and implementations corresponding to the
+       XML Schema built-in types.
+
+       The schema file provided to the compiler need not exist and is only
+       used to derive the name of the resulting header file. Use the
+       \cb{--extern-xml-schema} option to include this file in the
+       generated files for other schemas."
+     };
+
+    NarrowString --extern-xml-schema
+    {
+      "<file>",
+      "Include a header file derived from <file> instead of generating the
+       XML Schema namespace mapping inline. The provided file need not
+       exist and is only used to derive the name of the included header
+       file. Use the \cb{--generate-xml-schema} option to generate this
+       header file."
+     };
+
+    // Namespace mapping.
+    //
+    NarrowStrings --namespace-map
+    {
+      "<xns>=<cns>",
+      "Map XML Schema namespace <xns> to C++ namespace <cns>. Repeat
+       this option to specify mapping for more than one XML Schema namespace.
+       For example, the following option:
+
+       \cb{--namespace-map http://example.com/foo/bar=foo::bar}
+
+       Will map the \cb{http://example.com/foo/bar} XML Schema namespace to
+       the \cb{foo::bar} C++ namespace."
+    };
+
+    NarrowStrings --namespace-regex
+    {
+      "<regex>",
+      "Add <regex> to the list of regular expressions used to translate XML
+       Schema namespace names to C++ namespace names. <regex> is a Perl-like
+       regular expression in the form
+       \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}. Any character can be
+       used as a delimiter instead of '\cb{/}'. Escaping of the delimiter
+       character in \ci{pattern} or \ci{replacement} is not supported.
+
+       All the regular expressions are pushed into a stack with the last
+       specified expression considered first. The first match that
+       succeeds is used. Regular expressions are applied to a string in
+       the form
+
+       \c{\i{filename} \i{namespace}}
+
+       For example, if you have file \cb{hello.xsd} with namespace
+       \cb{http://example.com/hello} and you run \cb{xsd} on this file,
+       then the string in question will be:
+
+       \cb{hello.xsd. http://example.com/hello}
+
+       For the built-in XML Schema namespace the string is:
+
+       \cb{XMLSchema.xsd http://www.w3.org/2001/XMLSchema}
+
+       The following three steps are performed for each regular expression
+       until the match is found:
+
+       1. The expression is applied and if the result is empty the next
+       expression is considered.
+
+       2. All '\cb{/}' are replaced with '\cb{::}'.
+
+       3. The result is verified to be a valid C++ scope name (e.g.,
+       \cb{foo::bar}). If this test succeeds, the result is used as a
+       C++ namespace name.
+
+       As an example, the following expression maps XML  Schema namespaces
+       in the form \cb{http://example.com/foo/bar} to C++ namespaces in the
+       form \cb{foo::bar}:
+
+       \cb{%.* http://example.com/(.+)%$1%}
+
+       See also the REGEX AND SHELL QUOTING section below."
+    };
+
+    bool --namespace-regex-trace
+    {
+      "Trace the process of applying regular expressions specified with the
+       \cb{--namespace-regex} option. Use this option to find out why your
+       regular expressions don't do what you expected them to do."
+    };
+
+    // Reserved names.
+    //
+    NarrowStrings --reserved-name
+    {
+      "<n>[=<r>]",
+      "Add name <n> to the list of names that should not be used as
+       identifiers. The name can optionally be followed by \cb{=} and the
+       replacement name <r> that should be used instead. All the C++ keywords
+       are already in this list."
+    };
+
+    // Include options.
+    //
+    bool --include-with-brackets
+    {
+      "Use angle brackets (<>) instead of quotes (\"\") in generated
+       \cb{#include} directives."
+    };
+
+    NarrowString --include-prefix
+    {
+      "<prefix>",
+      "Add <prefix> to generated \cb{#include} directive paths.
+
+       For example, if you had the following import element in your schema
+
+       \cb{<import namespace=\"...\" schemaLocation=\"base.xsd\"/>}
+
+       and compiled this fragment with \cb{--include-prefix schemas/}, then
+       the include directive in the generated code would be:
+
+       \cb{#include \"schemas/base.hxx\"}"
+    };
+
+    NarrowStrings --include-regex
+    {
+      "<regex>",
+      "Add <regex> to the list of regular expressions used to transform
+       \cb{#include} directive paths. <regex> is a Perl-like regular
+       expression in the form \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}.
+       Any character can be used as a delimiter instead of '\cb{/}'. Escaping
+       of the delimiter character in \ci{pattern} or \ci{replacement} is not
+       supported.
+
+       All the regular expressions are pushed into a stack with the last
+       specified expression considered first. The first match that succeeds
+       is used.
+
+       As an example, the following expression transforms paths in the form
+       \cb{schemas/foo/bar} to paths in the form \cb{generated/foo/bar}:
+
+       \cb{%schemas/(.+)%generated/$1%}
+
+       See also the REGEX AND SHELL QUOTING section below."
+    };
+
+    bool --include-regex-trace
+    {
+      "Trace the process of applying regular expressions specified with the
+       \cb{--include-regex} option. Use this option to find out why your
+       regular expressions don't do what you expected them to do."
+    };
+
+    NarrowString --guard-prefix
+    {
+      "<prefix>",
+      "Add <prefix> to generated header inclusion guards. The prefix is
+       transformed to upper case and characters that are illegal in a
+       preprocessor macro name are replaced with underscores. If this
+       option is not specified then the directory part of the input schema
+       file is used as a prefix."
+    };
+
+    // File suffixes.
+    //
+    NarrowString --hxx-suffix = ".hxx"
+    {
+      "<suffix>",
+      "Use the provided <suffix> instead of the default \cb{.hxx} to
+       construct the name of the header file. Note that this suffix is also
+       used to construct names of header files corresponding to
+       included/imported schemas."
+    };
+
+    NarrowString --ixx-suffix = ".ixx"
+    {
+      "<suffix>",
+      "Use the provided <suffix> instead of the default \cb{.ixx} to
+       construct the name of the inline file."
+    };
+
+    NarrowString --cxx-suffix = ".cxx"
+    {
+      "<suffix>",
+      "Use the provided <suffix> instead of the default \cb{.cxx} to
+       construct the name of the source file."
+    };
+
+    NarrowString --fwd-suffix = "-fwd.hxx"
+    {
+      "<suffix>",
+      "Use the provided <suffix> instead of the default \cb{-fwd.hxx} to
+       construct the name of the forward declaration file."
+    };
+
+    NarrowString --hxx-regex
+    {
+      "<regex>",
+      "Use the provided expression to construct the name of the header file.
+       <regex> is a Perl-like regular expression in the form
+       \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}.
+       Note that this expression is also used to construct names of header
+       files corresponding to included/imported schemas. See also the REGEX
+       AND SHELL QUOTING section below."
+    };
+
+    NarrowString --ixx-regex
+    {
+      "<regex>",
+      "Use the provided expression to construct the name of the inline file.
+       <regex> is a Perl-like regular expression in the form
+       \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}. See also the REGEX AND
+       SHELL QUOTING section below."
+    };
+
+    NarrowString --cxx-regex
+    {
+      "<regex>",
+      "Use the provided expression to construct the name of the source file.
+       <regex> is a Perl-like regular expression in the form
+       \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}. See also the REGEX AND
+       SHELL QUOTING section below."
+    };
+
+    NarrowString --fwd-regex
+    {
+      "<regex>",
+      "Use the provided expression to construct the name of the forward
+       declaration file. <regex> is a Perl-like regular expression in the
+       form \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}. See also the REGEX
+       AND SHELL QUOTING section below."
+    };
+
+    // Prologues/epilogues.
+    //
+    NarrowStrings --hxx-prologue
+    {
+      "<text>",
+      "Insert <text> at the beginning of the header file."
+    };
+
+    NarrowStrings --ixx-prologue
+    {
+      "<text>",
+      "Insert <text> at the beginning of the inline file."
+    };
+
+    NarrowStrings --cxx-prologue
+    {
+      "<text>",
+      "Insert <text> at the beginning of the source file."
+    };
+
+    NarrowStrings --fwd-prologue
+    {
+      "<text>",
+      "Insert <text> at the beginning of the forward declaration file."
+    };
+
+    NarrowStrings --prologue
+    {
+      "<text>",
+      "Insert <text> at the beginning of each generated file for which
+       there is no file-specific prologue."
+    };
+
+    NarrowStrings --hxx-epilogue
+    {
+      "<text>",
+      "Insert <text> at the end of the header file."
+    };
+
+    NarrowStrings --ixx-epilogue
+    {
+      "<text>",
+      "Insert <text> at the end of the inline file."
+    };
+
+    NarrowStrings --cxx-epilogue
+    {
+      "<text>",
+      "Insert <text> at the end of the source file."
+    };
+
+    NarrowStrings --fwd-epilogue
+    {
+      "<text>",
+      "Insert <text> at the end of the forward declaration file."
+    };
+
+    NarrowStrings --epilogue
+    {
+      "<text>",
+      "Insert <text> at the end of each generated file for which there
+       is no file-specific epilogue."
+    };
+
+    NarrowString --hxx-prologue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the beginning of the header file."
+    };
+
+    NarrowString --ixx-prologue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the beginning of the inline file."
+    };
+
+    NarrowString --cxx-prologue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the beginning of the source file."
+    };
+
+    NarrowString --fwd-prologue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the beginning of the forward
+       declaration file."
+    };
+
+    NarrowString --prologue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the beginning of each generated
+       file for which there is no file-specific prologue file."
+    };
+
+    NarrowString --hxx-epilogue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the end of the header file."
+    };
+
+    NarrowString --ixx-epilogue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the end of the inline file."
+    };
+
+    NarrowString --cxx-epilogue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the end of the source file."
+    };
+
+    NarrowString --fwd-epilogue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the end of the forward declaration
+       file."
+    };
+
+    NarrowString --epilogue-file
+    {
+      "<file>",
+      "Insert the content of the <file> at the end of each generated file
+       for which there is no file-specific epilogue file."
+    };
+
+    // Export options.
+    //
+    NarrowString --export-symbol
+    {
+      "<symbol>",
+      "Insert <symbol> in places where DLL export/import control statements
+       (\cb{__declspec(dllexport/dllimport)}) are necessary."
+    };
+
+    bool --export-xml-schema
+    {
+      "Export/import types in the XML Schema namespace using the export
+       symbol provided with the \cb{--export-symbol} option. The
+       \cb{XSD_NO_EXPORT} macro can be used to omit this code during C++
+       compilation, which may be useful if you would like to use the same
+       generated code across multiple platforms."
+    };
+
+    bool --export-maps
+    {
+      "Export polymorphism support maps from a Win32 DLL into which this
+       generated code is placed. This is necessary when your type hierarchy
+       is split across several DLLs since otherwise each DLL will have its
+       own set of maps. In this situation the generated code for the DLL
+       which contains base types and/or substitution group heads should be
+       compiled with this option and the generated code for all other DLLs
+       should be compiled with \cb{--import-maps}. This option is only valid
+       together with \cb{--generate-polymorphic}. The \cb{XSD_NO_EXPORT}
+       macro can be used to omit this code during C++ compilation, which may
+       be useful if you would like to use the same generated code across
+       multiple platforms."
+    };
+
+    bool --import-maps
+    {
+      "Import polymorphism support maps to a Win32 DLL or executable into
+       which this generated code is linked. See the \cb{--export-maps}
+       option documentation for details. This options is only valid together
+       with \cb{--generate-polymorphic}. The \cb{XSD_NO_EXPORT} macro can be
+       used to omit this code during C++ compilation, which may be useful if
+       you would like to use the same generated code across multiple
+       platforms."
+    };
+
+    // Make dependency generation.
+    //
+    bool --generate-dep
+    {
+      "Generate \cb{make} dependency information. This option triggers the
+       creation of the \cb{.d} file containing the dependencies of the
+       generated files on the main schema file as well as all the schema
+       files that it includes/imports, transitively. This dependency file
+       is then normally included into the main \cb{makefile} to implement
+       automatic dependency tracking.
+
+       Note also that automatic dependency generation is not supported in
+       the file-per-type mode (\cb{--file-per-type}). In this case, all
+       the generated files are produced with a single compiler invocation
+       and depend on all the schemas. As a result, it is easier to establish
+       such a dependency manually, perhaps with the help of the
+       \cb{--file-list*} options."
+    };
+
+    bool --generate-dep-only
+    {
+      "Generate \cb{make} dependency information only."
+    };
+
+    bool --dep-phony
+    {
+      "Generate phony targets for included/imported schema files, causing
+       each to depend on nothing. Such dummy rules work around \cb{make}
+       errors caused by the removal of schema files without also updating
+       the dependency file to match."
+    };
+
+    NarrowStrings --dep-target
+    {
+      "<target>",
+      "Change the target of the dependency rule. By default it contains
+       all the generated C++ files as well as the dependency file itself,
+       without any directory prefixes. If you require multiple targets,
+       then you can specify them as a single, space-separated argument or
+       you can repeat this option multiple times."
+    };
+
+    NarrowString --dep-suffix = ".d"
+    {
+      "<suffix>",
+      "Use the provided <suffix> instead of the default \cb{.d} to
+       construct the name of the dependency file."
+    };
+
+    NarrowString --dep-regex
+    {
+      "<regex>",
+      "Use the provided expression to construct the name of the dependency
+       file. <regex> is a Perl-like regular expression in the form
+       \c{\b{/}\i{pattern}\b{/}\i{replacement}\b{/}}. See also the REGEX
+       AND SHELL QUOTING section below."
+    };
+  };
+}

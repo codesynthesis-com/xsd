@@ -1,0 +1,23 @@
+# file      : cxx/parser/hello/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -hello-pskel} {hxx ixx cxx}{hello-pskel} $libs
+
+exe{driver}: xml{hello}: test.input = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{hello-pskel}>: xsd{hello} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

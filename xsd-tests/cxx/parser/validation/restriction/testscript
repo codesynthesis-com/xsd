@@ -1,0 +1,159 @@
+# file      : cxx/parser/validation/all/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+test.arguments += test.xml
+
+: valid
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <restriction-a z="z">
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+      </restriction-a>
+
+      <restriction-a x="x" y="y" z="z">
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+      </restriction-a>
+
+      <restriction-b y="y">
+        <a>a</a>
+        <b>b</b>
+      </restriction-b>
+
+      <restriction-b y="y">
+        <a>a</a>
+        <c>c</c>
+      </restriction-b>
+
+      <restriction-b x="x" y="y">
+        <a>a</a>
+      </restriction-b>
+
+    </t:root>
+    EOI
+
+  $*
+}
+
+: invalid1
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- valid base but not restriction: a element -->
+      <restriction-a z="z">
+        <b>b</b>
+        <c>c</c>
+      </restriction-a>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    :7:8 error: expected element 'a' instead of 'b'
+    EOO
+}
+
+: invalid2
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- valid base but not restriction: z attribute -->
+      <restriction-a>
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+      </restriction-a>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    :10:19 error: expected attribute 'z'
+    EOO
+}
+
+: invalid3
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- valid base but not restriction: sequence maxOccurs="1" -->
+      <restriction-a z="z">
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+      </restriction-a>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    :11:8 error: unexpected element 'a'
+    EOO
+}
+
+: invalid4
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- valid extension but not restriction: a element -->
+      <restriction-b y="y">
+        <b>b</b>
+      </restriction-b>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    :7:8 error: expected element 'a' instead of 'b'
+    EOO
+}
+
+: invalid5
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- valid extension but not restriction: y attribute -->
+      <restriction-b>
+        <a>a</a>
+        <b>b</b>
+      </restriction-b>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    :9:19 error: expected attribute 'y'
+    EOO
+}

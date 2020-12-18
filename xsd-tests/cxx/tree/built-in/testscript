@@ -1,0 +1,394 @@
+# file      : cxx/tree/any-type/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: types
+:
+{
+  cat <<EOI >=elements.xml;
+    <?xml version="1.0" encoding="UTF-8"?>
+    <test:elements
+      xmlns:test="http://www.codesynthesis.com/xmlns/test"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.codesynthesis.com/xmlns/test types.xsd">
+
+      <!-- integers -->
+      <byte>65</byte>
+      <unsigned_byte>66</unsigned_byte>
+      <short>-222</short>
+      <unsigned_short>57005</unsigned_short>
+      <int>-57005</int>
+      <unsigned_int>3735928559</unsigned_int>
+      <long>-3735928559</long>
+      <unsigned_long>16045690984833335023</unsigned_long>
+      <integer>-3735928559</integer>
+      <non_positive_integer>-3735928559</non_positive_integer>
+      <non_negative_integer>3735928559</non_negative_integer>
+      <positive_integer>3735928559</positive_integer>
+      <negative_integer>-3735928559</negative_integer>
+
+
+      <!-- boolean -->
+      <boolean>true</boolean>
+
+
+      <!-- floats -->
+      <float>1234.1234</float>
+      <double>12345678.12345678</double>
+      <decimal>12345678.12345678</decimal>
+
+
+      <!-- strings -->
+      <string>string</string>
+      <normalized_string>normalized
+    string</normalized_string>
+      <token>
+               one
+               two three </token>
+      <name>name</name>
+      <name_token>name-token</name_token>
+      <name_tokens>name tokens</name_tokens>
+      <ncname>ncname</ncname>
+      <language>en-us</language>
+
+      <!-- qualified name -->
+      <qname>xsi:schemaLocation</qname>
+
+
+      <!-- ID/IDREF -->
+      <id>elements1</id>
+      <id>elements2</id>
+      <id_ref>elements1</id_ref>
+      <id_refs>elements1 elements2</id_refs>
+
+
+      <!-- URI -->
+      <any_uri>http://www.codesynthesis.com</any_uri>
+
+
+      <!-- binary -->
+      <base64_binary>YmFzZTY0IGJpbmFyeQ==</base64_binary>
+      <hex_binary>6865782052696E617279</hex_binary>
+
+
+      <!-- date/time -->
+      <date>2001-10-26+02:00</date>
+      <date_time>2001-10-26T21:32:52+02:00</date_time>
+      <duration>P1Y2M3DT5H20M30S</duration>
+      <day>---01+02:00</day>
+      <month>--11+02:00</month>
+      <month_day>--11-02+02:00</month_day>
+      <year>2001+02:00</year>
+      <year_month>2001-11+02:00</year_month>
+      <time>21:32:52+02:00</time>
+
+
+      <!-- entity -->
+      <!--
+      <entity>foo</entity>
+      <entities>foo bar</entities>
+      -->
+
+    </test:elements>
+    EOI
+
+  cat <<EOI >=attributes.xml;
+    <?xml version="1.0" encoding="UTF-8"?>
+    <test:attributes
+      xmlns:test="http://www.codesynthesis.com/xmlns/test"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.codesynthesis.com/xmlns/test types.xsd"
+
+
+      byte="65"
+      unsigned_byte="66"
+      short="-222"
+      unsigned_short="57005"
+      int="-57005"
+      unsigned_int="3735928559"
+      long="-3735928559"
+      unsigned_long="16045690984833335023"
+      integer="-3735928559"
+      non_positive_integer="-3735928559"
+      non_negative_integer="3735928559"
+      positive_integer="3735928559"
+      negative_integer="-3735928559"
+
+
+
+      boolean="false"
+
+
+
+      float="1234.1234"
+      double="12345678.12345678"
+      decimal="12345678.12345678"
+
+
+
+      string="string"
+      normalized_string="normalized string"
+      token="  one   two three  "
+      name="name"
+      name_token="name-token"
+      name_tokens="name tokens"
+      ncname="ncname"
+      language="en-us"
+
+
+      qname="xsi:schemaLocation"
+
+
+
+      id="attributes"
+      id_ref="attributes"
+      id_refs="attributes"
+
+
+
+      any_uri="http://www.codesynthesis.com"
+
+
+
+      base64_binary="YmFzZTY0IGJpbmFyeQ=="
+      hex_binary="6865782052696E617279"
+
+
+
+      date="2001-10-26+02:00"
+      date_time="2001-10-26T21:32:52+02:00"
+      duration="P1Y2M3DT5H20M30S"
+      day="---01+02:00"
+      month="--11+02:00"
+      month_day="--11-02+02:00"
+      year="2001+02:00"
+      year_month="2001-11+02:00"
+      time="21:32:52+02:00"
+
+    />
+    EOI
+
+  cat <<EOI >=inherited.xml;
+    <?xml version="1.0" encoding="UTF-8"?>
+    <test:inherited
+      xmlns:test="http://www.codesynthesis.com/xmlns/test"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.codesynthesis.com/xmlns/test types.xsd">
+
+      <!-- integers -->
+      <byte>65</byte>
+      <unsigned_byte>66</unsigned_byte>
+      <short>-222</short>
+      <unsigned_short>57005</unsigned_short>
+      <int>-57005</int>
+      <unsigned_int>3735928559</unsigned_int>
+      <long>-3735928559</long>
+      <unsigned_long>16045690984833335023</unsigned_long>
+      <integer>-3735928559</integer>
+      <non_positive_integer>-3735928559</non_positive_integer>
+      <non_negative_integer>3735928559</non_negative_integer>
+      <positive_integer>3735928559</positive_integer>
+      <negative_integer>-3735928559</negative_integer>
+
+
+      <!-- boolean -->
+      <boolean>true</boolean>
+
+
+      <!-- floats -->
+      <float>1234.1234</float>
+      <double>12345678.12345678</double>
+      <decimal>12345678.12345678</decimal>
+
+
+      <!-- strings -->
+      <string>string</string>
+        <normalized_string>normalized
+    string</normalized_string>
+      <token>
+               one
+               two three </token>
+      <name>name</name>
+      <name_token>name-token</name_token>
+      <name_tokens>name tokens</name_tokens>
+      <ncname>ncname</ncname>
+      <language>en-us</language>
+
+      <!-- qualified name -->
+      <qname>xsi:schemaLocation</qname>
+
+
+      <!-- ID/IDREF -->
+      <id>elements1</id>
+      <id>elements2</id>
+      <id_ref>elements1</id_ref>
+      <id_refs>elements1 elements2</id_refs>
+
+
+      <!-- URI -->
+      <any_uri>http://www.codesynthesis.com</any_uri>
+
+
+      <!-- binary -->
+      <base64_binary>YmFzZTY0IGJpbmFyeQ==</base64_binary>
+      <hex_binary>6865782052696E617279</hex_binary>
+
+
+      <!-- date/time -->
+      <date>2001-10-26+02:00</date>
+      <date_time>2001-10-26T21:32:52+02:00</date_time>
+      <duration>P1Y2M3DT5H20M30S</duration>
+      <day>---01+02:00</day>
+      <month>--11+02:00</month>
+      <month_day>--11-02+02:00</month_day>
+      <year>2001+02:00</year>
+      <year_month>2001-11+02:00</year_month>
+      <time>21:32:52+02:00</time>
+
+
+      <!-- entity -->
+      <!--
+      <entity>foo</entity>
+      <entities>foo bar</entities>
+      -->
+
+    </test:inherited>
+    EOI
+
+  ln -s $src_base/types.xsd ./;
+
+  $* elements.xml attributes.xml inherited.xml 2>>EOE
+    elements:
+    byte: A
+    unsigned_byte: B
+    short: -222
+    unsigned_short: 57005
+    int: -57005
+    unsigned_int: 3735928559
+    long: -3735928559
+    unsigned_long: 16045690984833335023
+    integer: -3735928559
+    non_positive_integer: -3735928559
+    non_negative_integer: 3735928559
+    positive_integer: 3735928559
+    negative_integer: -3735928559
+    boolean: 1
+    float: 1234.12
+    double: 1.23457e+07
+    decimal: 1.23457e+07
+    string: string
+    normalized_string: normalized string
+    token: one two three
+    name: name
+    name_token: name-token
+    name_tokens: name tokens
+    ncname: ncname
+    language: en-us
+    qname: http://www.w3.org/2001/XMLSchema-instance#schemaLocation
+    id: elements1
+    id: elements2
+    id_ref: elements1
+    id_refs: elements1 elements2
+    any_uri: http://www.codesynthesis.com
+    base64_binary: YmFzZTY0IGJpbmFyeQ==
+
+    hex_binary: 6865782052696E617279
+    date: 2001-10-26+02:00
+    date_time: 2001-10-26T21:32:52.000000+02:00
+    duration: P1Y2M3DT5H20M30.000000S
+    day: 01+02:00
+    month: 11+02:00
+    month_day: 11-02+02:00
+    year: 2001+02:00
+    year_month: 2001-11+02:00
+    time: 21:32:52.000000+02:00
+
+    attributes:
+    byte: A
+    unsigned_byte: B
+    short: -222
+    unsigned_short: 57005
+    int: -57005
+    unsigned_int: 3735928559
+    long: -3735928559
+    unsigned_long: 16045690984833335023
+    integer: -3735928559
+    non_positive_integer: -3735928559
+    non_negative_integer: 3735928559
+    positive_integer: 3735928559
+    negative_integer: -3735928559
+    boolean: 0
+    float: 1234.12
+    double: 1.23457e+07
+    decimal: 1.23457e+07
+    string: string
+    normalized_string: normalized string
+    token: one two three
+    name: name
+    name_token: name-token
+    name_tokens: name tokens
+    ncname: ncname
+    language: en-us
+    qname: http://www.w3.org/2001/XMLSchema-instance#schemaLocation
+    id: attributes
+    id_ref: attributes
+    id_refs: attributes
+    any_uri: http://www.codesynthesis.com
+    base64_binary: YmFzZTY0IGJpbmFyeQ==
+
+    hex_binary: 6865782052696E617279
+    date: 2001-10-26+02:00
+    date_time: 2001-10-26T21:32:52.000000+02:00
+    duration: P1Y2M3DT5H20M30.000000S
+    day: 01+02:00
+    month: 11+02:00
+    month_day: 11-02+02:00
+    year: 2001+02:00
+    year_month: 2001-11+02:00
+    time: 21:32:52.000000+02:00
+
+    inherited:
+    byte: A
+    unsigned_byte: B
+    short: -222
+    unsigned_short: 57005
+    int: -57005
+    unsigned_int: 3735928559
+    long: -3735928559
+    unsigned_long: 16045690984833335023
+    integer: -3735928559
+    non_positive_integer: -3735928559
+    non_negative_integer: 3735928559
+    positive_integer: 3735928559
+    negative_integer: -3735928559
+    boolean: 1
+    float: 1234.12
+    double: 1.23457e+07
+    decimal: 1.23457e+07
+    string: string
+    normalized_string: normalized string
+    token: one two three
+    name: name
+    name_token: name-token
+    name_tokens: name tokens
+    ncname: ncname
+    language: en-us
+    qname: http://www.w3.org/2001/XMLSchema-instance#schemaLocation
+    id: elements1
+    id: elements2
+    id_ref: elements1
+    id_refs: elements1 elements2
+    any_uri: http://www.codesynthesis.com
+    base64_binary: YmFzZTY0IGJpbmFyeQ==
+
+    hex_binary: 6865782052696E617279
+    date: 2001-10-26+02:00
+    date_time: 2001-10-26T21:32:52.000000+02:00
+    duration: P1Y2M3DT5H20M30.000000S
+    day: 01+02:00
+    month: 11+02:00
+    month_day: 11-02+02:00
+    year: 2001+02:00
+    year_month: 2001-11+02:00
+    time: 21:32:52.000000+02:00
+    EOE
+}

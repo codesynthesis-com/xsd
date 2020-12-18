@@ -1,0 +1,4 @@
+# file      : cxx/parser/buildfile
+# license   : not copyrighted - public domain
+
+./: */ doc{README}

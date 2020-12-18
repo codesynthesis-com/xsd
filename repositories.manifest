@@ -1,0 +1,33 @@
+: 1
+summary: W3C XML Schema to C++ data binding compiler repository
+
+:
+role: prerequisite
+location: https://git.build2.org/packaging/zlib/zlib.git##HEAD
+
+:
+role: prerequisite
+# @@ TMP Until xerces-c/3.2.3+2 revision is released.
+#
+location: https://git.build2.org/packaging/xerces-c/xerces-c.git#fix-warning
+#location: https://git.build2.org/packaging/xerces-c/xerces-c.git##HEAD
+
+:
+role: prerequisite
+location: https://git.build2.org/packaging/expat/expat.git#2.1
+
+:
+role: prerequisite
+
+# @@ TMP Until libcutl is merged into master.
+#
+#location: https://git.codesynthesis.com/libcutl/libcutl.git##HEAD
+location: https://git.codesynthesis.com/libcutl/libcutl.git#build2-only
+
+:
+role: prerequisite
+
+# @@ TMP Until libxsd-frontend is merged into master.
+#
+#location: https://git.codesynthesis.com/libxsd-frontend/libxsd-frontend.git##HEAD
+location: https://git.codesynthesis.com/libxsd-frontend/libxsd-frontend.git#build2

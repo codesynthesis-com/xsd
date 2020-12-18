@@ -1,0 +1,23 @@
+# file      : cxx/parser/polyroot/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver} doc{README} xml{batman person superman}
+
+exe{driver}: {hxx cxx}{* -supermen-pskel} {hxx ixx cxx}{supermen-pskel} $libs \
+             testscript
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{supermen-pskel}>: xsd{supermen} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --generate-polymorphic    \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

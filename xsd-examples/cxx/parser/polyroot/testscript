@@ -1,0 +1,6 @@
+# file      : cxx/parser/polyroot/testscript
+# license   : not copyrighted - public domain
+
+$* $src_base/batman.xml   >| : batman
+$* $src_base/person.xml   >| : person
+$* $src_base/superman.xml >| : superman

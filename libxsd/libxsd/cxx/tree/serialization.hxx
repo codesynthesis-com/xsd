@@ -1,0 +1,64 @@
+// file      : libxsd/cxx/tree/serialization.hxx
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+#ifndef LIBXSD_CXX_TREE_SERIALIZATION_HXX
+#define LIBXSD_CXX_TREE_SERIALIZATION_HXX
+
+#include <sstream>
+
+#include <xercesc/dom/DOMElement.hpp>
+
+namespace xsd
+{
+  namespace cxx
+  {
+    namespace tree
+    {
+      //
+      //
+      template <typename C>
+      class list_stream
+      {
+      public:
+        list_stream (std::basic_ostringstream<C>& os,
+                     xercesc::DOMElement& parent)
+            : os_ (os), parent_ (parent)
+        {
+        }
+
+        std::basic_ostringstream<C>& os_;
+        xercesc::DOMElement& parent_;
+      };
+
+      template <typename T>
+      class as_double
+      {
+      public:
+        as_double (const T& v)
+            : x (v)
+        {
+        }
+
+        const T& x;
+      };
+
+      template <typename T>
+      class as_decimal
+      {
+      public:
+        as_decimal (const T& v, const facet* f = 0)
+            : x (v), facets (f)
+        {
+        }
+
+        const T& x;
+        const facet* facets;
+      };
+    }
+  }
+}
+
+#include <libxsd/cxx/tree/serialization.txx>
+#include <libxsd/cxx/tree/serialization/date-time.txx>
+
+#endif  // LIBXSD_CXX_TREE_SERIALIZATION_HXX

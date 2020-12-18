@@ -1,0 +1,55 @@
+// file      : xsd/version.hxx.in
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+#ifndef XSD_VERSION // Note: using the version macro itself.
+
+// The numeric version format is AAAAABBBBBCCCCCDDDE where:
+//
+// AAAAA - major version number
+// BBBBB - minor version number
+// CCCCC - bugfix version number
+// DDD   - alpha / beta (DDD + 500) version number
+// E     - final (0) / snapshot (1)
+//
+// When DDDE is not 0, 1 is subtracted from AAAAABBBBBCCCCC. For example:
+//
+// Version      AAAAABBBBBCCCCCDDDE
+//
+// 0.1.0        0000000001000000000
+// 0.1.2        0000000001000020000
+// 1.2.3        0000100002000030000
+// 2.2.0-a.1    0000200001999990010
+// 3.0.0-b.2    0000299999999995020
+// 2.2.0-a.1.z  0000200001999990011
+//
+#define XSD_VERSION       $xsd.version.project_number$ULL
+#define XSD_VERSION_STR   "$xsd.version.project$"
+#define XSD_VERSION_ID    "$xsd.version.project_id$"
+#define XSD_VERSION_FULL  "$xsd.version$"
+
+#define XSD_VERSION_MAJOR $xsd.version.major$
+#define XSD_VERSION_MINOR $xsd.version.minor$
+#define XSD_VERSION_PATCH $xsd.version.patch$
+
+#define XSD_PRE_RELEASE   $xsd.version.pre_release$
+
+#define XSD_SNAPSHOT      $xsd.version.snapshot_sn$ULL
+#define XSD_SNAPSHOT_ID   "$xsd.version.snapshot_id$"
+
+#include <xercesc/util/XercesVersion.hpp>
+
+// Check that we have a compatible Xerces version (3.0.0 or later).
+//
+#if _XERCES_VERSION < 30000
+#  error Xerces-C++ 2-series is not supported
+#endif
+
+#include <libcutl/version.hxx>
+
+$libcutl.check(LIBCUTL_VERSION, LIBCUTL_SNAPSHOT)$
+
+#include <libxsd-frontend/version.hxx>
+
+$libxsd_frontend.check(LIBXSD_FRONTEND_VERSION, LIBXSD_FRONTEND_SNAPSHOT)$
+
+#endif // XSD_VERSION

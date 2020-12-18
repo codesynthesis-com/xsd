@@ -1,0 +1,4 @@
+# file      : cxx/tree/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+./: {*/ -binary/}

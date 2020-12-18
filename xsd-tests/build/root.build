@@ -1,0 +1,43 @@
+# file      : build/root.build
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+define xsd: file
+xsd{*}: extension = xsd
+
+define xml: file
+xml{*}: extension = xml
+
+define map: file
+map{*}: extension = map
+
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = hxx
+ixx{*}: extension = ixx
+txx{*}: extension = txx
+cxx{*}: extension = cxx
+
+if ($cxx.target.system == 'win32-msvc')
+  cxx.poptions += -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+
+if ($cxx.class == 'msvc')
+  cxx.coptions += /wd4251 /wd4275 /wd4800
+
+# Setup the xsd that we are testing.
+#
+import xsd = xsd%exe{xsd}
+
+# Every exe{} in this project is by default a test.
+#
+exe{*}: test = true
+
+# Specify the test target for cross-testing.
+#
+test.target = $cxx.target
+
+# @@ Calculate the xsd's --std option based on the effective C++ standard
+#    version.
+#
+xsd_cxx_std = --std c++11

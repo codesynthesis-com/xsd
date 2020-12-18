@@ -1,0 +1,8 @@
+: 1
+location: libxsd/
+:
+location: xsd/
+:
+location: xsd-tests/
+:
+location: xsd-examples/

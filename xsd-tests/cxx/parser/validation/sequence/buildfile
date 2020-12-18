@@ -1,0 +1,21 @@
+# file      : cxx/parser/validation/sequence/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs = libxsd%lib{xsd}
+
+exe{driver}: {hxx cxx}{* -test-pskel} {hxx ixx cxx}{test-pskel} $libs \
+             testscript
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{test-pskel}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --output-dir $out_base    \
+       --generate-validation     \
+       $path($<[0])
+}}

@@ -1,0 +1,4 @@
+# file      : schema/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+./: {*/ -any/ -any-attribute/ -inheritance/ -list/ -ref-type/}

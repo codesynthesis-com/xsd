@@ -1,0 +1,23 @@
+# file      : cxx/parser/multiroot/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver} doc{README} xml{balance deposit withdraw}
+
+exe{driver}: {hxx cxx}{* -protocol-pskel} {hxx ixx cxx}{protocol-pskel} $libs \
+             testscript
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{protocol-pskel}>: xsd{protocol} map{protocol} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --type-map $path($<[1])   \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

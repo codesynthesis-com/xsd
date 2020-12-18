@@ -1,0 +1,10 @@
+This package contains a number of examples that show how to use the XSD to C++
+data binding compiler and the generated C++ Tree and Parser classes. See the
+README files in example directories for more information on each example.
+
+The package source code is in the public domain.
+
+The project page is at https://www.codesynthesis.com/projects/xsd/.
+
+Send questions, bug reports, or any other feedback to
+xsd-users@codesynthesis.com.

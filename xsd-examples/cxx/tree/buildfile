@@ -1,0 +1,7 @@
+# file      : cxx/tree/buildfile
+# license   : not copyrighted - public domain
+
+# @@ TMP
+#
+# ./: {*/ -binary/} doc{README}
+./: caching/ compression/ custom/ doc{README}

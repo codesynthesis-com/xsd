@@ -1,0 +1,26 @@
+# file      : cxx/tree/custom/mixed/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -people} {hxx ixx cxx}{people} $libs
+
+exe{driver}: xml{people}: test.input = true
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{people}>: xsd{people} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std                         \
+       --generate-inline                             \
+       --generate-serialization                      \
+       --custom-type bio=/bio_base                   \
+       --hxx-epilogue '#include "people-custom.hxx"' \
+       --output-dir $out_base                        \
+       $path($<[0])
+}}

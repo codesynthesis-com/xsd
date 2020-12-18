@@ -1,0 +1,26 @@
+# file      : cxx/tree/default/general/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
+
+exe{driver}: xml{test}:    test.input  = true
+exe{driver}: file{output}: test.stdout = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std     \
+       --generate-inline         \
+       --generate-serialization  \
+       --generate-ostream        \
+       --generate-default-ctor   \
+       --generate-from-base-ctor \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

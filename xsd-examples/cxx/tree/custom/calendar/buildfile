@@ -1,0 +1,40 @@
+# file      : cxx/tree/custom/calendar/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+import libs += libboost_date_time%lib{boost_date_time}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx     cxx}{* -calendar -xml-schema} \
+             {hxx ixx cxx}{calendar}                \
+             {hxx        }{xml-schema}              \
+             $libs
+
+exe{driver}: xml{calendar}: test.input = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{calendar}>: xsd{calendar} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std              \
+       --generate-inline                  \
+       --extern-xml-schema xml-schema.xsd \
+       --output-dir $out_base             \
+       $path($<[0])
+}}
+
+hxx{xml-schema}: $xsd
+{{
+  diag xsd gen ($>[0])
+
+  $xsd cxx-tree $xsd_cxx_std                             \
+       --generate-xml-schema                             \
+       --custom-type date                                \
+       --hxx-epilogue '#include "xml-schema-custom.hxx"' \
+       --output-dir $out_base                            \
+       xml-schema.xsd
+}}

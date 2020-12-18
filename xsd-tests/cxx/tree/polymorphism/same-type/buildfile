@@ -1,0 +1,25 @@
+# file      : cxx/tree/polymorphism/same-type/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
+
+exe{driver}: xml{test}:    test.input  = true
+exe{driver}: file{output}: test.stdout = true
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std  \
+       --generate-inline      \
+       --generate-polymorphic \
+       --root-element root    \
+       --generate-ostream     \
+       --output-dir $out_base \
+       $path($<[0])
+}}

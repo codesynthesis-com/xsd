@@ -1,0 +1,41 @@
+# file      : cxx/tree/custom/comments/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx     cxx}{* -people -xml-schema} \
+             {hxx ixx cxx}{people}                \
+             {hxx        }{xml-schema}            \
+             $libs
+
+exe{driver}: xml{people}: test.input = true
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{people}>: xsd{people} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std              \
+       --generate-inline                  \
+       --generate-serialization           \
+       --extern-xml-schema xml-schema.xsd \
+       --output-dir $out_base             \
+       $path($<[0])
+}}
+
+hxx{xml-schema}: $xsd
+{{
+  diag xsd gen ($>[0])
+
+  $xsd cxx-tree $xsd_cxx_std                             \
+       --generate-xml-schema                             \
+       --generate-serialization                          \
+       --custom-type anyType=/type_base                  \
+       --hxx-epilogue '#include "xml-schema-custom.hxx"' \
+       --output-dir $out_base                            \
+       xml-schema.xsd
+}}

@@ -1,0 +1,31 @@
+# file      : cxx/tree/prefix/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+fs = foo bar test
+
+exe{driver}: {hxx cxx}{* -{$fs}} {hxx ixx cxx}{$fs} $libs
+
+exe{driver}: xml{test}:    test.input  = true
+exe{driver}: file{output}: test.stdout = true
+
+cxx.poptions =+ "-I$out_base"
+
+for f: $fs
+{
+  <{hxx ixx cxx}{$f}>: xsd{$f} $xsd
+  {{
+    diag xsd ($<[0]) # @@ TMP
+
+    $xsd cxx-tree $xsd_cxx_std         \
+         --generate-inline             \
+         --generate-serialization      \
+         --generate-polymorphic        \
+         --polymorphic-type 'foo#base' \
+         --root-element root           \
+         --output-dir $out_base        \
+         $path($<[0])
+  }}
+}

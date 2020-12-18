@@ -1,0 +1,6 @@
+# file      : tests/cxx/tree/basic/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs = libxsd%lib{xsd}
+
+exe{driver}: {hxx cxx}{*} $libs testscript

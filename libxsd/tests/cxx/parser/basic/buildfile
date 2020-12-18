@@ -1,0 +1,13 @@
+# file      : tests/cxx/parser/xerces/basic/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver-xerces} exe{driver-expat}
+
+exe{driver-xerces}: obj{driver-xerces} $libs testscript
+exe{driver-expat}:  obj{driver-expat}  $libs testscript
+
+obj{driver-xerces driver-expat}: cxx{driver} $libs
+
+obj{driver-expat}: cxx.poptions += -DPARSER_EXPAT

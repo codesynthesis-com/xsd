@@ -1,0 +1,24 @@
+# file      : cxx/parser/mixin/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -schema-pskel} {hxx ixx cxx}{schema-pskel} $libs
+
+exe{driver}: xml{instance}: test.input = true
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+<{hxx ixx cxx}{schema-pskel}>: xsd{schema} map{schema} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser $xsd_cxx_std   \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --type-map $path($<[1])   \
+       --output-dir $out_base    \
+       $path($<[0])
+}}

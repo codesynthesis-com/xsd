@@ -1,0 +1,56 @@
+# file      : build/root.build
+# license   : not copyrighted - public domain
+
+define xsd: file
+xsd{*}: extension = xsd
+
+define xml: file
+xml{*}: extension = xml
+
+define map: file
+map{*}: extension = map
+
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = hxx
+ixx{*}: extension = ixx
+txx{*}: extension = txx
+cxx{*}: extension = cxx
+
+if ($cxx.target.system == 'win32-msvc')
+  cxx.poptions += -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+
+if ($cxx.class == 'msvc')
+  cxx.coptions += /wd4251 /wd4275 /wd4800
+
+# Setup the xsd that we are using.
+#
+import xsd = xsd%exe{xsd}
+
+# Every exe{} in this project is by default a test.
+#
+exe{*}: test = true
+
+# Specify the test target for cross-testing.
+#
+test.target = $cxx.target
+
+# @@ Calculate the xsd's --std option based on the effective C++ standard
+#    version.
+#
+xsd_cxx_std = --std c++11
+
+# @@ Optionally define the XSD_CXX11 macro based on the effective C++ standard
+#    version, so that the source files that include libxsd headers directly are
+#    compiled properly.
+#
+#    Note that we could probably invent some configuration header which does
+#    that based on the pre-defined compiler macros and which can be included
+#    by the mentioned source files. However, it feels better to do it in sync
+#    with the xsd_cxx_std variable assignment, to make sure that these source
+#    files and the potentially present auto-generated files have this macro
+#    (un)defined equally.
+#
+cxx.poptions =+ -DXSD_CXX11

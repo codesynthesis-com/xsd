@@ -1,17 +1,6 @@
-Prerequisites
+The easiest way to build this package is with the bpkg package manager:
 
-  run-time:
+$ bpkg build libxsd
 
-    - libxerces-c >= 3.0.0  http://xerces.apache.org/xerces-c/
-
-
-Building libxsd
-
-  No building is necessary at the moment.
-
-
-Installing libxsd
-
-  Not supported in this version. You may want to copy libxsd/xsd
-  to $(prefix)/include so that you have $(prefix)/include/xsd/*.
-
+But if you don't want to use the package manager, then you can also build it
+manually using the standard build2 build system.

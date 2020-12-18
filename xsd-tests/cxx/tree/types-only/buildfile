@@ -1,0 +1,20 @@
+# file      : cxx/tree/types-only/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
+
+cxx.poptions =+ "-I$out_base"
+
+<{hxx ixx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree $xsd_cxx_std  \
+       --generate-inline      \
+       --suppress-parsing     \
+       --output-dir $out_base \
+       $path($<[0])
+}}

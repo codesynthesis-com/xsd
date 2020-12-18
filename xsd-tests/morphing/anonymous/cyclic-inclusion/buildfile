@@ -1,0 +1,24 @@
+# file      : morphing/anonymous/cyclic-inclusion/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+fs = includee includer
+
+exe{driver}: {hxx cxx}{* -{$fs}} {hxx cxx}{$fs} $libs
+
+cxx.poptions =+ "-I$out_base"
+
+for f: $fs
+{
+  <{hxx cxx}{$f}>: xsd{$f} $xsd
+  {{
+    diag xsd ($<[0]) # @@ TMP
+
+    $xsd cxx-tree $xsd_cxx_std  \
+         --root-element-all     \
+         --output-dir $out_base \
+         $path($<[0])
+  }}
+}
