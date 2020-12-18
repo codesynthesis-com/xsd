@@ -1,0 +1,8 @@
+# file      : buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+./: {*/ -build/} doc{INSTALL NEWS README} legal{GPLv2 LICENSE FLOSSE} manifest
+
+# Don't the INSTALL file.
+#
+doc{INSTALL}@./: install = false

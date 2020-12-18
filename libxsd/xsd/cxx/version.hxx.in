@@ -1,0 +1,43 @@
+// file      : xsd/cxx/version.hxx.in
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+#ifndef LIBXSD_VERSION // Note: using the version macro itself.
+
+// The numeric version format is AAAAABBBBBCCCCCDDDE where:
+//
+// AAAAA - major version number
+// BBBBB - minor version number
+// CCCCC - bugfix version number
+// DDD   - alpha / beta (DDD + 500) version number
+// E     - final (0) / snapshot (1)
+//
+// When DDDE is not 0, 1 is subtracted from AAAAABBBBBCCCCC. For example:
+//
+// Version      AAAAABBBBBCCCCCDDDE
+//
+// 0.1.0        0000000001000000000
+// 0.1.2        0000000001000020000
+// 1.2.3        0000100002000030000
+// 2.2.0-a.1    0000200001999990010
+// 3.0.0-b.2    0000299999999995020
+// 2.2.0-a.1.z  0000200001999990011
+//
+#define LIBXSD_VERSION       $libxsd.version.project_number$ULL
+#define LIBXSD_VERSION_STR   "$libxsd.version.project$"
+#define LIBXSD_VERSION_ID    "$libxsd.version.project_id$"
+#define LIBXSD_VERSION_FULL  "$libxsd.version$"
+
+#define LIBXSD_VERSION_MAJOR $libxsd.version.major$
+#define LIBXSD_VERSION_MINOR $libxsd.version.minor$
+#define LIBXSD_VERSION_PATCH $libxsd.version.patch$
+
+#define LIBXSD_PRE_RELEASE   $libxsd.version.pre_release$
+
+#define LIBXSD_SNAPSHOT      $libxsd.version.snapshot_sn$ULL
+#define LIBXSD_SNAPSHOT_ID   "$libxsd.version.snapshot_id$"
+
+// Note that Xerces and Expat compatibility is verified by the respective
+// parsers (see parser/xerces/elements.hxx and parser/expat/elements.hxx for
+// details).
+
+#endif // LIBXSD_VERSION

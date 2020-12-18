@@ -1,0 +1,187 @@
+# file      : doc/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+define css: doc
+css{*}: extension = css
+
+define xsd: doc
+xsd{*}: extension = xsd
+
+define xhtml: doc
+xhtml{*}: extension = xhtml
+
+define ps: doc
+ps{*}: extension = ps
+
+define pdf: doc
+pdf{*}: extension = pdf
+
+define html2ps: file
+html2ps{*}: extension = html2ps
+
+define png: doc
+png{*}: extension = png
+
+define svg: file
+svg{*}: extension = svg
+
+import? [metadata] cli = cli%exe{cli}
+
+# Import the html2ps and ps2pdf14 programs only if present on the system. This
+# way a distribution that includes pre-generated files can be built without
+# installing these programs.
+#
+import? html2ps  = html2ps%exe{html2ps}
+import? ps2pdf14 = ps2pdf14%exe{ps2pdf14}
+
+./: xsd{custom-literals}
+
+# Note that we include the cli, html2ps, and ps2pdf14 generated files into the
+# distribution and don't remove them when cleaning in src (so that clean
+# results in a state identical to distributed).
+
+# Generate the man pages if the cli program is available and handle (install,
+# distribute, etc) the pre-generated files otherwise, if present.
+#
+if ($cli != [null])
+{
+  ./: {man1 xhtml}{xsd}
+
+  man_topics = $(src_root)/xsd/cxx/cli{options tree/options parser/options}
+
+  man_options = -v project="XSD"                 \
+                -v version="$version.project_id" \
+                -v copyright="$copyright"        \
+                -I $src_root                     \
+                --stdout                         \
+                --suppress-undocumented          \
+                --exclude-base
+
+  man1{xsd}: $man_topics            \
+             man1{xsd-prologue      \
+                  xsd-tree-header   \
+                  xsd-parser-header \
+                  xsd-epilogue}     \
+             $cli
+  {
+    dist  = true
+    clean = ($src_root != $out_root)
+  }
+  {{
+    diag cli $> : ($<[0]) # @@ TMP: revise
+
+    # Note that the date change doesn't change the script semantics, thus the
+    # variable is defined locally.
+    #
+    date +"%B %Y" | set date
+
+    $cli --generate-man -v date="$date" $man_options \
+         --class CXX::options                        \
+         --class options                             \
+         --man-prologue-file $path($<[3])            \
+         $path($<[0]) >$path($>)
+
+    $cli --generate-man -v date="$date" $man_options \
+         --man-prologue-file $path($<[4])            \
+         $path($<[1]) >>$path($>)
+
+    $cli --generate-man -v date="$date" $man_options \
+         --man-prologue-file $path($<[5])            \
+         --man-epilogue-file $path($<[6])            \
+         $path($<[2]) >>$path($>)
+  }}
+
+  xhtml{xsd}: $man_topics             \
+              xhtml{xsd-prologue      \
+                    xsd-tree-header   \
+                    xsd-parser-header \
+                    xsd-epilogue}     \
+              css{*}                  \
+              $cli
+  {
+    dist  = true
+    clean = ($src_root != $out_root)
+  }
+  {{
+    diag cli $> : ($<[0]) # @@ TMP: revise
+
+    date +"%B %Y" | set date
+
+    $cli --generate-html -v date="$date" $man_options \
+         --class CXX::options                         \
+         --class options                              \
+         --html-prologue-file $path($<[3])            \
+         $path($<[0]) >$path($>)
+
+    $cli --generate-html -v date="$date" $man_options \
+         --html-prologue-file $path($<[4])            \
+         $path($<[1]) >>$path($>)
+
+    $cli --generate-html -v date="$date" $man_options \
+         --html-prologue-file $path($<[5])            \
+         --html-epilogue-file $path($<[6])            \
+         $path($<[2]) >>$path($>)
+  }}
+}
+else
+  # Distribute both the pre-generated file (if present) and the sources.
+  #
+  ./: {man1 xhtml}{+xsd xsd-*} css{*}
+
+# Generate the user guide/manual ps/pdf files if the html2ps and ps2pdf14
+# programs are imported and handle (install, distribute, etc) the
+# pre-generated files otherwise, if present.
+#
+for d: cxx/parser/guide/ cxx/tree/guide/ cxx/tree/manual/
+{
+  p = "([dir_path] $path.leaf($path.directory($d)))" # parser, tree
+  l = "([dir_path] $path.leaf($d))"                  # guide, manual
+  f = "cxx-$p-$l"                                    # cxx-parser-guide, etc
+
+  ./: $d/xhtml{index}: $d/{png svg}{*}
+
+  $d/xhtml{index}: $d/in{index}
+  {
+    in.symbol = '@'
+  }
+
+  if ($html2ps != [null])
+  {
+    ./: $d/ps{$f}: $d/xhtml{index} $d/html2ps{$l} $html2ps
+    {
+      dist  = true
+      clean = ($src_root != $out_root)
+    }
+    {{
+      diag html2ps $> : ($<[0]) # @@ TMP: revise
+
+      $html2ps -f $path($<[1]) -o $path($>) $path($<[0])
+    }}
+
+    if ($ps2pdf14 != [null])
+    {
+      ./: $d/pdf{$f}: $d/ps{$f} $ps2pdf14
+      {
+        dist  = true
+        clean = ($src_root != $out_root)
+      }
+      {{
+        diag ps2pdf14 $> : ($<[0]) # @@ TMP: revise
+
+        $ps2pdf14 -dOptimize=true -dEmbedAllFonts=true $path($<[0]) $path($>)
+      }}
+    }
+    else
+      ./: $d/pdf{+$f}
+  }
+  else
+    ./: $d/{ps pdf}{+$f} $d/html2ps{$l}
+
+  $d/html2ps{$l}: $d/in{$l}
+  {
+    in.symbol = '@'
+  }
+}
+
+{man1 xhtml}{xsd-*}: install = false        # xsd-prologue, etc
+doc{*}:              install.subdirs = true

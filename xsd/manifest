@@ -1,0 +1,23 @@
+: 1
+name: xsd
+version: 4.2.0-b.1.z
+summary: XML Schema to C++ data binding compiler
+license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
+topics: C++, XML, XML Schema, XML parser, source code generation
+description-file: README
+changes-file: NEWS
+url: https://www.codesynthesis.com/projects/xsd/
+doc-url: https://www.codesynthesis.com/projects/xsd/
+src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd/
+email: xsd-users@codesynthesis.com ; Mailing list
+build-warning-email: builds@codesynthesis.com
+requires: c++11
+depends: * build2 >= 0.13.0
+depends: * bpkg >= 0.13.0
+# @@ Should probably become conditional dependency.
+requires: ? cli ; Only required if changing .cli files.
+depends: libxsd-frontend ^2.1.0-
+depends: libcutl ^1.11.0-
+depends: libxerces-c ^3.0.0
+tests: xsd-tests == $
+examples: xsd-examples == $

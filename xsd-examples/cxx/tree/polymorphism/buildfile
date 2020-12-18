@@ -1,0 +1,26 @@
+# file      : cxx/tree/polymorphism/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -supermen} {hxx ixx cxx}{supermen} $libs
+
+exe{driver}: xml{supermen}: test.input = true
+
+<{hxx ixx cxx}{supermen}>: xsd{supermen} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11     \
+       --generate-inline        \
+       --generate-polymorphic   \
+       --generate-serialization \
+       --root-element-last      \
+       --output-dir $out_base   \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

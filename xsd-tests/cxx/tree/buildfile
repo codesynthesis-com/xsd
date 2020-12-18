@@ -1,0 +1,6 @@
+# file      : cxx/tree/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# Exclude tests which depend on not yet packaged libraries.
+#
+./: {*/ -binary/}

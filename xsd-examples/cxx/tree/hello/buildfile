@@ -1,0 +1,23 @@
+# file      : cxx/tree/hello/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -hello} {hxx ixx cxx}{hello} $libs
+
+exe{driver}: xml{hello}: test.input = true
+
+<{hxx ixx cxx}{hello}>: xsd{hello} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11   \
+       --generate-inline      \
+       --output-dir $out_base \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

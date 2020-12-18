@@ -1,0 +1,16 @@
+# file      : schema/ref-type/invalid/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: unresolvable-namespace-prefix
+:
+$* --output-dir $~ $src_base/invalid-0.xsd 2>>~%EOE%d != 0
+  %\.+invalid-0.xsd:10:75: error: unable to resolve namespace ''%
+  %\.+invalid-0.xsd:11:77: error: unable to resolve namespace prefix 't' in 't:author'%
+  %\.+invalid-0.xsd:15:81: error: unable to resolve namespace 'http://www.codesynthesis.com/xmlns/phony'%
+  EOE
+
+: unresolvable-type
+:
+$* --output-dir $~ $src_base/invalid-1.xsd 2>>~%EOE%d != 0
+  %\.+invalid-1.xsd:9:79: error: unable to resolve type 'author' in namespace 'http://www.codesynthesis.com/xmlns/test'%
+  EOE

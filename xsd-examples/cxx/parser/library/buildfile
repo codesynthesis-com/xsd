@@ -1,0 +1,25 @@
+# file      : cxx/parser/library/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -library-pskel} {hxx ixx cxx}{library-pskel} $libs
+
+exe{driver}: xml{library}: test.input = true
+
+<{hxx ixx cxx}{library-pskel}>: xsd{library} map{library} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser --std c++11    \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --type-map $path($<[1])   \
+       --output-dir $out_base    \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"

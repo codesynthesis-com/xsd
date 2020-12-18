@@ -1,0 +1,30 @@
+# file      : cxx/tree/binary/xdr/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+if ($cxx.target.class == 'linux')
+  import libs += libtirpc%lib{tirpc}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -library} {hxx ixx cxx}{library} $libs
+
+exe{driver}: xml{library}: test.input = true
+
+<{hxx ixx cxx}{library}>: xsd{library} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11        \
+       --generate-inline           \
+       --generate-ostream          \
+       --generate-insertion 'XDR'  \
+       --generate-extraction 'XDR' \
+       --generate-comparison       \
+       --output-dir $out_base      \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

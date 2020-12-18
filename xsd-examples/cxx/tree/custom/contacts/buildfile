@@ -1,0 +1,25 @@
+# file      : cxx/tree/custom/contacts/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -contacts} {hxx ixx cxx}{contacts} $libs
+
+exe{driver}: xml{contacts}: test.input = true
+
+<{hxx ixx cxx}{contacts}>: xsd{contacts} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11                             \
+       --generate-inline                                \
+        --custom-type contact=/contact_base             \
+        --hxx-epilogue '#include "contacts-custom.hxx"' \
+       --output-dir $out_base                           \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"

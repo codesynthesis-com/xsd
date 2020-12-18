@@ -1,0 +1,21 @@
+This package contains a number of examples that show how to use XSD, the
+XML Schema to C++ data binding compiler and the generated C++ Tree and
+Parser classes. See the README files in example directories for more
+information on each example.
+
+The package source code is in the public domain.
+
+The project page is at https://www.codesynthesis.com/projects/xsd/.
+
+The easiest way to build this package is with the bpkg package manager:
+
+$ mkdir xsd-examples/
+$ cd xsd-examples/
+$ bpkg create cc
+$ bpkg build xsd-examples@https://pkg.cppget.org/1/stable
+
+But if you don't want to use the package manager, then you can also build it
+manually using the standard build2 build system.
+
+Send bug reports or any other feedback to the xsd-users@codesynthesis.com
+mailing list.

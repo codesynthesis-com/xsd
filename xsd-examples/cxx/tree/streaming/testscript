@@ -1,0 +1,10 @@
+# file      : cxx/tree/streaming/testscript
+# license   : not copyrighted - public domain
+
+: position
+:
+{
+  $* $src_base/position.xml 2>| &out.xml;
+  echo ''     >|;
+  cat out.xml >|
+}

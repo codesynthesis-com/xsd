@@ -1,0 +1,328 @@
+# file      : cxx/parser/validation/sequence/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+test.arguments += test.xml
+
+: valid
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <sequence>
+        <c>c</c>
+        <d>d</d>
+        <t:any>aaa<a>bbb</a>ccc</t:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+      <sequence>
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+        <d>d</d>
+        <d>d</d>
+        <d>d</d>
+        <o:any>any</o:any>
+        <f>f</f>
+        <e>e</e>
+        <e>e</e>
+      </sequence>
+
+      <sequence>
+        <a>a</a>
+        <b>b</b>
+        <c>c</c>
+        <d>d</d>
+        <d>d</d>
+        <d>d</d>
+        <o:any>any</o:any>
+        <f>f</f>
+        <e>e</e>
+        <e>e</e>
+
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      d = d
+      any: test#any
+      {
+        chars = aaa
+      any: #a
+      {
+        chars = bbb
+      }
+        chars = ccc
+      }
+      f = f
+      e = e
+    }
+
+    {
+      a = a
+      b = b
+      c = c
+      d = d
+      d = d
+      d = d
+      any: other#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+      e = e
+    }
+
+    {
+      a = a
+      b = b
+      c = c
+      d = d
+      d = d
+      d = d
+      any: other#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+      e = e
+      c = c
+      d = d
+      any: test#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+    }
+
+    EOO
+}
+
+: invalid1
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail minOccurs="1" -->
+      <sequence>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      :8:14 error: expected element 'a'
+    }
+
+    EOO
+}
+
+: invalid2
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail maxOccurs="2" -->
+      <sequence>
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      d = d
+      any: test#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+      c = c
+      d = d
+      any: test#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+      :20:8 error: unexpected element 'c'
+    }
+
+    EOO
+}
+
+: invalid3
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail a maxOccurs="1" -->
+      <sequence>
+        <a>a</a>
+        <a>a</a>
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      a = a
+      :9:8 error: expected element 'b' instead of 'a'
+    }
+
+    EOO
+}
+
+: invalid4
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail c minOccurs="1" -->
+      <sequence>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      :8:8 error: expected element 'a' instead of 'd'
+    }
+
+    EOO
+}
+
+: invalid5
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o1="other1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail any namespace="##targetNamespace other" -->
+      <sequence>
+        <c>c</c>
+        <d>d</d>
+        <o1:any>any</o1:any>
+        <f>f</f>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      d = d
+      :10:13 error: expected element '##targetNamespace#*' instead of 'other1#any'
+    }
+
+    EOO
+}
+
+: invalid6
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- fail e maxOccurs="2" -->
+      <sequence>
+        <c>c</c>
+        <d>d</d>
+        <t:any>any</t:any>
+        <f>f</f>
+        <e>e</e>
+        <e>e</e>
+        <e>e</e>
+      </sequence>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      d = d
+      any: test#any
+      {
+        chars = any
+      }
+      f = f
+      e = e
+      e = e
+      :14:8 error: unexpected element 'e'
+    }
+
+    EOO
+}

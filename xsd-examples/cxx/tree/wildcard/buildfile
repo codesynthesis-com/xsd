@@ -1,0 +1,30 @@
+# file      : cxx/tree/wildcard/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -email} {hxx ixx cxx}{email} $libs
+
+exe{driver}: xml{email}: test.input = true
+
+<{hxx ixx cxx}{email}>: xsd{email} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11     \
+       --generate-inline        \
+       --generate-wildcard      \
+       --generate-serialization \
+       --root-element message   \
+       --output-dir $out_base   \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"
+
+# Define XSD_CXX11 since we include libxsd headers directly.
+#
+cxx.poptions += -DXSD_CXX11

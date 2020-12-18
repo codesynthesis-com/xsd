@@ -1,0 +1,9 @@
+// file      : schema/any/driver.cxx.in
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+#include "$sch$.hxx"
+
+int
+main (int, char*[])
+{
+}

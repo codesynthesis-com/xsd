@@ -1,0 +1,27 @@
+# file      : schema/import/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# Just make sure that the schema files and the xsd-generated C++ mappings are
+# compilable.
+#
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+fs = importer schemas/importee
+
+exe{driver}: {hxx cxx}{** -{$fs}} {hxx cxx}{$fs} $libs
+
+for f: $fs
+{
+  <{hxx cxx}{$f}>: xsd{$f} $xsd
+  {{
+    diag xsd ($<[0]) # @@ TMP
+
+    $xsd cxx-tree --std c++11                  \
+         --root-element-all                    \
+         --output-dir $directory($path($>[0])) \
+         $path($<[0])
+  }}
+}
+
+cxx.poptions =+ "-I$out_base"

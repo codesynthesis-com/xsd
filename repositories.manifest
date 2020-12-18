@@ -1,0 +1,22 @@
+: 1
+summary: XML Schema to C++ data binding compiler repository
+
+:
+role: prerequisite
+location: https://git.build2.org/packaging/zlib/zlib.git##HEAD
+
+:
+role: prerequisite
+location: https://git.build2.org/packaging/xerces-c/xerces-c.git##HEAD
+
+:
+role: prerequisite
+location: https://git.build2.org/packaging/expat/expat.git#2.1
+
+:
+role: prerequisite
+location: https://git.codesynthesis.com/libcutl/libcutl.git##HEAD
+
+:
+role: prerequisite
+location: https://git.codesynthesis.com/libxsd-frontend/libxsd-frontend.git##HEAD

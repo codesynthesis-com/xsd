@@ -1,0 +1,9 @@
+# file      : build/bootstrap.build
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+project = xsd-tests
+
+using version
+using config
+using dist
+using test

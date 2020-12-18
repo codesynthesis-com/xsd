@@ -1,0 +1,119 @@
+.\" Process this file with
+.\" groff -man -Tascii xsd.1
+.\"
+.TH XSD 1 "$date$" "$project$ $version$"
+.SH NAME
+xsd \- W3C XML Schema to C++ Compiler
+.\"
+.\"
+.\"
+.\"--------------------------------------------------------------------
+.SH SYNOPSIS
+.\"--------------------------------------------------------------------
+.B xsd
+.I command
+.B [
+.I options
+.B ]
+.I file
+.B [
+.I file
+.B ...]
+.in
+.B xsd help
+.B [
+.I command
+.B ]
+.in
+.B xsd version
+.\"
+.\"
+.\"
+.\"--------------------------------------------------------------------
+.SH DESCRIPTION
+.\"--------------------------------------------------------------------
+.B xsd
+generates vocabulary-specific, statically-typed C++ mapping from W3C XML
+Schema definitions. Particular mapping to produce is selected by a
+.IR command .
+Each mapping has a number of mapping-specific
+.I options
+that should appear, if any, after the
+.IR command .
+Input files should be W3C XML Schema definitions. The exact set of the
+generated files depends on the selected mapping and options.
+.\"
+.\"
+.\"
+.\"--------------------------------------------------------------------
+.SH COMMANDS
+.\"--------------------------------------------------------------------
+.IP \fBcxx-tree\fR
+Generate the C++/Tree mapping. For each input file in the form
+.B name.xsd
+the following C++ files are generated:
+.B name.hxx
+(header file),
+.B name.ixx
+(inline file, generated only if the
+.B --generate-inline
+option is specified),
+.B name.cxx
+(source file), and
+.B name-fwd.hxx
+(forward declaration file, generated only if the
+.B --generate-forward
+option is specified).
+
+.IP \fBcxx-parser\fR
+Generate the C++/Parser mapping. For each input file in the form
+.B name.xsd
+the following C++ files are generated:
+.B name-pskel.hxx
+(parser skeleton header file),
+.B name-pskel.ixx
+(parser skeleton inline file, generated only if the
+.B --generate-inline
+option is specified), and
+.B name-pskel.cxx
+(parser skeleton source file). If the
+.B --generate-noop-impl
+or
+.B --generate-print-impl
+option is specified, the following additional sample implementation files
+are generated:
+.B name-pimpl.hxx
+(parser implementation header file) and
+.B name-pimpl.cxx
+(parser implementation source file). If the
+.B --generate-test-driver
+option is specified, the additional
+.B name-driver.cxx
+test driver file is generated.
+
+.IP \fBhelp\fR
+Print usage information and exit. Use
+.PP
+.RS
+.RS 3
+.B xsd help
+.I command
+.RE
+.PP
+for command-specific help.
+.RE
+.IP \fBversion\fR
+Print version and exit.
+.\"--------------------------------------------------------------------
+.SH OPTIONS
+.\"--------------------------------------------------------------------
+Command-specific
+.IR options ,
+if any, should appear after the corresponding
+.IR command .
+
+.\"
+.\" Common options.
+.\"
+.SS common options
+.

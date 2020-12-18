@@ -1,0 +1,9 @@
+# file      : cxx/parser/performance/gen.testscript
+# license   : not copyrighted - public domain
+
+: 50k
+:
+{
+  $* 317 test-50k.xml &test-50k.xml;
+  cat test-50k.xml >>>$src_base/test-50k.xml
+}

@@ -1,0 +1,22 @@
+# file      : cxx/tree/enumeration/ctor/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
+
+<{hxx ixx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11      \
+       --generate-inline         \
+       --generate-default-ctor   \
+       --generate-from-base-ctor \
+       --generate-doxygen        \
+       --output-dir $out_base    \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

@@ -1,0 +1,30 @@
+# file      : cxx/tree/custom/mixed/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -people} {hxx ixx cxx}{people} $libs
+
+exe{driver}: xml{people}: test.input = true
+
+<{hxx ixx cxx}{people}>: xsd{people} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11                          \
+       --generate-inline                             \
+       --generate-serialization                      \
+       --custom-type bio=/bio_base                   \
+       --hxx-epilogue '#include "people-custom.hxx"' \
+       --output-dir $out_base                        \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+# Define XSD_CXX11 since we include libxsd headers directly.
+#
+cxx.poptions += -DXSD_CXX11

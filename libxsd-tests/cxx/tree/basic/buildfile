@@ -1,0 +1,7 @@
+# file      : cxx/tree/basic/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{*} $libs testscript

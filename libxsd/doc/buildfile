@@ -1,0 +1,83 @@
+# file      : doc/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+define html: file
+html{*}: extension = html
+
+define doxygen: file
+doxygen{*}: extension = doxygen
+
+define doxytag: file
+doxytag{*}: extension = doxytag
+
+# Import the doxygen program only if present on the system. This way a
+# distribution that includes pre-generated files can be built without
+# installing this programs.
+#
+import? doxygen = doxygen%exe{doxygen}
+
+# Note that we include the doxygen-generated files into the distribution and
+# don't remove them when cleaning in src (so that clean results in a state
+# identical to distributed).
+
+cxx/tree/reference/
+{
+  # @@ Currently, there are the following issues that can only be addressed
+  #    on the build2 level:
+  #
+  #    - The update recipe is not re-executed after html/ directory content
+  #      has changed or it is removed.
+  #
+  #    - The clean operation doesn't remove the html/ directory.
+  #
+  #    - The html/ directory is not installed nor distributed regardless of
+  #      the doxygen presence.
+  #
+  if ($doxygen != [null])
+  {
+    ../../../: doxytag{libxsd}
+
+    headers = buffer types date-time elements element-map exceptions
+
+    <doxytag{libxsd} fsdir{html}>: doxygen{libxsd}                      \
+                                   html{footer}                         \
+                                   $src_root/xsd/cxx/tree/hxx{$headers} \
+                                   $doxygen
+    {
+      dist  = true
+      clean = ($src_root != $out_root)
+    }
+    {{
+      diag doxygen $> : ($<[0]) # @@ TMP: revise
+
+      rm -r -f $directory($>[1])
+
+      $doxygen $path($<[0])
+    }}
+
+    doxygen{libxsd}: in{libxsd}
+    {
+      in.symbol = '%'
+
+      input = $regex.merge($headers,                         \
+                           '^(.*)$',                         \
+                           "$src_root/xsd/cxx/tree/\\1.hxx", \
+                           ' ')
+    }
+
+    html{footer}: in{footer}
+    {
+      # Extract the copyright notice from the LICENSE file.
+      #
+      # Note that cat is a builtin which means this is both portable and fast.
+      #
+      copyright = $process.run_regex(cat $src_root/LICENSE,    \
+                                     'Copyright \(c\) (.+)\.', \
+                                     '\1')
+    }
+  }
+  else
+    ../../../: doxytag{+libxsd}
+}
+
+doc{*}: install.subdirs = true

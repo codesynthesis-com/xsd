@@ -1,0 +1,37 @@
+# file      : build/root.build
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+using in
+
+cxx.std = latest
+
+using cxx
+
+hxx{*}: extension = hxx
+ixx{*}: extension = ixx
+txx{*}: extension = txx
+cxx{*}: extension = cxx
+
+if ($cxx.target.system == 'win32-msvc')
+  cxx.poptions += -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+
+if ($cxx.class == 'msvc')
+  cxx.coptions += /wd4251 /wd4275 /wd4800 /wd4819
+
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+# Load the cli module but only if it's available. This way a distribution
+# that includes pre-generated files can be built without installing cli.
+# This is also the reason why we need to explicitly spell out individual
+# source file prerequisites instead of using the cli.cxx{} group (it won't
+# be there unless the module is configured).
+#
+using? cli
+
+# Extract the copyright notice from the LICENSE file.
+#
+# Note that cat is a builtin which means this is both portable and fast.
+#
+copyright = $process.run_regex(cat $src_root/LICENSE,    \
+                               'Copyright \(c\) (.+)\.', \
+                               '\1')

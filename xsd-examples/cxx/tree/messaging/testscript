@@ -1,0 +1,6 @@
+# file      : cxx/tree/messaging/testscript
+# license   : not copyrighted - public domain
+
+$* $src_base/balance.xml  >| 2>| : balance
+$* $src_base/withdraw.xml >| 2>| : withdraw
+$* $src_base/deposit.xml  >| 2>| : deposit

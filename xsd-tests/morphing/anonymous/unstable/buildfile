@@ -1,0 +1,31 @@
+# file      : morphing/anonymous/unstable/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+fs = includee-1 includee-2
+
+./: {hxx cxx}{$fs}
+
+# Make sure that the schema files are compilable.
+#
+for f: $fs
+{
+  <{hxx cxx}{$f}>: xsd{$f} $xsd
+  {{
+    diag xsd ($<[0]) # @@ TMP
+
+    $xsd cxx-tree --std c++11   \
+         --root-element-all     \
+         --output-dir $out_base \
+         $path($<[0])
+  }}
+}
+
+# Test that the invalid schema files compilation expectedly fails.
+#
+./: testscript xsd{** -{$fs}} $xsd
+
+testscript{*}:
+{
+  test           = $xsd
+  test.arguments = cxx-tree --std c++11
+}

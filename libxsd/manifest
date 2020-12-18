@@ -1,0 +1,17 @@
+: 1
+name: libxsd
+version: 4.2.0-b.1.z
+project: xsd
+summary: XML Schema to C++ data binding compiler runtime library
+license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
+topics: C++, XML, XML Schema, XML parser
+description-file: README
+changes-file: NEWS
+url: https://www.codesynthesis.com/projects/xsd/
+doc-url: https://www.codesynthesis.com/projects/xsd/
+src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/libxsd/
+email: xsd-users@codesynthesis.com ; Mailing list
+build-warning-email: builds@codesynthesis.com
+depends: * build2 >= 0.13.0
+depends: * bpkg >= 0.13.0
+tests: libxsd-tests == $

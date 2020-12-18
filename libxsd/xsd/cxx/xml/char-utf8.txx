@@ -115,20 +115,24 @@ namespace xsd
               rs[i + 3] = C ((u | 0x80UL) & 0xBFUL);
               u >>= 6;
             }
+            // Fall through.
           case 3:
             {
               rs[i + 2] = C ((u | 0x80UL) & 0xBFUL);
               u >>= 6;
             }
+            // Fall through.
           case 2:
             {
               rs[i + 1] = C ((u | 0x80UL) & 0xBFUL);
               u >>= 6;
             }
+            // Fall through.
           case 1:
             {
               rs[i] = C (u | first_byte_mask_[count]);
             }
+            // Fall through.
           }
 
           i += count;

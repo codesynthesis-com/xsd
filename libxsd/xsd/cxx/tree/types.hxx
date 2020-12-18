@@ -3123,7 +3123,9 @@ namespace xsd
       class base64_binary: public B, public buffer<C>
       {
       public:
+        //@cond
         typedef typename buffer<C>::size_t size_t;
+        //@endcond
 
       public:
         /**
@@ -3342,7 +3344,9 @@ namespace xsd
       class hex_binary: public B, public buffer<C>
       {
       public:
+        //@cond
         typedef typename buffer<C>::size_t size_t;
+        //@endcond
 
       public:
         /**

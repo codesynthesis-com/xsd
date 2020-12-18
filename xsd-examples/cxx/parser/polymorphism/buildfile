@@ -1,0 +1,25 @@
+# file      : cxx/parser/polymorphism/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -supermen-pskel} {hxx ixx cxx}{supermen-pskel} $libs
+
+exe{driver}: xml{supermen}: test.input = true
+
+<{hxx ixx cxx}{supermen-pskel}>: xsd{supermen} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser --std c++11    \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --generate-polymorphic    \
+       --output-dir $out_base    \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

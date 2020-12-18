@@ -1,0 +1,10 @@
+# file      : cxx/parser/validation/built-in/string/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs = libxsd%lib{xsd}
+
+exe{driver}: {hxx cxx}{*} $libs
+
+# Define XSD_CXX11 since we include libxsd headers directly.
+#
+cxx.poptions += -DXSD_CXX11

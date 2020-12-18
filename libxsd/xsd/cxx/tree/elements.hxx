@@ -235,6 +235,8 @@ namespace xsd
         std::size_t index;
       };
 
+      //@cond
+
       bool
       operator== (const content_order&, const content_order&);
 
@@ -243,8 +245,6 @@ namespace xsd
 
       bool
       operator< (const content_order&, const content_order&);
-
-      //@cond
 
       // DOM user data keys.
       //
@@ -458,7 +458,9 @@ namespace xsd
         // anyType content API.
         //
       public:
+        //@cond
         typedef element_optional dom_content_optional;
+        //@endcond
 
         /**
          * @brief Return a read-only (constant) reference to the anyType
@@ -1198,9 +1200,9 @@ namespace xsd
           dom_content_optional dom;
         };
 
-        //@endcond
-
         mutable XSD_AUTO_PTR<content_type> content_;
+
+        //@endcond
 
       private:
         container* container_;

@@ -1,0 +1,32 @@
+# Compiler/linker output.
+#
+*.d
+*.t
+*.i
+*.ii
+*.o
+*.obj
+*.so
+*.dll
+*.a
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.exe
+*.exe.dlls/
+*.exe.manifest
+*.pc
+
+# Test executables.
+#
+driver
+
+# XSD-generated files.
+#
+test.?xx
+
+# Testscript output directories (can be symlinks).
+#
+test
+test-driver

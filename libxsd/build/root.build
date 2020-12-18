@@ -1,0 +1,14 @@
+# file      : build/root.build
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+using in
+
+cxx.std = latest
+
+using cxx
+
+# Note that this is a header-only library.
+#
+hxx{*}: extension = hxx
+ixx{*}: extension = ixx
+txx{*}: extension = txx

@@ -1,0 +1,39 @@
+# file      : xsd/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# Note that libxsd includes headers of some third-party libraries (Xerces-C++,
+# Expat, ACE) and APIs (XDR) into some of its headers. We consider
+# functionality provided by these headers as optional and assume that libxsd
+# dependents that require such functionality will handle the respective
+# dependencies (in buildfiles, manifests, etc) themselves. An alternative would
+# be to split libxsd into the hierarchy of libraries, but it doesn't feel very
+# practical at the moment.
+#
+lib{xsd}: cxx/{hxx ixx txx}{** -version} cxx/hxx{version}
+
+# Include the generated version header into the distribution (so that we don't
+# pick up an installed one) and don't remove it when cleaning in src (so that
+# clean results in a state identical to distributed).
+#
+cxx/
+{
+  hxx{version}: in{version} $src_root/manifest
+  hxx{version}:
+  {
+    dist  = true
+    clean = ($src_root != $out_root)
+  }
+}
+
+# Export options.
+#
+lib{xsd}: cxx.export.poptions = "-I$out_root" "-I$src_root"
+
+# Install into the xsd/ subdirectory of, say, /usr/include/ recreating
+# subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/xsd/
+  install.subdirs = true
+}

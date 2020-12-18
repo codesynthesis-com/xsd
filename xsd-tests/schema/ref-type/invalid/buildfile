@@ -1,0 +1,12 @@
+# file      : schema/ref-type/invalid/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# Test that the invalid schema files compilation expectedly fails.
+#
+./: testscript xsd{*} $xsd
+
+testscript{*}:
+{
+  test           = $xsd
+  test.arguments = cxx-tree --std c++11
+}

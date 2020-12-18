@@ -1,0 +1,7 @@
+driver-expat
+driver-xerces
+gen
+
+# Testscript output directory (can be symlink).
+#
+test-gen

@@ -1,0 +1,8 @@
+# file      : schema/list/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: invalid-definition
+:
+$* --output-dir $~ $src_base/any-simple-type/test.xsd 2>>/"EOE" != 0
+  $src_base/any-simple-type/test.xsd:9:45: error: item type definition must have variety of atomic or union where all member types must be atomic
+  EOE

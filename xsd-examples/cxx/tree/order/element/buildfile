@@ -1,0 +1,30 @@
+# file      : cxx/tree/order/element/buildfile
+# license   : not copyrighted - public domain
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+./: exe{driver} doc{README}
+
+exe{driver}: {hxx cxx}{* -transactions} {hxx ixx cxx}{transactions} $libs
+
+exe{driver}: xml{transactions}: test.input = true
+
+<{hxx ixx cxx}{transactions}>: xsd{transactions} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11     \
+       --generate-inline        \
+       --generate-serialization \
+       --generate-wildcard      \
+       --ordered-type batch     \
+       --output-dir $out_base   \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"
+
+# Define XSD_CXX11 since we include libxsd headers directly.
+#
+cxx.poptions += -DXSD_CXX11

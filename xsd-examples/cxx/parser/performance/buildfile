@@ -1,0 +1,57 @@
+# file      : cxx/parser/performance/buildfile
+# license   : not copyrighted - public domain
+
+import libs = libxsd%lib{xsd}
+
+import libxerces = libxerces-c%lib{xerces-c}
+import libexpat  = libexpat%lib{expat}
+
+./: doc{README}
+
+# exe{driver-{xerces,expat}}
+#
+for p: 'xerces' 'expat'
+{
+  # Make sure that obje{time} doesn't depend on the parser library that varies
+  # for different exe{driver-*} targets. Think of -I... options passed to the
+  # compiler while compiling time.cxx, which would vary depending on exe
+  # target time.cxx is a prerequisite of.
+  #
+  ./: exe{driver-$p}: obje{driver-$p time}         \
+                      {hxx ixx cxx}{test-$p-pskel} \
+                      $libs $(lib$p)
+
+  exe{driver-$p}: xml{test-50k}: test.input = true
+
+  obje{driver-$p}: cxx{driver} $libs $(lib$p)
+
+  <{hxx ixx cxx}{test-$p-pskel}>: xsd{test} $xsd
+  {
+    # Note: we can't use $p in the buildscript since it will be substituted by
+    # the latest $p value.
+    #
+    parser = $p
+  }
+  {{
+    diag xsd ($<[0]) # @@ TMP
+
+    $xsd cxx-parser --std c++11            \
+         --generate-inline                 \
+         --skel-file-suffix -$parser-pskel \
+         --xml-parser $parser              \
+         --output-dir $out_base            \
+         $path($<[0])
+  }}
+}
+
+obje{time}: {hxx cxx}{time}
+
+# exe{gen}
+#
+./: exe{gen}: cxx{gen} testscript{gen}
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_base" "-I$src_base"
+
+obje{driver-xerces}: cxx.poptions += -DXERCES_PARSER

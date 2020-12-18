@@ -1,0 +1,8 @@
+# file      : schema/any-attribute/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: decl-after-any-attribute
+:
+$* --output-dir $~ $src_base/test.xsd 2>>/"EOE" != 0
+  $src_base/test.xsd:12:44: error: anyAttribute must not be followed by other declarations
+  EOE

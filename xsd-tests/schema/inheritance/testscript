@@ -1,0 +1,8 @@
+# file      : schema/inheritance/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: base-not-found
+:
+$* --output-dir $~ $src_base/sourced-forward/includee.xsd 2>>/"EOE" != 0
+  $src_base/sourced-forward/includee.xsd:7:35: error: base type 'Base' not found in 'Derived' definition
+  EOE

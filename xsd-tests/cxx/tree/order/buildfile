@@ -1,0 +1,37 @@
+# file      : cxx/tree/order/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
+
+exe{driver}: xml{test}:    test.input  = true
+exe{driver}: file{output}: test.stdout = true
+
+<{hxx ixx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11      \
+       --generate-inline         \
+       --generate-serialization  \
+       --generate-wildcard       \
+       --generate-comparison     \
+       --ordered-type t1_base    \
+       --ordered-type t1_derived \
+       --ordered-type t2_base    \
+       --ordered-type t2_derived \
+       --ordered-type t3_type    \
+       --ordered-type t4_base    \
+       --ordered-type t4_derived \
+       --ordered-type t5_base    \
+       --ordered-type t5_derived \
+       --ordered-type t6_base    \
+       --ordered-type t6_derived \
+       --ordered-type t7_type    \
+       --output-dir $out_base    \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

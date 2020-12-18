@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>$project$ $version$ Compiler Command Line Manual</title>
+
+  <meta name="version" content="$version$"/>
+  <meta name="copyright" content="&#169; $copyright$"/>
+  <meta name="keywords" content="xsd,xml,schema,c++,mapping,data,binding,code,generator,manual,man,page"/>
+  <meta name="description" content="XSD Compiler Command Line Manual"/>
+
+  <link rel="stylesheet" type="text/css" href="default.css" />
+
+<style type="text/css">
+
+  #synopsis {
+    list-style-type:  none;
+  }
+
+  #synopsis li {
+    padding-top      : 0.0em;
+    padding-bottom   : 0.0em;
+  }
+
+  #commands dt {
+    padding-top      : 0.4em;
+  }
+
+  #commands dd {
+    padding-bottom   : 0.4em;
+    padding-left     : 2em;
+  }
+
+  .options {
+    margin: 1em 0 1em 0;
+  }
+
+  .options dt {
+    margin: 1em 0 0 0;
+  }
+
+  .options dd {
+    margin: .1em 0 0 4.5em;
+  }
+
+</style>
+</head>
+
+<body>
+<div id="container">
+  <div id="content">
+
+  <h1>NAME</h1>
+
+  <p>xsd - W3C XML Schema to C++ Compiler</p>
+
+  <h1>SYNOPSIS</h1>
+
+  <dl id="synopsis">
+    <dt><code><b>xsd</b> <i>command</i> [<i>options</i>] <i>file</i> [<i>file</i> ...]</code></dt>
+    <dt><code><b>xsd help</b> [<i>command</i>]</code></dt>
+    <dt><code><b>xsd version</b></code></dt>
+  </dl>
+
+  <h1>DESCRIPTION</h1>
+
+  <p><code><b>xsd</b></code> generates vocabulary-specific, statically-typed
+  C++ mapping from W3C XML Schema definitions. Particular mapping to
+  produce is selected by a <code><i>command</i></code>. Each mapping has
+  a number of mapping-specific <code><i>options</i></code> that should
+  appear, if any, after the <code><i>command</i></code>. Input files should
+  be W3C XML Schema definitions. The exact set of the generated files depends
+  on the selected mapping and options.</p>
+
+  <h1>COMMANDS</h1>
+
+  <dl id="commands">
+    <dt><code><b>cxx-tree</b></code></dt>
+    <dd>Generate the C++/Tree mapping. For each input file in the form
+        <code><b>name.xsd</b></code> the following C++ files are generated:
+        <code><b>name.hxx</b></code> (header file),
+        <code><b>name.ixx</b></code> (inline file, generated only if the
+          <code><b>--generate-inline</b></code> option is specified),
+	<code><b>name.cxx</b></code> (source file), and
+        <code><b>name-fwd.hxx</b></code> (forward declaration file, generated
+          only if the <code><b>--generate-forward</b></code> option is
+          specified).</dd>
+
+    <dt><code><b>cxx-parser</b></code></dt>
+    <dd>Generate the C++/Parser mapping. For each input file in the form
+        <code><b>name.xsd</b></code> the following C++ files are generated:
+        <code><b>name-pskel.hxx</b></code> (parser skeleton header file),
+        <code><b>name-pskel.ixx</b></code> (parser skeleton inline file,
+          generated only if the <code><b>--generate-inline</b></code>
+          option is specified), and
+	<code><b>name-pskel.cxx</b></code> (parser skeleton source file).
+        If the <code><b>--generate-noop-impl</b></code> or
+        <code><b>--generate-print-impl</b></code> option is specified,
+        the following additional sample implementation files are generated:
+        <code><b>name-pimpl.hxx</b></code> (parser implementation header
+        file) and
+        <code><b>name-pimpl.cxx</b></code> (parser implementation source
+        file). If the <code><b>--generate-test-driver</b></code> option
+        is specified, the additional <code><b>name-driver.cxx</b></code>
+        test driver file is generated.</dd>
+
+    <dt><code><b>help</b></code></dt>
+    <dd>Print usage information and exit. Use
+      <p><code><b>xsd help</b> <i>command</i></code></p>
+      for command-specific help.
+    </dd>
+
+    <dt><code><b>version</b></code></dt>
+    <dd>Print version and exit.</dd>
+  </dl>
+
+  <h1>OPTIONS</h1>
+
+  <p>Command-specific <code><i>options</i></code>, if any, should appear
+  after the corresponding <code><i>command</i></code>.</p>
+
+  <h2>COMMON OPTIONS</h2>

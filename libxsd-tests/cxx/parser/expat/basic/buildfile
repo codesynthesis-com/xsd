@@ -1,0 +1,7 @@
+# file      : cxx/parser/expat/basic/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libexpat%lib{expat}
+
+exe{driver}: cxx{driver} $libs testscript

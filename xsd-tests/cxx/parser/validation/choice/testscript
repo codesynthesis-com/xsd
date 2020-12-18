@@ -1,0 +1,179 @@
+# file      : cxx/parser/validation/choice/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+test.arguments += test.xml
+
+: valid
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <choice>
+        <a>a</a>
+
+        <b>b</b>
+      </choice>
+
+      <choice>
+        <c>c</c>
+        <d>d</d>
+
+        <o:any>any</o:any>
+
+        <a>a</a>
+      </choice>
+
+      <choice>
+        <c>c</c>
+        <d>d</d>
+
+        <d>d</d>
+
+        <a>a</a>
+      </choice>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      a = a
+      b = b
+    }
+
+    {
+      c = c
+      d = d
+      any: other#any
+      {
+        chars = any
+      }
+      a = a
+    }
+
+    {
+      c = c
+      d = d
+      d = d
+      a = a
+    }
+
+    EOO
+}
+
+: absent1
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- invalid -->
+      <choice>
+      </choice>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      :8:12 error: expected element 'a'
+    }
+
+    EOO
+}
+
+: absent2
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- invalid -->
+      <choice>
+        <c>c</c>
+        <d>d</d>
+
+        <o:any>any</o:any>
+
+        <a>a</a>
+        <b>b</b>
+      </choice>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      d = d
+      any: other#any
+      {
+        chars = any
+      }
+      a = a
+      :14:8 error: unexpected element 'b'
+    }
+
+    EOO
+}
+
+: absent3
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- invalid -->
+      <choice>
+        <c>c</c>
+      </choice>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      c = c
+      :9:12 error: expected element 'd'
+    }
+
+    EOO
+}
+
+: absent4
+:
+{
+  cat <<EOI >=test.xml;
+    <t:root xmlns:t="test"
+            xmlns:o="other"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="test test.xsd">
+
+      <!-- invalid -->
+      <choice>
+        <x>x</x>
+      </choice>
+
+    </t:root>
+    EOI
+
+  $* >>EOO
+    {
+      :8:8 error: expected element 'a' instead of 'x'
+    }
+
+    EOO
+}

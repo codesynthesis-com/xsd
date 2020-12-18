@@ -1,0 +1,22 @@
+# file      : schema/union/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# Just make sure that the schema files and the xsd-generated C++ mappings are
+# compilable.
+#
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test} {hxx cxx}{test} $libs
+
+<{hxx cxx}{test}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-tree --std c++11   \
+       --root-element-all     \
+       --output-dir $out_base \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

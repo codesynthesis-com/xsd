@@ -1,0 +1,9 @@
+// file      : processing/inheritance/driver.cxx.in
+// license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+#include "test-$num$.hxx"
+
+int
+main (int, char*[])
+{
+}

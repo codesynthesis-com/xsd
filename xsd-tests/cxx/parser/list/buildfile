@@ -1,0 +1,23 @@
+# file      : cxx/parser/list/buildfile
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+import libs  = libxsd%lib{xsd}
+import libs += libxerces-c%lib{xerces-c}
+
+exe{driver}: {hxx cxx}{* -test-pskel} {hxx ixx cxx}{test-pskel} $libs
+
+exe{driver}: xml{test}:    test.input  = true
+exe{driver}: file{output}: test.stdout = true
+
+<{hxx ixx cxx}{test-pskel}>: xsd{test} $xsd
+{{
+  diag xsd ($<[0]) # @@ TMP
+
+  $xsd cxx-parser --std c++11    \
+       --generate-inline         \
+       --skel-file-suffix -pskel \
+       --output-dir $out_base    \
+       $path($<[0])
+}}
+
+cxx.poptions =+ "-I$out_base"

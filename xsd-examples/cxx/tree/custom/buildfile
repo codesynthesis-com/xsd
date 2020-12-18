@@ -1,0 +1,6 @@
+# file      : cxx/tree/custom/buildfile
+# license   : not copyrighted - public domain
+
+# Exclude examples which depend on not yet packaged libraries.
+#
+./: {*/ -calendar/}

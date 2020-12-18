@@ -1,0 +1,4 @@
+# file      : cxx/tree/compression/testscript
+# license   : not copyrighted - public domain
+
+$* $src_base/library.xml.gz &out.xml.gz 2>| : compressed-out

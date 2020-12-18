@@ -1,0 +1,11 @@
+# file      : morphing/anonymous/unstable/testscript
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+: unstable-conflict
+:
+$* --output-dir $~ $src_base/includer.xsd 2>>/"EOE" != 0
+  $src_base/includee-2.xsd:8:28: error: element name 'base' creates an unstable conflict when used as a type name
+  $src_base/includee-1.xsd:8:31: info: conflicting type is defined here
+  $src_base/includee-2.xsd:8:28: info: use --anonymous-regex to resolve this conflict
+  $src_base/includee-2.xsd:8:28: info: and don't forget to pass the same option when translating 'includee-2.xsd' and all the schemas that refer to it
+  EOE
