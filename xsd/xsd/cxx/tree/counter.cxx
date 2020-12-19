@@ -241,18 +241,20 @@ namespace CXX
 
       schema >> sources >> schema;
 
-      Traversal::Names schema_names;
-      Traversal::Namespace ns;
-      Traversal::Names ns_names;
-      GlobalType global_type (ctx, counts);
-      GlobalElement global_element (ctx, counts);
+      {
+        Traversal::Names schema_names;
+        Traversal::Namespace ns;
+        Traversal::Names ns_names;
+        GlobalType global_type (ctx, counts);
+        GlobalElement global_element (ctx, counts);
 
-      schema >> schema_names >> ns >> ns_names;
+        schema >> schema_names >> ns >> ns_names;
 
-      ns_names >> global_element;
-      ns_names >> global_type;
+        ns_names >> global_element;
+        ns_names >> global_type;
 
-      schema.dispatch (tu);
+        schema.dispatch (tu);
+      }
 
       return counts;
     }

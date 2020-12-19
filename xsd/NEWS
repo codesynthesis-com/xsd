@@ -879,7 +879,7 @@ Version 2.0.0
     * MSVC 7.1 has a limit on the length of the "if else if" chain. This
       results in ICE when compiling generated code for enumerations with
       a large number of values. This version addresses this issue. Thanks
-      to Cyrille Chépélov <cyrille at chepelov.org> for reporting this and
+      to Cyrille ChÃ©pÃ©lov <cyrille at chepelov.org> for reporting this and
       suggesting a fix.
 
 

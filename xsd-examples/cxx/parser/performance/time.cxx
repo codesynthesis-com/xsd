@@ -3,7 +3,7 @@
 
 #include "time.hxx"
 
-#if defined (WIN32) || defined (__WIN32__)
+#ifdef _WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>  // GetSystemTimeAsFileTime
 #else
@@ -19,7 +19,7 @@ namespace os
   time::
   time ()
   {
-#if defined (WIN32) || defined (__WIN32__)
+#ifdef _WIN32
     FILETIME ft;
     GetSystemTimeAsFileTime (&ft);
     unsigned long long v (

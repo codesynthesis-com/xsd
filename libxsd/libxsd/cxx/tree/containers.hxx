@@ -1090,7 +1090,7 @@ namespace xsd
         }
 
         // Note that the container object of the two sequences being
-	// swapped should be the same.
+        // swapped should be the same.
         //
         void
         swap (sequence& x)

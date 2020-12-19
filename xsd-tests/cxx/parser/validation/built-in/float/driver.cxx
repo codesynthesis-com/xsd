@@ -219,6 +219,11 @@ main ()
 
   // float
   //
+  // Note that some standard libraries recognize the [+-](INF|INFINITY)
+  // strings (notably libc++) and some of them don't (notably libstdc++; see
+  // LWG #2381 for details).
+  //
+#if 0
   {
     float_pimpl<char> p;
     p.pre ();
@@ -226,6 +231,7 @@ main ()
     p._characters ("+INF");
     assert (test_post_fail (p));
   }
+#endif
 
   {
     float_pimpl<char> p;
@@ -237,6 +243,7 @@ main ()
 
   // double
   //
+#if 0
   {
     double_pimpl<char> p;
     p.pre ();
@@ -244,6 +251,7 @@ main ()
     p._characters ("+INF");
     assert (test_post_fail (p));
   }
+#endif
 
   {
     double_pimpl<char> p;

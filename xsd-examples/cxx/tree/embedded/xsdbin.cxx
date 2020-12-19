@@ -350,7 +350,7 @@ main (int argc, char* argv[])
 
     if (!outdir.empty ())
     {
-#if defined (WIN32) || defined (__WIN32__)
+#ifdef _WIN32
       hxx = outdir + '\\' + hxx;
       cxx = outdir + '\\' + cxx;
 #else

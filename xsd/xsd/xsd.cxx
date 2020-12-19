@@ -14,7 +14,7 @@
 
 #include <libxsd-frontend/parser.hxx>
 #include <libxsd-frontend/transformations/anonymous.hxx>
-#include <libxsd-frontend/transformations/enum-synthesis.cxx>
+#include <libxsd-frontend/transformations/enum-synthesis.hxx>
 #include <libxsd-frontend/transformations/restriction.hxx>
 #include <libxsd-frontend/transformations/schema-per-type.hxx>
 #include <libxsd-frontend/transformations/simplifier.hxx>

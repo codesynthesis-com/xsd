@@ -602,7 +602,7 @@ namespace CXX
     // Binary.
     //
     static unsigned char
-    base64_decode (unsigned char c)
+    base64_decode (wchar_t c)
     {
       unsigned char r = 0xFF;
 
@@ -800,7 +800,7 @@ namespace CXX
     }
 
     static unsigned char
-    hex_decode (unsigned char c)
+    hex_decode (wchar_t c)
     {
       unsigned char r = 0xFF;
 
