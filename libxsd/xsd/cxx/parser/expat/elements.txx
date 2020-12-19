@@ -312,7 +312,7 @@ namespace xsd
 
             if (XML_Parse (parser.get (),
                            buf,
-                           is.gcount (),
+                           static_cast<int> (is.gcount ()),
                            is.eof ()) == XML_STATUS_ERROR)
             {
               r = false;
@@ -337,7 +337,8 @@ namespace xsd
           //
           if (auto_xml_parser_.get () == 0)
           {
-            auto_xml_parser_ = XML_ParserCreateNS (0, XML_Char (' '));
+            auto_xml_parser_.reset (
+              XML_ParserCreateNS (0, XML_Char (' ')));
 
             if (auto_xml_parser_.get () == 0)
               throw std::bad_alloc ();

@@ -302,7 +302,7 @@ main (int argc, char* argv[])
       root_p.pre ();
       doc.parse_begin (xml_parser, public_id);
 
-      XML_Parse (xml_parser, buf, size, 1);
+      XML_Parse (xml_parser, buf, static_cast <int> (size), 1);
 
       doc.parse_end ();
       root_p.post_root ();
@@ -321,7 +321,8 @@ main (int argc, char* argv[])
 
     cerr << "time:           " << time << " sec" << endl;
 
-    double ms (time.sec () * 1000000ULL + time.nsec () / 1000ULL);
+    double ms (static_cast<double> (
+      time.sec () * 1000000ULL + time.nsec () / 1000ULL));
 
     // Calculate throughput in documents/sec.
     //

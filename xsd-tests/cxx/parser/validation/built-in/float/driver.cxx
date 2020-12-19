@@ -207,6 +207,11 @@ main ()
 
   // float
   //
+  // Note that some standard libraries recognize the [+-](INF|INFINITY)
+  // strings (notably libc++) and some of them don't (notably msvc and
+  // libstdc++; see Library Working Group (LWG) issue 2381 for details).
+  //
+#ifndef _LIBCPP_VERSION
   {
     float_pimpl<char> p;
     p.pre ();
@@ -214,6 +219,7 @@ main ()
     p._characters ("+INF");
     assert (test_post_fail (p));
   }
+#endif
 
   {
     float_pimpl<char> p;
@@ -225,6 +231,7 @@ main ()
 
   // double
   //
+#ifndef _LIBCPP_VERSION
   {
     double_pimpl<char> p;
     p.pre ();
@@ -232,6 +239,7 @@ main ()
     p._characters ("+INF");
     assert (test_post_fail (p));
   }
+#endif
 
   {
     double_pimpl<char> p;

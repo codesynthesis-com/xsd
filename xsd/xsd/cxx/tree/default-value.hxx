@@ -15,6 +15,8 @@ namespace CXX
   {
     struct IsLiteralValue: IsFundamentalType, Traversal::Complex
     {
+      using IsFundamentalType::traverse;
+
       IsLiteralValue (bool& r);
 
       virtual void
@@ -48,6 +50,9 @@ namespace CXX
 
                          Context
     {
+      using Traversal::NodeDispatcher::dispatch;
+      using Traversal::EdgeDispatcher::dispatch;
+
       LiteralValue (Context&);
 
       String
@@ -214,6 +219,9 @@ namespace CXX
 
                       Context
     {
+      using Traversal::NodeDispatcher::dispatch;
+      using Traversal::EdgeDispatcher::dispatch;
+
       InitValue (Context&);
 
       void

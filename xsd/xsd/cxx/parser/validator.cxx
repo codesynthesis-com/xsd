@@ -255,6 +255,8 @@ namespace CXX
                         Traversal::Element,
                         ValidationContext
       {
+        using Schema::traverse;
+
         Traverser (ValidationContext& c)
             : ValidationContext (c),
               any_ (c)
@@ -395,6 +397,9 @@ namespace CXX
                             Traversal::Attribute,
                             ValidationContext
       {
+        using Schema::traverse;
+        using Complex::traverse;
+
         AnonymousType (ValidationContext& c)
             : ValidationContext (c),
               anonymous_error_issued_ (false)
@@ -448,7 +453,7 @@ namespace CXX
         virtual void
         traverse (SemanticGraph::Element& e)
         {
-	  if (skip (e)) return;
+          if (skip (e)) return;
 
           if (traverse_common (e))
           {

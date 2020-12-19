@@ -1808,6 +1808,8 @@ namespace CXX
 
                                    Context
       {
+        using Namespace::traverse;
+
         FundamentalNamespace (Context& c)
             : Context (c)
         {

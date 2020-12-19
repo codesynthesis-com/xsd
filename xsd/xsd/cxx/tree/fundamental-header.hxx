@@ -76,6 +76,8 @@ namespace CXX
                                   Traversal::Fundamental::Entities,
                                   Context
     {
+      using Namespace::traverse;
+
       FundamentalNamespace (Context& c)
           : DocumentedNamespace (c),
             Context (c),

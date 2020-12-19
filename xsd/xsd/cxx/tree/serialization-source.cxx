@@ -334,6 +334,10 @@ namespace CXX
           {
             // sequence
             //
+            // Always pass the sequence element reference to typeid() to
+            // suppress the Clang's 'expression with side effects will be
+            // evaluated despite being used as an operand to typeid' warning.
+            //
             if (ordered)
               os << "const " << type << "& x (i." << aname <<
                 " ()[b->index]);"
@@ -343,13 +347,12 @@ namespace CXX
                  << "b (i." << aname << " ().begin ()), " <<
                 "n (i." << aname << " ().end ());" << endl
                  << "b != n; ++b)"
-                 << "{";
-
-            char const* x (ordered ? "x" : "*b");
+                 << "{"
+                 << "const " << type << "& x (*b);" << endl;
 
             if (poly)
             {
-              os << "if (typeid (" << type << ") == typeid (" << x << "))"
+              os << "if (typeid (" << type << ") == typeid (x))"
                  << "{"
                  << xerces_ns << "::DOMElement& s (" << endl
                  << "::xsd::cxx::xml::dom::create_element (" << endl
@@ -357,14 +360,14 @@ namespace CXX
                  << (ns ? strlit (ns) + L",\n" : L"")
                  << "e));"
                  << endl
-                 << "s << " << x << ";"
+                 << "s << x;"
                  << "}"
                  << "else" << endl
                  << "tsm.serialize (" << endl
                  << strlit (e.name ()) << "," << endl
                  << strlit (ns) << "," << endl
                  << (e.global_p () ? "true" : "false") << ", " <<
-                (e.qualified_p () ? "true" : "false") << ", e, " << x << ");";
+                (e.qualified_p () ? "true" : "false") << ", e, x);";
             }
             else
             {
@@ -379,17 +382,17 @@ namespace CXX
               {
               case st_other:
                 {
-                  os << "s << " << x << ";";
+                  os << "s << x;";
                   break;
                 }
               case st_double:
                 {
-                  os << "s << " << as_double_type << " (" << x << ");";
+                  os << "s << " << as_double_type << " (x);";
                   break;
                 }
               case st_decimal:
                 {
-                  os << "s << " << as_decimal_type << " (" << x << ");";
+                  os << "s << " << as_decimal_type << " (x);";
                   break;
                 }
               }
@@ -800,7 +803,7 @@ namespace CXX
 
           {
             bool o (ordered_p (c));
-            size_t start, count;
+            size_t start (0), count (0);
 
             if (o)
             {

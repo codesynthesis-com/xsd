@@ -37,7 +37,7 @@ main ()
     p._pre ();
     p._characters ("-2147483648");
     p._post ();
-    assert (p.post_int () == -2147483648);
+    assert (p.post_int () == -2147483647 - 1);
   }
 
   {

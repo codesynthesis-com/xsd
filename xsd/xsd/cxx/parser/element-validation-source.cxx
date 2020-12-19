@@ -710,9 +710,9 @@ namespace CXX
 
           os << "count = 0;"
              << "state = " << next_state_ << "UL;"
-             << "// Fall through." << endl
-             << "}"  // else
-             << "}"; // case
+             << "}" // else
+             << "}" // case
+             << "// Fall through." << endl;
         }
 
         virtual void
@@ -831,9 +831,9 @@ namespace CXX
 
           os << "count = 0;"
              << "state = " << next_state_ << "UL;"
-             << "// Fall through." << endl
-             << "}"  // else
-             << "}"; // case
+             << "}" // else
+             << "}" // case
+             << "// Fall through." << endl;
         }
 
       private:

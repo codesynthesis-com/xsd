@@ -1616,6 +1616,8 @@ namespace CXX
                      Traversal::Attribute,
                      Context
     {
+      using Complex::traverse;
+
       // The second version outputs the argument name and stores
       // in in the base_arg string.
       //
@@ -1776,6 +1778,8 @@ namespace CXX
                                 Traversal::Attribute,
                                 Context
     {
+      using Complex::traverse;
+
       CtorArgsWithoutBase (Context& c, CtorArgType, bool arg, bool first);
 
       virtual void

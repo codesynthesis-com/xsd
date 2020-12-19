@@ -145,7 +145,8 @@ parsing (const char* file, unsigned long iter, bool validate)
 
     cerr << "  time:           " << time << " sec" << endl;
 
-    double ms (time.sec () * 1000000ULL + time.nsec () / 1000ULL);
+    double ms (static_cast<double> (
+      time.sec () * 1000000ULL + time.nsec () / 1000ULL));
 
     // Calculate throughput in documents/sec.
     //

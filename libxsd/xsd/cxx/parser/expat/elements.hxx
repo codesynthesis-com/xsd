@@ -86,6 +86,12 @@ namespace xsd
             return parser_;
           }
 
+          void
+          reset (XML_Parser parser)
+          {
+            *this = parser;
+          }
+
         private:
           parser_auto_ptr (const parser_auto_ptr&);
 
