@@ -1078,6 +1078,11 @@ namespace xsd
         {
         }
 
+#ifdef XSD_CXX11
+        nmtokens&
+        operator= (const nmtokens&) = default;
+#endif
+
         /**
          * @brief Copy the instance polymorphically.
          *
@@ -2559,6 +2564,11 @@ namespace xsd
         {
         }
 
+#ifdef XSD_CXX11
+        idrefs&
+        operator= (const idrefs&) = default;
+#endif
+
         /**
          * @brief Copy the instance polymorphically.
          *
@@ -2966,6 +2976,11 @@ namespace xsd
           // Note that ns_ and name_ have no DOM association.
           //
         }
+
+#ifdef XSD_CXX11
+        qname&
+        operator= (const qname&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -3848,6 +3863,11 @@ namespace xsd
             : B (x, f, c), base_type (x, f, this)
         {
         }
+
+#ifdef XSD_CXX11
+        entities&
+        operator= (const entities&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.

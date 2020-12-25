@@ -858,6 +858,11 @@ namespace xsd
         {
         }
 
+#ifdef XSD_CXX11
+        sequence&
+        operator= (const sequence&) = default;
+#endif
+
       public:
         void
         assign (size_type n, const T& x)
@@ -1132,6 +1137,11 @@ namespace xsd
             : base_sequence (s)
         {
         }
+
+#ifdef XSD_CXX11
+        sequence&
+        operator= (const sequence&) = default;
+#endif
       };
 
 

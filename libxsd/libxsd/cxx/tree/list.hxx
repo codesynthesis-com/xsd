@@ -62,6 +62,11 @@ namespace xsd
         {
         }
 
+#ifdef XSD_CXX11
+        list&
+        operator= (const list&) = default;
+#endif
+
       public:
         list (const xercesc::DOMElement&, flags = 0, container* c = 0);
 
@@ -111,6 +116,11 @@ namespace xsd
             : sequence<T> (l, f, c)
         {
         }
+
+#ifdef XSD_CXX11
+        list&
+        operator= (const list&) = default;
+#endif
 
       public:
         list (const xercesc::DOMElement&, flags = 0, container* c = 0);

@@ -252,6 +252,12 @@ namespace CXX
              << container << "* c = 0);"
              << endl;
 
+          os << "#ifdef XSD_CXX11" << endl
+             << name << "&" << endl
+             << "operator= (const " << name << "&) = default;"
+             << "#endif" << endl
+             << endl;
+
           // clone
           //
           if (doxygen)
@@ -525,6 +531,12 @@ namespace CXX
           os << name << " (const " << name << "& x," << endl
              << flags_type << " f = 0," << endl
              << container << "* c = 0);"
+             << endl;
+
+          os << "#ifdef XSD_CXX11" << endl
+             << name << "&" << endl
+             << "operator= (const " << name << "&) = default;"
+             << "#endif" << endl
              << endl;
 
           // clone
@@ -940,6 +952,12 @@ namespace CXX
           os << name << " (const " << name << "& x," << endl
              << flags_type << " f = 0," << endl
              << container << "* c = 0);"
+             << endl;
+
+          os << "#ifdef XSD_CXX11" << endl
+             << name << "&" << endl
+             << "operator= (const " << name << "&) = default;"
+             << "#endif" << endl
              << endl;
 
           // clone
@@ -3319,11 +3337,14 @@ namespace CXX
           // operator=
           //
           bool priv (false);
+          bool asop (true);
 
           if (!simple)
           {
             if (options.suppress_assignment ())
             {
+              asop = false;
+
               priv = true;
               os << "private:" << endl;
 
@@ -3343,6 +3364,8 @@ namespace CXX
             }
             else if (has_members || (gen_wildcard && (hae || haa)))
             {
+              asop = false;
+
               if (doxygen)
               {
                 os << "/**" << endl
@@ -3370,6 +3393,15 @@ namespace CXX
 
           if (priv)
             os << "public:" << endl;
+
+          if (asop)
+          {
+            os << "#ifdef XSD_CXX11" << endl
+               << name << "&" << endl
+               << "operator= (const " << name << "&) = default;"
+               << "#endif" << endl
+               << endl;
+          }
 
           // d-tor
           //
@@ -3870,6 +3902,12 @@ namespace CXX
 
           os << name << " (const " << name << "& x, " <<
             flags_type << " f = 0);"
+             << endl;
+
+          os << "#ifdef XSD_CXX11" << endl
+             << name << "&" << endl
+             << "operator= (const " << name << "&) = default;"
+             << "#endif" << endl
              << endl;
 
           // _clone
