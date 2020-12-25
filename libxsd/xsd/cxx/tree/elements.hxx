@@ -1254,6 +1254,11 @@ namespace xsd
          */
         simple_type (const simple_type& x, flags f = 0, container* c = 0);
 
+#ifdef XSD_CXX11
+        simple_type&
+        operator= (const simple_type&) = default;
+#endif
+
         /**
          * @brief Copy the instance polymorphically.
          *
@@ -1616,6 +1621,11 @@ namespace xsd
             : B (x, f, c), facet_table_ (0), x_ (x.x_)
         {
         }
+
+#ifdef XSD_CXX11
+        fundamental_base&
+        operator= (const fundamental_base&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.

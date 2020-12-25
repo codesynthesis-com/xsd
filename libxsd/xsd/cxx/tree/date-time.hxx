@@ -210,6 +210,11 @@ namespace xsd
          */
         gday (const gday& x, flags f = 0, container* c = 0);
 
+#ifdef XSD_CXX11
+        gday&
+        operator= (const gday&) = default;
+#endif
+
         /**
          * @brief Copy the instance polymorphically.
          *
@@ -371,6 +376,11 @@ namespace xsd
          */
         gmonth (const gmonth& x, flags f = 0, container* c = 0);
 
+#ifdef XSD_CXX11
+        gmonth&
+        operator= (const gmonth&) = default;
+#endif
+
         /**
          * @brief Copy the instance polymorphically.
          *
@@ -531,6 +541,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         gyear (const gyear& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        gyear&
+        operator= (const gyear&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -695,6 +710,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         gmonth_day (const gmonth_day& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        gmonth_day&
+        operator= (const gmonth_day&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -879,6 +899,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         gyear_month (const gyear_month& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        gyear_month&
+        operator= (const gyear_month&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -1067,6 +1092,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         date (const date& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        date&
+        operator= (const date&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -1268,6 +1298,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         time (const time& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        time&
+        operator= (const time&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
@@ -1492,6 +1527,11 @@ namespace xsd
          */
         virtual date_time*
         _clone (flags f = 0, container* c = 0) const;
+
+#ifdef XSD_CXX11
+        date_time&
+        operator= (const date_time&) = default;
+#endif
 
         /**
          * @brief Create an instance from a data representation
@@ -1722,6 +1762,11 @@ namespace xsd
          * For polymorphic object models use the _clone function instead.
          */
         duration (const duration& x, flags f = 0, container* c = 0);
+
+#ifdef XSD_CXX11
+        duration&
+        operator= (const duration&) = default;
+#endif
 
         /**
          * @brief Copy the instance polymorphically.
