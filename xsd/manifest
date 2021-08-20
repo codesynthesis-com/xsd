@@ -13,12 +13,12 @@ email: xsd-users@codesynthesis.com ; Mailing list
 build-warning-email: builds@codesynthesis.com
 builds: host : &default
 requires: c++11
-depends: * build2 >= 0.13.0
-depends: * bpkg >= 0.13.0
+depends: * build2 >= 0.14.0-
+depends: * bpkg >= 0.14.0-
 # @@ Should probably become conditional dependency.
 requires: ? cli ; Only required if changing .cli files.
 depends: libxsd-frontend ^2.1.0-
 depends: libcutl ^1.11.0-
 depends: libxerces-c ^3.0.0
-tests: xsd-tests == $
-examples: xsd-examples == $
+tests: * xsd-tests == $
+examples: * xsd-examples == $
