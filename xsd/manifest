@@ -11,7 +11,7 @@ doc-url: https://www.codesynthesis.com/projects/xsd/
 src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd/
 email: xsd-users@codesynthesis.com ; Mailing list
 build-warning-email: builds@codesynthesis.com
-builds: host : &default
+requires: host
 requires: c++11
 depends: * build2 >= 0.14.0-
 depends: * bpkg >= 0.14.0-
