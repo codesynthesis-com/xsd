@@ -5,11 +5,13 @@ import libs  = libxsd-frontend%lib{xsd-frontend}
 import libs += libcutl%lib{cutl}
 import libs += libxerces-c%lib{xerces-c}
 
-options_topics = options cxx/options cxx/parser/options cxx/tree/options
+import! [metadata] cli = cli%exe{cli}
 
-./: exe{xsd}: {hxx ixx txx cxx}{** -{$options_topics} -version} \
-              {hxx ixx cxx}{$options_topics}                    \
-              {hxx}{version}                                    \
+ops = options cxx/options cxx/parser/options cxx/tree/options
+
+./: exe{xsd}: {hxx ixx txx cxx}{** -{$ops} -version} \
+              {hxx ixx cxx}{$ops}                    \
+              {hxx}{version}                         \
               $libs
 
 # Target metadata, see also --build2-metadata in xsd.cxx.
@@ -24,45 +26,51 @@ exe{xsd}:
 
 hxx{version}: in{version} $src_root/manifest
 
+# Generated options parser.
+#
+# Note: tracking .cli dependencies manually.
+#
+cli_options = --std c++11 -I $src_root --generate-specifier \
+--generate-file-scanner --suppress-undocumented \
+--ostream-type ::std::wostream --exclude-base \
+--include-with-brackets --option-length 28 \
+--cxx-prologue '"#include <xsd/options-parser.hxx>"' # TMP: WTF?
+
+<{hxx ixx cxx}{options}>: cli{options}
+{
+  cli_options += --include-prefix xsd --guard-prefix XSD
+}
+
+<cxx/{hxx ixx cxx}{options}>: cxx/cli{options} cli{options}
+{
+  cli_options += --include-prefix xsd/cxx --guard-prefix XSD_CXX
+}
+
+<cxx/parser/{hxx ixx cxx}{options}>: cxx/parser/cli{options} cxx/cli{options} \
+                                     cli{options}
+{
+  cli_options += --include-prefix xsd/cxx/parser --guard-prefix XSD_CXX_PARSER
+}
+
+<cxx/tree/{hxx ixx cxx}{options}>: cxx/tree/cli{options} cxx/cli{options} \
+                                   cli{options}
+{
+  cli_options += --include-prefix xsd/cxx/tree --guard-prefix XSD_CXX_TREE
+}
+
+<hxx{~'/(.*)/'} ixx{~'/\1/'} cxx{~'/\1/'}>: cli{~'/\1/'} $cli
+{
+  # Symlink the generated code in src for convenience of development.
+  #
+  backlink = true
+}
+{{
+  $cli $cli_options -o $directory($path($>[0])) $path($<[0])
+}}
+
 # Build options.
 #
 # Pass the copyright notice extracted from the LICENSE file.
 #
 obj{xsd cxx/parser/generator cxx/tree/generator}: \
   cxx.poptions += -DXSD_COPYRIGHT=\"$copyright\"
-
-# Generated options parser.
-#
-if $cli.configured
-{
-  cli.cxx{options}:            cli{options}
-  cxx/cli.cxx{options}:        cxx/cli{options}
-  cxx/parser/cli.cxx{options}: cxx/parser/cli{options}
-  cxx/tree/cli.cxx{options}:   cxx/tree/cli{options}
-
-  cli.options += --std c++11 -I $src_root --generate-specifier \
---ostream-type ::std::wostream --exclude-base --suppress-undocumented \
---generate-file-scanner --include-with-brackets --option-length 28 \
---cxx-prologue '#include <xsd/options-parser.hxx>'
-
-  cli.cxx{options}: cli.options += --include-prefix xsd --guard-prefix XSD
-
-  cxx/cli.cxx{options}: cli.options += --include-prefix xsd/cxx \
-                                       --guard-prefix XSD_CXX
-
-  cxx/parser/cli.cxx{options}: cli.options += --include-prefix xsd/cxx/parser \
-                                               --guard-prefix XSD_CXX_PARSER
-
-  cxx/tree/cli.cxx{options}: cli.options += --include-prefix xsd/cxx/tree \
-                                            --guard-prefix XSD_CXX_TREE
-
-  # Include the generated cli files into the distribution and don't remove
-  # them when cleaning in src (so that clean results in a state identical to
-  # distributed).
-  #
-  cli.cxx{*}:
-  {
-    dist  = true
-    clean = ($src_root != $out_root)
-  }
-}

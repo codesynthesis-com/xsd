@@ -20,3 +20,7 @@ location: https://git.codesynthesis.com/libcutl/libcutl.git##HEAD
 :
 role: prerequisite
 location: https://git.codesynthesis.com/libxsd-frontend/libxsd-frontend.git##HEAD
+
+:
+role: prerequisite
+location: https://git.codesynthesis.com/cli/cli.git##HEAD

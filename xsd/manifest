@@ -15,10 +15,9 @@ requires: host
 requires: c++11
 depends: * build2 >= 0.14.0-
 depends: * bpkg >= 0.14.0-
-# @@ Should probably become conditional dependency.
-requires: ? cli ; Only required if changing .cli files.
 depends: libxsd-frontend ^2.1.0-
 depends: libcutl ^1.11.0-
 depends: libxerces-c ^3.0.0
+depends: * cli ^1.2.0-
 tests: * xsd-tests == $
 examples: * xsd-examples == $
