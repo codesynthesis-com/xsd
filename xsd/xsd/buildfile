@@ -34,7 +34,7 @@ cli_options = --std c++11 -I $src_root --generate-specifier \
 --generate-file-scanner --suppress-undocumented \
 --ostream-type ::std::wostream --exclude-base \
 --include-with-brackets --option-length 28 \
---cxx-prologue '"#include <xsd/options-parser.hxx>"' # TMP: WTF?
+--cxx-prologue '#include <xsd/options-parser.hxx>'
 
 <{hxx ixx cxx}{options}>: cli{options}
 {
