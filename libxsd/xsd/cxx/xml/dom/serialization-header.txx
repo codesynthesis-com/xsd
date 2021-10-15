@@ -174,7 +174,9 @@ namespace xsd
               atts.push_back (a);
             }
 
-            for (std::vector<DOMAttr*>::iterator i (atts.begin ()),
+            // Qualify DOMAttr to work around MSVC 16.11 /std:c++20 issue.
+            //
+            for (std::vector<xercesc::DOMAttr*>::iterator i (atts.begin ()),
                    end (atts.end ()); i != end; ++i)
             {
               e.removeAttributeNode (*i);
