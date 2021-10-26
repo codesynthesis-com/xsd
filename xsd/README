@@ -13,6 +13,8 @@ defined in XML Schema. Using these parser templates you can build
 your own in-memory representations or perform immediate processing
 of XML instance documents.
 
+Note also that the xsd executable provides build2 metadata.
+
 See the NEWS file for the user-visible changes from the previous release.
 
 See the LICENSE file for distribution conditions.
