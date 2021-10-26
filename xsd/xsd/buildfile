@@ -16,12 +16,14 @@ ops = options cxx/options cxx/parser/options cxx/tree/options
 
 # Target metadata, see also --build2-metadata in xsd.cxx.
 #
+# Note that xsd does not query any environment variables.
+#
 exe{xsd}:
 {
   export.metadata = 1 xsd
   xsd.name = [string] xsd
-  xsd.version  = $version
-  xsd.checksum = $version
+  xsd.version  = [string] $version
+  xsd.checksum = [string] $version
 }
 
 hxx{version}: in{version} $src_root/manifest
