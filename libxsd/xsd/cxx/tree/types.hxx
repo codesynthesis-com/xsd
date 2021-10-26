@@ -268,6 +268,18 @@ namespace xsd
           base () = x;
           return *this;
         }
+
+      public:
+        /**
+         * @brief Explicitly "cast" to the base string type.
+         *
+         * @return A const reference to the instance as the base string type.
+         */
+        const std::basic_string<C>&
+        base_string () const
+        {
+          return *this;
+        }
       };
 
       /**
@@ -2874,6 +2886,18 @@ namespace xsd
         operator= (const uri& x)
         {
           base () = x;
+          return *this;
+        }
+
+      public:
+        /**
+         * @brief Explicitly "cast" to the base string type.
+         *
+         * @return A const reference to the instance as the base string type.
+         */
+        const std::basic_string<C>&
+        base_string () const
+        {
           return *this;
         }
 
