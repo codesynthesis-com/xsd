@@ -8,8 +8,10 @@
 #include <sstream>
 #include <iostream>
 
-
 #include "types.hxx"
+
+#undef NDEBUG
+#include <cassert>
 
 using std::cerr;
 using std::endl;

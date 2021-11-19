@@ -10,6 +10,9 @@
 #include "test-pskel.hxx"
 #include "test-pimpl.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 using namespace test;
 

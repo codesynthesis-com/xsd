@@ -5,7 +5,6 @@
 //
 
 #include <memory> // std::auto_ptr/unique_ptr
-#include <cassert>
 
 #include "test.hxx"
 
@@ -15,6 +14,9 @@
 #else
 #  define XSD_MOVE(x) x
 #endif
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace test;

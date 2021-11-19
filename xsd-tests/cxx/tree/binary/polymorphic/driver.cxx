@@ -5,13 +5,15 @@
 //
 
 #include <memory> // std::auto_ptr/unique_ptr
-#include <cassert>
 #include <iostream>
 #include <typeinfo>
 
 #include <ace/Log_Msg.h>  // ACE_HEX_DUMP
 
 #include "test.hxx"
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace test;

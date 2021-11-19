@@ -1,7 +1,6 @@
 // file      : cxx/tree/basic/driver.cxx
 // copyright : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-#include <cassert>
 #include <iostream>
 
 #include <xercesc/dom/DOMText.hpp>
@@ -31,6 +30,9 @@
 #include <xsd/cxx/tree/elements.hxx>      // auto_initializer, properties
 #include <xsd/cxx/tree/exceptions.hxx>    // parsing
 #include <xsd/cxx/tree/error-handler.hxx>
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace xsd::cxx;

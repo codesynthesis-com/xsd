@@ -4,10 +4,12 @@
 // Test the built-in string & friends types validation.
 //
 #include <string>
-#include <cassert>
 
 #include <xsd/cxx/parser/validating/exceptions.hxx>
 #include <xsd/cxx/parser/validating/xml-schema-pimpl.hxx>
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace xsd::cxx::parser::validating;
 

@@ -15,6 +15,9 @@
 
 #include <xsd/cxx/xml/string.hxx>
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 using namespace test;
 using namespace xercesc;

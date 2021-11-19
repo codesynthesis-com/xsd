@@ -3,6 +3,9 @@
 
 #include "global.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 int
 main (int, char*[])
 {

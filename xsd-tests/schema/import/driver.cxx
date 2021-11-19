@@ -3,6 +3,9 @@
 
 #include "importer.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 int
 main (int, char*[])
 {

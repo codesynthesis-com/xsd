@@ -3,10 +3,11 @@
 
 // Test the built-in int and unsigned int types validation.
 //
-#include <cassert>
-
 #include <xsd/cxx/parser/validating/exceptions.hxx>
 #include <xsd/cxx/parser/validating/xml-schema-pimpl.hxx>
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace xsd::cxx::parser::validating;
 

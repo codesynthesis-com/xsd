@@ -10,6 +10,9 @@
 
 #include "test-pskel.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 using namespace test;
 using xml_schema::ro_string;
@@ -23,7 +26,7 @@ struct any_type_pimpl: xml_schema::any_type_pimpl
   }
 
   virtual void
-  _start_any_element (ro_string const&, 
+  _start_any_element (ro_string const&,
                       ro_string const& n,
 		      ro_string const*)
   {

@@ -1,7 +1,6 @@
 // file      : cxx/parser/xerces/basic/driver.cxx
 // copyright : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-#include <cassert>
 #include <iostream>
 
 // Define XSD_CXX11 since we include libxsd headers directly.
@@ -24,6 +23,9 @@
 #include <xsd/cxx/parser/non-validating/parser.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pskel.hxx>
 #include <xsd/cxx/parser/non-validating/xml-schema-pimpl.hxx>
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace xsd::cxx;

@@ -4,6 +4,9 @@
 #include "includer.hxx"
 #include "schemas/includee.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 int
 main (int, char*[])
 {

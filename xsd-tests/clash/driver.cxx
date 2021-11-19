@@ -4,6 +4,9 @@
 #include "foo.hxx"
 #include "clash.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 int
 main (int, char*[])
 {

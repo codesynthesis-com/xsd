@@ -9,6 +9,9 @@
 
 #include "test-pskel.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 
 struct sub_pimpl: sub_type_pskel

@@ -9,6 +9,9 @@
 
 #include "test.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 using namespace test;
 

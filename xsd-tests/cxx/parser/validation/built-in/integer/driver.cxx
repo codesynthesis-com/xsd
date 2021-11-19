@@ -7,10 +7,12 @@
 
 #include <string>
 #include <sstream>
-#include <cassert>
 
 #include <xsd/cxx/parser/validating/exceptions.hxx>
 #include <xsd/cxx/parser/validating/xml-schema-pimpl.hxx>
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace xsd::cxx::parser::validating;

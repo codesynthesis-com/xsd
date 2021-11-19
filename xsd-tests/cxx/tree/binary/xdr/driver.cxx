@@ -6,10 +6,12 @@
 
 #include <memory>  // std::auto_ptr/unique_ptr
 #include <cstring> // std::memcpy
-#include <cassert>
 #include <iostream>
 
 #include "test.hxx"
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace test;

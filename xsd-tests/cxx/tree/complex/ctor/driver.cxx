@@ -4,7 +4,6 @@
 // Test generation of varous complex type constructors.
 //
 
-#include <cassert>
 #include <memory>
 
 #include "test.hxx"
@@ -15,6 +14,9 @@
 #else
 #  define XSD_MOVE(x) x
 #endif
+
+#undef NDEBUG
+#include <cassert>
 
 using namespace std;
 using namespace test;

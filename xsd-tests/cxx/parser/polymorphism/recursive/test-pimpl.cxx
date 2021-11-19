@@ -5,6 +5,9 @@
 
 #include "test-pimpl.hxx"
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace std;
 
 namespace test

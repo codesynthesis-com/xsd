@@ -15,6 +15,9 @@
 #include <xsd/cxx/tree/exceptions.hxx>
 #include <xsd/cxx/tree/error-handler.hxx>
 
+#undef NDEBUG
+#include <cassert>
+
 using namespace xercesc;
 namespace xml = xsd::cxx::xml;
 namespace tree = xsd::cxx::tree;
