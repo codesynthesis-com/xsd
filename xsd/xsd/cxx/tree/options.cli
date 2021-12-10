@@ -257,9 +257,9 @@ namespace CXX
       {
         "<style>",
         "Specify the function naming convention that should be used in the
-         generated code. Valid styles are \cb{knr} (default), \cb{lcc}, and
-         \cb{java}. See the NAMING CONVENTION section below for more
-         information."
+         generated code. Valid styles are \cb{knr} (default), \cb{lcc},
+         \cb{ucc}, and \cb{java}. See the NAMING CONVENTION section below
+         for more information."
       };
 
       NarrowStrings --type-regex

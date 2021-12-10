@@ -587,7 +587,7 @@ namespace CXX
 
       NarrowString fn (ops.function_naming ());
 
-      if (fn != "knr" && fn != "lcc" && fn != "java")
+      if (fn != "knr" && fn != "lcc" && fn != "ucc" && fn != "java")
       {
         wcerr << "error: unknown function naming style specified: '" <<
           fn.c_str () << "'" << endl;

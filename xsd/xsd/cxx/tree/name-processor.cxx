@@ -129,6 +129,12 @@ namespace CXX
               accessor_regex.push_back ("/([^,]+),([^,]+),([^,]+)/\\l$1\\u$2\\u$3/");
               accessor_regex.push_back ("/([^,]+)/\\l$1/");
             }
+            else if (fn == "ucc")
+            {
+              accessor_regex.push_back ("/([^,]+),([^,]+)/\\u$1\\u$2/");
+              accessor_regex.push_back ("/([^,]+),([^,]+),([^,]+)/\\u$1\\u$2\\u$3/");
+              accessor_regex.push_back ("/([^,]+)/\\u$1/");
+            }
             else
             {
               // Java: add get.
@@ -169,6 +175,11 @@ namespace CXX
               modifier_regex.push_back ("/([^,]+),([^,]+)/\\l$1\\u$2/");
               modifier_regex.push_back ("/([^,]+)/\\l$1/");
             }
+            else if (fn == "ucc")
+            {
+              modifier_regex.push_back ("/([^,]+),([^,]+)/\\u$1\\u$2/");
+              modifier_regex.push_back ("/([^,]+)/\\u$1/");
+            }
             else
             {
               // Java: add set.
@@ -202,6 +213,10 @@ namespace CXX
             {
               parser_regex.push_back ("/(.+)/\\l$1/");
             }
+            else if (fn == "ucc")
+            {
+              parser_regex.push_back ("/(.+)/\\u$1/");
+            }
             else if (fn == "java")
             {
               // Java: add parse.
@@ -218,6 +233,10 @@ namespace CXX
             if (fn == "lcc")
             {
               serializer_regex.push_back ("/(.+)/\\l$1/");
+            }
+            else if (fn == "ucc")
+            {
+              serializer_regex.push_back ("/(.+)/\\u$1/");
             }
             else if (fn == "java")
             {
@@ -243,6 +262,11 @@ namespace CXX
             {
               const_regex.push_back ("/([^,]+),([^,]+),([^,]+)/\\l$1_\\u$2_\\u$3/");
               const_regex.push_back ("/([^,]+),([^,]+)/\\l$1\\u$2/");
+            }
+            else if (fn == "ucc")
+            {
+              const_regex.push_back ("/([^,]+),([^,]+),([^,]+)/\\u$1_\\u$2_\\u$3/");
+              const_regex.push_back ("/([^,]+),([^,]+)/\\u$1\\u$2/");
             }
             else
             {
@@ -2173,6 +2197,8 @@ namespace CXX
 
           if (fn == "knr")
             n.context ().set ("tree-node-key", String ("tree_node_key"));
+          else if (fn == "ucc")
+            n.context ().set ("tree-node-key", String ("TreeNodeKey"));
           else
             n.context ().set ("tree-node-key", String ("treeNodeKey"));
 

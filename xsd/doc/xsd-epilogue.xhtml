@@ -38,14 +38,17 @@
   <p>Similarly, the <code><b>--function-naming</b></code> option
      specifies the convention that should be used for naming C++
      functions. Possible values for this option are <code><b>knr</b></code>
-     (default), <code><b>lcc</b></code>, and <code><b>java</b></code>. The
-     <code><b>knr</b></code> value (stands for K&amp;R) signifies
-     the standard, lower-case naming convention with the underscore
-     used as a word delimiter, for example: <code>foo()</code>,
-     <code>foo_bar()</code>. The <code><b>lcc</b></code> value
-     (stands for lower-camel-case) signifies a naming convention
-     where the first letter of each word except the first is
-     capitalized, for example: <code>foo()</code>, <code>fooBar()</code>.
+     (default), <code><b>lcc</b></code>, <code><b>ucc</b></code>, and
+     <code><b>java</b></code>. The <code><b>knr</b></code> value (stands
+     for K&amp;R) signifies the standard, lower-case naming convention
+     with the underscore used as a word delimiter, for example:
+     <code>foo()</code>, <code>foo_bar()</code>. The <code><b>lcc</b></code>
+     value (stands for lower-camel-case) signifies a naming convention
+     where the first letter of each word except the first is capitalized,
+     for example: <code>foo()</code>, <code>fooBar()</code>. The
+     <code><b>ucc</b></code> value (stands for upper-camel-case) signifies
+     a naming convention where the first letter of each word is capitalized,
+     for example: <code>Foo()</code>, <code>FooBar()</code>.
      The <code><b>java</b></code> naming convention is similar to
      the lower-camel-case one except that accessor functions are prefixed
      with <code>get</code>, modifier functions are prefixed
