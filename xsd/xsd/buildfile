@@ -67,6 +67,7 @@ cli_options = --std c++11 -I $src_root --generate-specifier \
   backlink = true
 }
 {{
+  diag cli ($<[0])
   $cli $cli_options -o $directory($path($>[0])) $path($<[0])
 }}
 
