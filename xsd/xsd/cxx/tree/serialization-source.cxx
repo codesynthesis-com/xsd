@@ -999,8 +999,25 @@ namespace CXX
         virtual void
         traverse (Type& e)
         {
+          // Similar to parsing, we cannot just omit this element if it's
+          // abstract because it may serve as a "link" between the root of the
+          // substitution group and a non-abstract element that uses this
+          // element as its root (see
+          // element_serializer_map::find_substitution() for details).
+          //
           if (polymorphic && e.substitutes_p ())
           {
+            SemanticGraph::Type& t (e.type ());
+
+            // Check if this element is abstract.
+            //
+            bool abst;
+            {
+              SemanticGraph::Complex* tc;
+              abst = (tc = dynamic_cast<SemanticGraph::Complex*> (&t)) != 0 &&
+                tc->abstract_p ();
+            }
+
             Type& r (e.substitutes ().root ());
 
             String const& name (ename (e));
@@ -1016,7 +1033,18 @@ namespace CXX
                << strlit (r.name ()) << "," << endl
                << strlit (r.namespace_ ().name ()) << "," << endl
                << strlit (e.name ()) << "," << endl
-               << strlit (e.namespace_ ().name ()) << ");"
+               << strlit (e.namespace_ ().name ()) << "," << endl;
+
+            if (abst)
+              os << "0";
+            else
+            {
+              os << "&::xsd::cxx::tree::serializer_impl< ";
+              belongs (e, belongs_);
+              os << " >";
+            }
+
+            os << ");"
                << endl
                << endl;
           }

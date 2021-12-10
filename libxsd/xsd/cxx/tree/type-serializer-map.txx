@@ -550,14 +550,21 @@ namespace xsd
       template<unsigned long id, typename C, typename T>
       element_serializer_initializer<id, C, T>::
       element_serializer_initializer (const C* root_name, const C* root_ns,
-                                   const C* subst_name, const C* subst_ns)
+                                      const C* subst_name, const C* subst_ns,
+                                      serializer s)
           : root_name_ (root_name), root_ns_ (root_ns)
       {
+        // Note that we still have to use real typeid (instead of, say, NULL)
+        // for abstract elements to make sure we have separate entries for
+        // each of them. We can assume that such a typeid can never be looked
+        // up (since it's impossible to instantiate the corresponding abstract
+        // type).
+        //
         type_serializer_map_instance<id, C> ().register_element (
           xml::qualified_name<C> (root_name, root_ns),
           xml::qualified_name<C> (subst_name, subst_ns),
           typeid (T),
-          &serializer_impl<T>);
+          s);
       }
 
       template<unsigned long id, typename C, typename T>

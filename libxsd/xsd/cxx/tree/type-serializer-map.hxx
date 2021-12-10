@@ -216,8 +216,11 @@ namespace xsd
       template<unsigned long id, typename C, typename T>
       struct element_serializer_initializer
       {
+        typedef typename type_serializer_map<C>::serializer serializer;
+
         element_serializer_initializer (const C* root_name, const C* root_ns,
-                                        const C* subst_name, const C* subst_ns);
+                                        const C* subst_name, const C* subst_ns,
+                                        serializer);
 
         ~element_serializer_initializer ();
 
