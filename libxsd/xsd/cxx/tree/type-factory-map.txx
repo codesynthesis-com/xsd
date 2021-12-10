@@ -302,6 +302,9 @@ namespace xsd
 
             if (i != element_map_.end ())
             {
+              // Note that we may find an abstract element in which case the
+              // returned factory will be NULL.
+              //
               f = find_substitution (i->second, qn);
             }
           }
@@ -455,21 +458,22 @@ namespace xsd
 
       //
       //
-      template<unsigned long id, typename C, typename T>
-      element_factory_initializer<id, C, T>::
+      template<unsigned long id, typename C>
+      element_factory_initializer<id, C>::
       element_factory_initializer (const C* root_name, const C* root_ns,
-                                const C* subst_name, const C* subst_ns)
+                                   const C* subst_name, const C* subst_ns,
+                                   factory f)
           : root_name_ (root_name), root_ns_ (root_ns),
             subst_name_ (subst_name), subst_ns_ (subst_ns)
       {
         type_factory_map_instance<id, C> ().register_element (
           xml::qualified_name<C> (root_name, root_ns),
           xml::qualified_name<C> (subst_name, subst_ns),
-          &factory_impl<T>);
+          f);
       }
 
-      template<unsigned long id, typename C, typename T>
-      element_factory_initializer<id, C, T>::
+      template<unsigned long id, typename C>
+      element_factory_initializer<id, C>::
       ~element_factory_initializer ()
       {
         type_factory_map_instance<id, C> ().unregister_element (

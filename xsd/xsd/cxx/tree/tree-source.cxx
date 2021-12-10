@@ -3727,24 +3727,36 @@ namespace CXX
             }
           }
 
-          if (!abst && polymorphic && e.substitutes_p () &&
-              !options.suppress_parsing ())
+          // Note that we cannot just omit this element if it's abstract
+          // because it may serve as a "link" between the root of the
+          // substitution group and a non-abstract element that uses this
+          // element as its root (see element_factory_map::find_substitution()
+          // for details).
+          //
+          if (polymorphic && e.substitutes_p () && !options.suppress_parsing ())
           {
             String const& name (ename (e));
             Type& r (e.substitutes ().root ());
 
             os << "static" << endl
                << "const ::xsd::cxx::tree::element_factory_initializer< " <<
-              poly_plate << ", " << char_type << ", ";
-
-            belongs (e, belongs_);
-
-            os << " >" << endl
+              poly_plate << ", " << char_type << " >" << endl
                << "_xsd_" << name << "_element_factory_init (" << endl
                << strlit (r.name ()) << "," << endl
                << strlit (r.namespace_ ().name ()) << "," << endl
                << strlit (e.name ()) << "," << endl
-               << strlit (e.namespace_ ().name ()) << ");"
+               << strlit (e.namespace_ ().name ()) << "," << endl;
+
+            if (abst)
+              os << "0";
+            else
+            {
+              os << "&::xsd::cxx::tree::factory_impl< ";
+              belongs (e, belongs_);
+              os << " >";
+            }
+
+            os << ");"
                << endl
                << endl;
           }
