@@ -1,0 +1,16 @@
+# file      : tests/build/root.build
+# license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
+
+# We need to configure C++ module to obtain the target information (see
+# below).
+#
+using cxx.config
+
+# Import the XSD compiler we will be testing.
+#
+import! [metadata] xsd = xsd%exe{xsd}
+testscript{*}: test = $xsd
+
+# Specify the test target for cross-testing.
+#
+test.target = $cxx.target
