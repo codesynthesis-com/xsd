@@ -8,6 +8,7 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMAttr.hpp>
+#include <xercesc/dom/DOMText.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMDocument.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
