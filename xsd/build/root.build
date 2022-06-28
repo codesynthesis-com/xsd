@@ -29,6 +29,7 @@ cxx.poptions =+ "-I$out_root" "-I$src_root"
 #
 # Note that cat is a builtin which means this is both portable and fast.
 #
-copyright = $process.run_regex(cat $src_root/LICENSE,    \
-                               'Copyright \(c\) (.+)\.', \
-                               '\1')
+if ($build.mode != 'skeleton')
+  copyright = $process.run_regex(cat $src_root/LICENSE,    \
+                                 'Copyright \(c\) (.+)\.', \
+                                 '\1')
