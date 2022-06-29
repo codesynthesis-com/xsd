@@ -9,8 +9,8 @@ url: https://www.codesynthesis.com/projects/xsd/
 doc-url: https://www.codesynthesis.com/projects/xsd/
 src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd-examples/
 email: xsd-users@codesynthesis.com ; Mailing list
-depends: * build2 >= 0.14.0
-depends: * bpkg >= 0.14.0
+depends: * build2 >= 0.15.0-
+depends: * bpkg >= 0.15.0-
 depends: libxsd == $
 depends: libxerces-c ^3.0.0
 depends: libexpat ^2.1.0
