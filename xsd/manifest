@@ -18,6 +18,6 @@ depends: * bpkg >= 0.15.0
 depends: libxsd-frontend ^2.1.0-
 depends: libcutl ^1.11.0-
 depends: libxerces-c ^3.0.0
-depends: * cli ^1.2.0-
+depends: * cli ^1.2.0- ? ($config.xsd.develop)
 tests: * xsd-tests == $
 examples: * xsd-examples == $

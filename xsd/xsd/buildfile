@@ -5,13 +5,10 @@ import libs  = libxsd-frontend%lib{xsd-frontend}
 import libs += libcutl%lib{cutl}
 import libs += libxerces-c%lib{xerces-c}
 
-import! [metadata] cli = cli%exe{cli}
-
 ops = options cxx/options cxx/parser/options cxx/tree/options
 
-./: exe{xsd}: {hxx ixx txx cxx}{** -{$ops} -version} \
-              {hxx ixx cxx}{$ops}                    \
-              {hxx}{version}                         \
+./: exe{xsd}: {hxx ixx txx cxx}{** -version -{$ops} -pregenerated/**} \
+              {hxx}{version}                                          \
               $libs
 
 # Target metadata, see also --build2-metadata in xsd.cxx.
@@ -28,51 +25,96 @@ exe{xsd}:
 
 hxx{version}: in{version} $src_root/manifest
 
-# Generated options parser.
+## Consumption build ($develop == false).
 #
-# Note: tracking .cli dependencies manually.
+
+# Use pregenerated versions in the consumption build.
 #
-cli_options = --std c++11 -I $src_root --generate-specifier \
---generate-file-scanner --suppress-undocumented \
---ostream-type ::std::wostream --exclude-base \
---include-with-brackets --option-length 28 \
---cxx-prologue '#include <xsd/options-parser.hxx>'
+exe{xsd}: pregenerated/{hxx ixx cxx}{**}: include = (!$develop)
 
-<{hxx ixx cxx}{options}>: cli{options}
-{
-  cli_options += --include-prefix xsd --guard-prefix XSD
-}
+if! $develop
+  cxx.poptions =+ "-I($src_base/pregenerated)" # Note: must come first.
 
-<cxx/{hxx ixx cxx}{options}>: cxx/cli{options} cli{options}
-{
-  cli_options += --include-prefix xsd/cxx --guard-prefix XSD_CXX
-}
+# Distribute pregenerated versions only in the consumption build.
+#
+pregenerated/{hxx ixx cxx}{*}: dist = (!$develop)
 
-<cxx/parser/{hxx ixx cxx}{options}>: cxx/parser/cli{options} cxx/cli{options} \
-                                     cli{options}
-{
-  cli_options += --include-prefix xsd/cxx/parser --guard-prefix XSD_CXX_PARSER
-}
+#
+##
 
-<cxx/tree/{hxx ixx cxx}{options}>: cxx/tree/cli{options} cxx/cli{options} \
-                                   cli{options}
+## Development build ($develop == true).
+#
+
+exe{xsd}: {hxx ixx cxx}{$ops}: include = $develop
+
+if $develop
+  import! [metadata] cli = cli%exe{cli}
+
+# In the development build distribute regenerated {hxx ixx cxx}{options},
+# remapping their locations to the paths of the pregenerated versions (which
+# are only distributed in the consumption build; see above). This way we make
+# sure that the distributed files are always up-to-date.
+#
+for f: $ops
 {
-  cli_options += --include-prefix xsd/cxx/tree --guard-prefix XSD_CXX_TREE
+  d = $directory($f) # empty, cxx/, etc.
+
+  <{hxx ixx cxx}{$f}>: cli{$f}
+  {
+    dist = ($develop ? $relative([dir_path] "pregenerated/xsd/$d", $d) : false)
+
+    # Symlink the generated code in src for convenience of development.
+    #
+    backlink = true
+  }
 }
 
 <hxx{~'/(.*)/'} ixx{~'/\1/'} cxx{~'/\1/'}>: cli{~'/\1/'} $cli
-{
-  # Symlink the generated code in src for convenience of development.
-  #
-  backlink = true
-}
+%
+if $develop
 {{
-  diag cli ($<[0])
-  $cli $cli_options -o $directory($path($>[0])) $path($<[0])
+  t = $path($>[0]).t
+
+  depdb dyndep --byproduct --file $t
+
+  h = $path($>[0])
+  i = $path($>[1])
+  c = $path($>[2])
+
+  d = $directory($h)
+  p = $string($leaf($d, $out_root)) # xsd, xsd/cxx, etc
+
+  options = --std c++11 -I $src_root --include-prefix $p              \
+            --guard-prefix $regex.replace($ucase($p), '[/\\]', '_')   \
+            --generate-specifier --generate-file-scanner              \
+            --suppress-undocumented --ostream-type ::std::wostream    \
+            --exclude-base --include-with-brackets --option-length 28 \
+            --cxx-prologue '#include <xsd/options-parser.hxx>'
+
+  $cli $options --generate-dep --dep-file $t -o $d $path($<[0])
+
+  # If the result differs from the pregenerated version, copy it over.
+  #
+  d = [dir_path] $src_base/pregenerated/$p
+
+  dh = $d/$leaf($h)
+  di = $d/$leaf($i)
+  dc = $d/$leaf($c)
+
+  if diff $dh $h >- && \
+     diff $di $i >- && \
+     diff $dc $c >-
+    exit
+  end
+
+  cp $h $dh
+  cp $i $di
+  cp $c $dc
 }}
 
-# Build options.
 #
+##
+
 # Pass the copyright notice extracted from the LICENSE file.
 #
 obj{xsd cxx/parser/generator cxx/tree/generator}: \

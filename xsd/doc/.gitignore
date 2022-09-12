@@ -1,2 +1,5 @@
-xsd.1
-xsd.xhtml
+/xsd.1
+/xsd.xhtml
+
+*.ps
+*.pdf

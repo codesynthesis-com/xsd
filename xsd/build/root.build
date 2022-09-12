@@ -3,6 +3,8 @@
 
 config [bool] config.xsd.develop ?= false
 
+develop = $config.xsd.develop
+
 define cli: file
 cli{*}: extension = cli
 

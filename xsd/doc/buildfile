@@ -25,172 +25,269 @@ png{*}: extension = png
 define svg: file
 svg{*}: extension = svg
 
-import! [metadata] cli = cli%exe{cli}
+./: css{default} xsd{custom-literals} {png svg}{**}
 
-# Import the html2ps and ps2pdf14 programs only if present on the system. This
-# way a distribution that includes pre-generated files can be built without
-# installing these programs.
+# Man pages.
 #
-import? html2ps  = html2ps%exe{html2ps}
-import? ps2pdf14 = ps2pdf14%exe{ps2pdf14}
 
-if $config.xsd.develop
+## Consumption build ($develop == false).
+#
+
+# Use pregenerated versions in the consumption build.
+#
+./: pregenerated/{man1 xhtml}{*}: include = (!$develop)
+
+# Distribute pregenerated versions only in the consumption build.
+#
+pregenerated/{man1 xhtml}{*}: dist = (!$develop)
+
+#
+##
+
+## Development build ($develop == true).
+#
+
+./: {man1 xhtml}{xsd}: include = $develop
+
+if $develop
 {
-  if ($html2ps == [null] || $ps2pdf14 == [null])
-    warn "html2ps and/or ps2pdf14 are not available, not generating .ps and .pdf documentation"
+  doc_version = [string] "$version.major\.$version.minor\.$version.patch"
+  if $version.pre_release
+    doc_version += "-$version.pre_release_string"
+
+  # Let's take the last four-digit number to cover 2000-2021,2022.
+  #
+  doc_year = $regex.replace($copyright, '.+[-, ]([0-9][0-9][0-9][0-9]) .+', '\1')
+
+  man_options = -v project="XSD"          \
+                -v version="$doc_version" \
+                -v copyright="$copyright" \
+                -I $src_root              \
+                --stdout                  \
+                --suppress-undocumented   \
+                --exclude-base
+
+  import! [metadata] cli = cli%exe{cli}
 }
 
-./: xsd{custom-literals}
-
-# Generate the man pages.
+# In the development build distribute regenerated versions, remapping their
+# locations to the paths of the pregenerated versions (which are only
+# distributed in the consumption build; see above). This way we make sure that
+# the distributed files are always up-to-date.
 #
-ops = $(src_root)/xsd/cxx/cli{options tree/options parser/options}
+{man1 xhtml}{xsd}: dist = ($develop ? pregenerated/ : false)
 
-doc_version = [string] "$version.major\.$version.minor\.$version.patch"
-if $version.pre_release
-  doc_version += "-$version.pre_release_string"
+ops = ../xsd/cxx/cli{options tree/options parser/options}
 
-# Let's take the last for-digit number to cover 2000-2021,2022.
-#
-doc_year = $regex.replace($copyright, '.+[-, ]([0-9][0-9][0-9][0-9]) .+', '\1')
-
-man_options = -v project="XSD"          \
-              -v version="$doc_version" \
-              -v copyright="$copyright" \
-              -I $src_root              \
-              --stdout                  \
-              --suppress-undocumented   \
-              --exclude-base
-
-
-# Note: *logue and *-header are not real man pages.
-#
-./: man1{xsd}: $ops                     \
-               file{xsd-prologue.1      \
-                    xsd-tree-header.1   \
-                    xsd-parser-header.1 \
-                    xsd-epilogue.1}     \
-               $cli
-{
-  dist = true # Include into the distribution for user's convenience.
-}
+man1{xsd}: $ops                     \
+           file{xsd-prologue.1      \
+                xsd-tree-header.1   \
+                xsd-parser-header.1 \
+                xsd-epilogue.1}     \
+           $cli
+%
+if $develop
 {{
-  diag cli --man ($<[0])
+  o = $path($>)
 
   # Use the copyright year to approximate the last authoring date.
   #
-  $cli --generate-man -v date="January $doc_year"  \
-       $man_options                                \
-       --class CXX::options                        \
-       --class options                             \
-       --man-prologue-file $path($<[3])            \
-       $path($<[0]) >$path($>)
+  $cli --generate-man $man_options      \
+       -v date="January $doc_year"      \
+       --class CXX::options             \
+       --class options                  \
+       --man-prologue-file $path($<[3]) \
+       $path($<[0]) >$o
 
-  $cli --generate-man -v date="January $doc_year"  \
-       $man_options                                \
-       --man-prologue-file $path($<[4])            \
-       $path($<[1]) >>$path($>)
+  $cli --generate-man $man_options      \
+       -v date="January $doc_year"      \
+       --man-prologue-file $path($<[4]) \
+       $path($<[1]) >>$o
 
-  $cli --generate-man -v date="January $doc_year"  \
-       $man_options                                \
-       --man-prologue-file $path($<[5])            \
-       --man-epilogue-file $path($<[6])            \
-       $path($<[2]) >>$path($>)
+  $cli --generate-man $man_options      \
+       -v date="January $doc_year"      \
+       --man-prologue-file $path($<[5]) \
+       --man-epilogue-file $path($<[6]) \
+       $path($<[2]) >>$o
+
+  # If the result differs from the pregenerated version, copy it over.
+  #
+  if! diff $src_base/pregenerated/xsd.1 $o >-
+    cp $o $src_base/pregenerated/xsd.1
+  end
 }}
 
-# Note: *logue and *-header are not real xhtml files.
-#
-./: xhtml{xsd}: $ops                         \
-                file{xsd-prologue.xhtml      \
-                     xsd-tree-header.xhtml   \
-                     xsd-parser-header.xhtml \
-                     xsd-epilogue.xhtml}     \
-                css{*}                       \
-                $cli
-{
-  dist = true
-}
+xhtml{xsd}: $ops                         \
+            file{xsd-prologue.xhtml      \
+                 xsd-tree-header.xhtml   \
+                 xsd-parser-header.xhtml \
+                 xsd-epilogue.xhtml}     \
+            $cli
+%
+if $develop
 {{
-  diag cli --html ($<[0])
+  o = $path($>)
 
-  $cli --generate-html -v date="January $doc_year"  \
-       $man_options                                 \
-       --class CXX::options                         \
-       --class options                              \
-       --html-prologue-file $path($<[3])            \
-       $path($<[0]) >$path($>)
+  $cli --generate-html $man_options      \
+       -v date="January $doc_year"       \
+       --class CXX::options              \
+       --class options                   \
+       --html-prologue-file $path($<[3]) \
+       $path($<[0]) >$o
 
-  $cli --generate-html -v date="January $doc_year"  \
-       $man_options                                 \
-       --html-prologue-file $path($<[4])            \
-       $path($<[1]) >>$path($>)
+  $cli --generate-html $man_options      \
+       -v date="January $doc_year"       \
+       --html-prologue-file $path($<[4]) \
+       $path($<[1]) >>$o
 
-  $cli --generate-html -v date="January $doc_year"  \
-       $man_options                                 \
-       --html-prologue-file $path($<[5])            \
-       --html-epilogue-file $path($<[6])            \
-       $path($<[2]) >>$path($>)
+  $cli --generate-html $man_options      \
+       -v date="January $doc_year"       \
+       --html-prologue-file $path($<[5]) \
+       --html-epilogue-file $path($<[6]) \
+       $path($<[2]) >>$o
+
+  if! diff $src_base/pregenerated/xsd.xhtml $o >-
+    cp $o $src_base/pregenerated/xsd.xhtml
+  end
 }}
 
-# Generate the user guide/manual ps/pdf files if the html2ps and ps2pdf14
-# programs are imported and handle (install, distribute, etc) the
-# pre-generated files otherwise, if present.
 #
-for d: cxx/parser/guide/ cxx/tree/guide/ cxx/tree/manual/
+##
+
+# Manuals/guides.
+#
+# This case is slightly more involved because we make the generation of the
+# manuals/guides ps/pdf files optional and also don't keep the result in the
+# repository. Specifically:
+#
+# 1. In the consumption build we will install/redistribute ps/pdf if present.
+#
+# 2. In the development build we will generate ps/pdf if we are able to import
+#    the needed tools, issuing a warning otherwise.
+#
+# 3. We generate manuals/guides xhtml files from the templates and distribute
+#    them.
+
+manuals = cxx/parser/guide/index cxx/tree/guide/index cxx/tree/manual/index
+
+for m: $manuals
 {
-  p = "([dir_path] $path.leaf($path.directory($d)))" # parser, tree
-  l = "([dir_path] $path.leaf($d))"                  # guide, manual
-  f = "cxx-$p-$l"                                    # cxx-parser-guide, etc
-
-  ./: $d/{png svg}{*}
-
-  ./: $d/xhtml{index}: $d/in{index}
+  ./: xhtml{$m}: in{$m}
   {
     in.symbol = '@'
 
     dist  = true
     clean = ($src_root != $out_root)
   }
-
-  if ($html2ps != [null] && $ps2pdf14 != [null])
-  {
-    # Note that we include these generated files into the distribution and
-    # don't remove them when cleaning in src (so that clean results in a state
-    # identical to distributed).
-    #
-    ./: $d/ps{$f}: $d/xhtml{index} $d/html2ps{$l} $html2ps
-    {
-      base = $src_base/$d
-
-      dist  = true
-      clean = ($src_root != $out_root)
-    }
-    {{
-      diag html2ps ($<[0])
-
-      # Note: --base must include trailing directory separator.
-      #
-      $html2ps --base $base -f $path($<[1]) -o $path($>) $path($<[0])
-    }}
-
-    ./: $d/pdf{$f}: $d/ps{$f} $ps2pdf14
-    {
-      dist  = true
-      clean = ($src_root != $out_root)
-    }
-    {{
-      diag ps2pdf14 ($<[0])
-
-      $ps2pdf14 -dOptimize=true -dEmbedAllFonts=true $path($<[0]) $path($>)
-    }}
-
-    $d/html2ps{$l}: $d/in{$l}
-    {
-      in.symbol = '@'
-    }
-  }
-  else
-    ./: $d/{ps pdf}{+$f} $d/file{$l.html2ps.in}
 }
 
-doc{*}: install.subdirs = true
+## Consumption build ($develop == false).
+#
+
+# Use pregenerated versions, if exist, in the consumption build.
+#
+./: pregenerated/{ps pdf}{**}: include = (!$develop)
+
+# Distribute pregenerated versions only in the consumption build.
+#
+pregenerated/{ps pdf}{*}: dist = (!$develop)
+
+#
+##
+
+## Development build ($develop == true).
+#
+
+html2pdf = false
+
+if $develop
+{
+  # Import the html2ps and ps2pdf programs from the system, if available.
+  #
+  import? html2ps = html2ps%exe{html2ps}
+  import? ps2pdf  = ps2pdf14%exe{ps2pdf14}
+
+  html2pdf = ($html2ps != [null] && $ps2pdf != [null])
+
+  if! $html2pdf
+    warn "html2ps and/or ps2pdf14 are not available, not generating .ps and .pdf documentation"
+}
+
+for m: $manuals
+{
+  d = $directory($m)          # cxx/parser/guide/, etc
+  p = "$leaf($directory($d))" # parser, tree
+  l = "$leaf($d)"             # guide, manual
+  f = "cxx-$p-$l"             # cxx-parser-guide, etc
+
+  pf = $d/$f                  # cxx/parser/guide/cxx-parser-guide, etc
+  cf = $d/$l                  # cxx/parser/guide/guide, etc
+
+  ./: {ps pdf}{$pf}: include = $html2pdf
+
+  # In the development build distribute regenerated versions, remapping their
+  # locations to the paths of the pregenerated versions (which are only
+  # distributed in the consumption build; see above). This way we make sure
+  # that the distributed files are always up-to-date.
+  #
+  {ps pdf}{$pf}: \
+    dist = ($html2pdf ? $relative([dir_path] "pregenerated/$d", $d) : false)
+
+  pdf{$pf}: ps{$pf}: xhtml{$m} html2ps{$cf}
+
+  html2ps{$cf}: in{$cf}
+  {
+    in.symbol = '@'
+  }
+}
+
+# Note: the pregenerated file may not exist, thus --no-cleanup option is
+# required for the mkdir and cp builtin calls. Strictly speaking we don't
+# really need to copy them since they are not stored in the repository, but
+# let's do that for consistency with the distributed source tree.
+#
+ps{~'/cxx-.+-(.+)/'}: xhtml{~'/index/'} html2ps{~'/\1/'} $html2ps
+%
+if $html2pdf
+{{
+  # cxx/parser/guide/, etc
+  #
+  d = [dir_path] $leaf($directory($path($>[0])), $out_base)
+
+  # Note: --base must include trailing directory separator.
+  #
+  options = --base $src_base/$d
+
+  diag html2ps ($<[0])
+  $html2ps $options -f $path($<[1]) -o $path($>) $path($<[0])
+
+  # Note: must include trailing directory separator (see cp for details).
+  #
+  d = $src_base/pregenerated/$d
+
+  mkdir -p --no-cleanup $d
+  cp --no-cleanup $path($>) $d
+}}
+
+pdf{~'/(cxx-.+-.+)/'}: ps{~'/\1/'} $ps2pdf
+%
+if $html2pdf
+{{
+  options = -dOptimize=true -dEmbedAllFonts=true
+
+  diag ps2pdf ($<[0])
+  $ps2pdf $options $path($<[0]) $path($>)
+
+  # Note: must include trailing directory separator (see cp for details).
+  #
+  d = $src_base/pregenerated/$leaf($directory($path($>[0])), $out_base)
+
+  mkdir -p --no-cleanup $d
+  cp --no-cleanup $path($>) $d
+}}
+
+#
+##
+
+doc{*}:              install.subdirs = true
+pregenerated/doc{*}: install.subdirs = true
