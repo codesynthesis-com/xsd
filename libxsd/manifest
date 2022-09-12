@@ -1,6 +1,6 @@
 : 1
 name: libxsd
-version: 4.2.0-b.4
+version: 4.2.0-b.4.z
 project: xsd
 summary: XML Schema to C++ data binding compiler runtime library
 license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
