@@ -220,7 +220,7 @@ namespace xsd
             //
             u = (c & 0x1F) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
@@ -235,7 +235,7 @@ namespace xsd
             //
             u = (c & 0x0F) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
@@ -243,7 +243,7 @@ namespace xsd
             }
             u = (u | (c & 0x3F)) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
@@ -258,7 +258,7 @@ namespace xsd
             //
             u = (c & 0x07) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
@@ -266,7 +266,7 @@ namespace xsd
             }
             u = (u | (c & 0x3F)) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
@@ -274,7 +274,7 @@ namespace xsd
             }
             u = (u | (c & 0x3F)) << 6;
 
-            c = *++p;
+            c = static_cast<unsigned char> (*++p);
             if ((c >> 6) != 2)
             {
               valid = false;
