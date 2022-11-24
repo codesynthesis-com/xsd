@@ -12,8 +12,6 @@ exe{driver}: xml{hello}: test.input = true
 
 <{hxx ixx cxx}{hello-pskel}>: xsd{hello} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-parser --std c++11    \
        --generate-inline         \
        --skel-file-suffix -pskel \

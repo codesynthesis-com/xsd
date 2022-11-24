@@ -11,8 +11,6 @@ exe{driver}: {hxx cxx}{* -library} {hxx ixx cxx}{library} $libs testscript
 
 <{hxx ixx cxx}{library}>: xsd{library} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11     \
        --generate-inline        \
        --generate-serialization \

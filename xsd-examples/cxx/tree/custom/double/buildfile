@@ -13,8 +13,6 @@ exe{driver}: {hxx     cxx}{* -order -xml-schema} \
 
 <{hxx ixx cxx}{order}>: xsd{order} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11               \
        --generate-inline                  \
        --generate-serialization           \
@@ -25,7 +23,7 @@ exe{driver}: {hxx     cxx}{* -order -xml-schema} \
 
 hxx{xml-schema}: $xsd
 {{
-  diag xsd gen ($>[0])
+  diag xsd $>
 
   # Note that the specified xml-schema.xsd doesn't exist and is only used to
   # deduce the generated header name.

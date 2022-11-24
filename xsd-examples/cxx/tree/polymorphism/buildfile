@@ -12,8 +12,6 @@ exe{driver}: xml{supermen}: test.input = true
 
 <{hxx ixx cxx}{supermen}>: xsd{supermen} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11     \
        --generate-inline        \
        --generate-polymorphic   \

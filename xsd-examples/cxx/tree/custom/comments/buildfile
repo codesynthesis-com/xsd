@@ -15,8 +15,6 @@ exe{driver}: xml{people}: test.input = true
 
 <{hxx ixx cxx}{people}>: xsd{people} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11               \
        --generate-inline                  \
        --generate-serialization           \
@@ -27,7 +25,7 @@ exe{driver}: xml{people}: test.input = true
 
 hxx{xml-schema}: $xsd
 {{
-  diag xsd gen ($>[0])
+  diag xsd $>
 
   # Note that the specified xml-schema.xsd doesn't exist and is only used to
   # deduce the generated header name.

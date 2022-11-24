@@ -23,8 +23,6 @@ for sc: idref idrefs
 
   <{hxx cxx}{$sc}>: xsd{$sc} $xsd
   {{
-    diag xsd ($<[0]) # @@ TMP
-
     $xsd cxx-tree --std c++11   \
          --root-element-all     \
          --output-dir $out_base \

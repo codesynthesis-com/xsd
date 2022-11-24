@@ -258,7 +258,7 @@ if $html2pdf
   #
   options = --base $src_base/$d
 
-  diag html2ps ($<[0])
+  diag html2ps ($<[0]) -> $>
   $html2ps $options -f $path($<[1]) -o $path($>) $path($<[0])
 
   # Note: must include trailing directory separator (see cp for details).
@@ -275,7 +275,7 @@ if $html2pdf
 {{
   options = -dOptimize=true -dEmbedAllFonts=true
 
-  diag ps2pdf ($<[0])
+  diag ps2pdf ($<[0]) -> $>
   $ps2pdf $options $path($<[0]) $path($>)
 
   # Note: must include trailing directory separator (see cp for details).

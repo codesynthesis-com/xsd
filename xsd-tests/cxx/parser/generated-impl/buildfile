@@ -16,8 +16,6 @@ exe{driver}: file{output}: test.stdout = true
  {hxx     cxx}{test-pimpl}                   \
  {        cxx}{test-driver}>: xsd{test} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-parser --std c++11    \
        --generate-inline         \
        --skel-file-suffix -pskel \

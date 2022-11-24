@@ -48,7 +48,7 @@ cxx/tree/reference/
       clean = ($src_root != $out_root)
     }
     {{
-      diag doxygen $> : ($<[0]) # @@ TMP: revise
+      diag doxygen ($<[0]) -> $> # @@ TMP: revise
 
       rm -r -f $directory($>[1])
 

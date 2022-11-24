@@ -1,15 +1,6 @@
 # file      : build/root.build
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-define xsd: file
-xsd{*}: extension = xsd
-
-define xml: file
-xml{*}: extension = xml
-
-define map: file
-map{*}: extension = map
-
 using in
 
 cxx.std = latest
@@ -21,20 +12,32 @@ ixx{*}: extension = ixx
 txx{*}: extension = txx
 cxx{*}: extension = cxx
 
-if ($cxx.target.system == 'win32-msvc')
-  cxx.poptions += -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+if ($build.mode != 'skeleton')
+{
+  define xsd: file
+  xsd{*}: extension = xsd
 
-if ($cxx.class == 'msvc')
-  cxx.coptions += /wd4251 /wd4275 /wd4800
+  define xml: file
+  xml{*}: extension = xml
 
-# Setup the xsd that we are testing.
-#
-import xsd = xsd%exe{xsd}
+  define map: file
+  map{*}: extension = map
 
-# Every exe{} in this project is by default a test.
-#
-exe{*}: test = true
+  if ($cxx.target.system == 'win32-msvc')
+    cxx.poptions += -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
 
-# Specify the test target for cross-testing.
-#
-test.target = $cxx.target
+  if ($cxx.class == 'msvc')
+    cxx.coptions += /wd4251 /wd4275 /wd4800
+
+  # Import xsd that we are testing.
+  #
+  import! [metadata] xsd = xsd%exe{xsd}
+
+  # Every exe{} in this project is by default a test.
+  #
+  exe{*}: test = true
+
+  # Specify the test target for cross-testing.
+  #
+  test.target = $cxx.target
+}

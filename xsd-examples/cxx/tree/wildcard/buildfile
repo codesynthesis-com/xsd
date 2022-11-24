@@ -12,8 +12,6 @@ exe{driver}: xml{email}: test.input = true
 
 <{hxx ixx cxx}{email}>: xsd{email} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11     \
        --generate-inline        \
        --generate-wildcard      \

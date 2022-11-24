@@ -11,8 +11,6 @@ for f: $fs
 {
   <{hxx cxx}{$f}>: xsd{$f} $xsd
   {{
-    diag xsd ($<[0]) # @@ TMP
-
     $xsd cxx-tree --std c++11                  \
          --output-dir $directory($path($>[0])) \
          $path($<[0])

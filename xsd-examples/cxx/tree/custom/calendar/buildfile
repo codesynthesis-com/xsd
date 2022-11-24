@@ -16,8 +16,6 @@ exe{driver}: xml{calendar}: test.input = true
 
 <{hxx ixx cxx}{calendar}>: xsd{calendar} $xsd
 {{
-  diag xsd ($<[0]) # @@ TMP
-
   $xsd cxx-tree --std c++11               \
        --generate-inline                  \
        --extern-xml-schema xml-schema.xsd \
@@ -27,7 +25,7 @@ exe{driver}: xml{calendar}: test.input = true
 
 hxx{xml-schema}: $xsd
 {{
-  diag xsd gen ($>[0])
+  diag xsd $>
 
   # Note that the specified xml-schema.xsd doesn't exist and is only used to
   # deduce the generated header name.
