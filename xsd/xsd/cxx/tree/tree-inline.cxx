@@ -291,7 +291,7 @@ namespace CXX
           }
 
           os << "// " << name << endl
-             << "// " << endl
+             << "//" << endl
              << endl;
 
           // default c-tor
@@ -902,7 +902,7 @@ namespace CXX
             return;
 
           os << "// " << name << endl
-             << "// " << endl
+             << "//" << endl
              << endl;
 
           // Generate accessors and modifiers.
@@ -1037,7 +1037,7 @@ namespace CXX
           String const& name (ename (e));
 
           os << "// " << name << endl
-             << "// " << endl
+             << "//" << endl
              << endl;
 
           // Accessors/modifiers.

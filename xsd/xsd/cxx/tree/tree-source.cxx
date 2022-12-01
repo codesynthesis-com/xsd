@@ -3562,7 +3562,7 @@ namespace CXX
             String const& member (emember (e));
 
             os << "// " << name << endl
-               << "// " << endl
+               << "//" << endl
                << endl;
 
             // Virtual accessors.
