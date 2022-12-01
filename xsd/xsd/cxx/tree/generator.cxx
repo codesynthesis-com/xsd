@@ -928,18 +928,15 @@ namespace CXX
           }
         }
 
-        if (inline_)
-        {
-          hxx << "#ifndef XSD_DONT_INCLUDE_INLINE" << endl
-              << "#include " << ctx.process_include_path (ixx_name) << endl
-              << "#endif // XSD_DONT_INCLUDE_INLINE" << endl
-              << endl;
-        }
-
         hxx << "#include <xsd/cxx/post.hxx>" << endl
               << endl;
 
         // Copy epilogue.
+        //
+        // Note that it goes before the inline file in case it defines
+        // something (such as a custom type) which is needed by this file.
+        // And if something in the epilogue needs something from the inline
+        // file, then it should be the inline rather than header epilogue.
         //
         hxx << "// Begin epilogue." << endl
             << "//" << endl;
@@ -950,6 +947,14 @@ namespace CXX
         hxx << "//" << endl
             << "// End epilogue." << endl
             << endl;
+
+        if (inline_)
+        {
+          hxx << "#ifndef XSD_DONT_INCLUDE_INLINE" << endl
+              << "#include " << ctx.process_include_path (ixx_name) << endl
+              << "#endif // XSD_DONT_INCLUDE_INLINE" << endl
+              << endl;
+        }
 
         hxx << "#endif // " << guard << endl;
 
@@ -999,12 +1004,18 @@ namespace CXX
             << "// End prologue." << endl
             << endl;
 
+        ixx << "#include <xsd/cxx/pre.hxx>" << endl
+            << endl;
+
         // Generate.
         //
         {
           ind_filter ind (ixx); // We don't want to indent prologues/epilogues.
           generate_tree_inline (ctx, 1, 0);
         }
+
+        ixx << "#include <xsd/cxx/post.hxx>" << endl
+            << endl;
 
         // Copy epilogue.
         //
