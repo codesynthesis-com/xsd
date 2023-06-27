@@ -88,7 +88,7 @@ namespace cli
   {
     public:
     virtual
-    ~unknown_option () throw ();
+    ~unknown_option () noexcept;
 
     unknown_option (const std::string& option);
 
@@ -99,7 +99,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string option_;
@@ -109,7 +109,7 @@ namespace cli
   {
     public:
     virtual
-    ~unknown_argument () throw ();
+    ~unknown_argument () noexcept;
 
     unknown_argument (const std::string& argument);
 
@@ -120,7 +120,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string argument_;
@@ -130,7 +130,7 @@ namespace cli
   {
     public:
     virtual
-    ~missing_value () throw ();
+    ~missing_value () noexcept;
 
     missing_value (const std::string& option);
 
@@ -141,7 +141,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string option_;
@@ -151,7 +151,7 @@ namespace cli
   {
     public:
     virtual
-    ~invalid_value () throw ();
+    ~invalid_value () noexcept;
 
     invalid_value (const std::string& option,
                    const std::string& value,
@@ -170,7 +170,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string option_;
@@ -185,14 +185,14 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
   };
 
   class file_io_failure: public exception
   {
     public:
     virtual
-    ~file_io_failure () throw ();
+    ~file_io_failure () noexcept;
 
     file_io_failure (const std::string& file);
 
@@ -203,7 +203,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string file_;
@@ -213,7 +213,7 @@ namespace cli
   {
     public:
     virtual
-    ~unmatched_quote () throw ();
+    ~unmatched_quote () noexcept;
 
     unmatched_quote (const std::string& argument);
 
@@ -224,7 +224,7 @@ namespace cli
     print (::std::wostream&) const;
 
     virtual const char*
-    what () const throw ();
+    what () const noexcept;
 
     private:
     std::string argument_;

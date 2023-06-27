@@ -27,7 +27,7 @@ namespace cli
   // unknown_option
   //
   unknown_option::
-  ~unknown_option () throw ()
+  ~unknown_option () noexcept
   {
   }
 
@@ -38,7 +38,7 @@ namespace cli
   }
 
   const char* unknown_option::
-  what () const throw ()
+  what () const noexcept
   {
     return "unknown option";
   }
@@ -46,7 +46,7 @@ namespace cli
   // unknown_argument
   //
   unknown_argument::
-  ~unknown_argument () throw ()
+  ~unknown_argument () noexcept
   {
   }
 
@@ -57,7 +57,7 @@ namespace cli
   }
 
   const char* unknown_argument::
-  what () const throw ()
+  what () const noexcept
   {
     return "unknown argument";
   }
@@ -65,7 +65,7 @@ namespace cli
   // missing_value
   //
   missing_value::
-  ~missing_value () throw ()
+  ~missing_value () noexcept
   {
   }
 
@@ -76,7 +76,7 @@ namespace cli
   }
 
   const char* missing_value::
-  what () const throw ()
+  what () const noexcept
   {
     return "missing option value";
   }
@@ -84,7 +84,7 @@ namespace cli
   // invalid_value
   //
   invalid_value::
-  ~invalid_value () throw ()
+  ~invalid_value () noexcept
   {
   }
 
@@ -99,7 +99,7 @@ namespace cli
   }
 
   const char* invalid_value::
-  what () const throw ()
+  what () const noexcept
   {
     return "invalid option value";
   }
@@ -113,7 +113,7 @@ namespace cli
   }
 
   const char* eos_reached::
-  what () const throw ()
+  what () const noexcept
   {
     return "end of argument stream reached";
   }
@@ -121,7 +121,7 @@ namespace cli
   // file_io_failure
   //
   file_io_failure::
-  ~file_io_failure () throw ()
+  ~file_io_failure () noexcept
   {
   }
 
@@ -132,7 +132,7 @@ namespace cli
   }
 
   const char* file_io_failure::
-  what () const throw ()
+  what () const noexcept
   {
     return "unable to open file or read failure";
   }
@@ -140,7 +140,7 @@ namespace cli
   // unmatched_quote
   //
   unmatched_quote::
-  ~unmatched_quote () throw ()
+  ~unmatched_quote () noexcept
   {
   }
 
@@ -151,7 +151,7 @@ namespace cli
   }
 
   const char* unmatched_quote::
-  what () const throw ()
+  what () const noexcept
   {
     return "unmatched quote";
   }
