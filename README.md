@@ -2,6 +2,11 @@
 
 XSD is an XML Schema to C++ compiler.
 
+NOTE: the steps described below are more appropriate for the development of
+XSD as opposed to consumption. If you just want to use XSD, see [Installing
+XSD with `build2`](https://codesynthesis.com/products/xsd/doc/install-build2.xhtml)
+for the step by step instructions.
+
 The development setup for XSD uses two configurations, for example:
 
 ```
