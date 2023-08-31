@@ -1,6 +1,8 @@
 # file      : build/root.build
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
+config [bool] config.libxsd.doxygen ?= false
+
 using in
 
 cxx.std = latest

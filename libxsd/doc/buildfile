@@ -10,74 +10,83 @@ doxygen{*}: extension = doxygen
 define doxytag: file
 doxytag{*}: extension = doxytag
 
-# Import the doxygen program only if present on the system. This way a
-# distribution that includes pre-generated files can be built without
-# installing this programs.
-#
-import? doxygen = doxygen%exe{doxygen}
+doxygen_doc = $config.libxsd.doxygen
 
-# Note that we include the doxygen-generated files into the distribution and
-# don't remove them when cleaning in src (so that clean results in a state
-# identical to distributed).
+if $doxygen_doc
+  import! doxygen = doxygen%exe{doxygen}
+
+./: cxx/tree/reference/doxytag{libxsd}: include = $doxygen_doc
 
 cxx/tree/reference/
 {
-  # @@ Currently, there are the following issues that can only be addressed
-  #    on the build2 level:
-  #
-  #    - The update recipe is not re-executed after html/ directory content
-  #      has changed or it is removed.
-  #
-  #    - The clean operation doesn't remove the html/ directory.
-  #
-  #    - The html/ directory is not installed nor distributed regardless of
-  #      the doxygen presence.
-  #
-  if ($doxygen != [null])
+  headers = buffer types date-time elements element-map exceptions
+
+  <doxytag{libxsd}>: doxygen{libxsd}                      \
+                     html{footer}                         \
+                     $src_root/xsd/cxx/tree/hxx{$headers} \
+                     $doxygen
+  %
+  if $doxygen_doc
+  {{
+    o  = $directory($>[0])    # Target output directory.
+    c  = $path($<[0])         # Doxygen config file.
+    t  = $path($>[0]).t       # Temp dir.
+    tc = $t/"$leaf($c)"       # Temp doxygen config file.
+    d  = $t/$name($>[0]).d    # Dep file (target list).
+
+    # Describe the dynamic targets for better diagnostics.
+    #
+    dyndep_options = --target-what 'generated doxygen'
+
+    # Doxygen doesn't provide any way to list the would-be-generated HTML
+    # files so the best we can do is to generate them, get their list, and
+    # throw them away. Note that this code is inspired by the hello-thrift
+    # example (see its buildfile for details).
+    #
+    # Note: fsdir{} could have been static prerequisite but let's keep it
+    #       dynamic in case we want to turn this into a rule one day.
+    #
+    depdb dyndep --dyn-target $dyndep_options --format lines --file $d -- \
+      mkdir -p $t                                                      && \
+      sed -e "s%^\\s*\(HTML_OUTPUT\\s*=\).*\$%\\1 $t/html%"               \
+          -e "s%^\\s*\(GENERATE_TAGFILE\\s*=\).*\$%\\1%"    $c >$tc    && \
+      $doxygen $tc &$t/html/***                                        && \
+      find $t/html -type f                                     >$d     && \
+      sed -e "s%[/\\\\]$path.leaf($t)%%g"                    -i $d     && \
+      echo ''                                                 >>$d     && \
+      echo $path.representation([dir_path] $o/html)           >>$d
+
+    diag doxygen ($<[0]) -> ($>[0]) $o/fsdir{html/}
+
+    rm -rf $o/html # Note: doxygen doesn't clean it up itself.
+
+    # @@ It's unclear if it would be beneficial (or even possible) to list
+    #    relative inputs in doxygen{libxsd} and then adjust the CWD here. Note
+    #    that while relative header paths are used in libxsd.doxygen for
+    #    make-based build system, absolute paths still end up in
+    #    libxsd.doxytag.
+    #
+    $doxygen $c
+  }}
+
+  doxygen{libxsd}: in{libxsd}
   {
-    ../../../: doxytag{libxsd}
+    in.symbol = '%'
 
-    headers = buffer types date-time elements element-map exceptions
-
-    <doxytag{libxsd} fsdir{html}>: doxygen{libxsd}                      \
-                                   html{footer}                         \
-                                   $src_root/xsd/cxx/tree/hxx{$headers} \
-                                   $doxygen
-    {
-      dist  = true
-      clean = ($src_root != $out_root)
-    }
-    {{
-      diag doxygen ($<[0]) -> $> # @@ TMP: revise
-
-      rm -r -f $directory($>[1])
-
-      $doxygen $path($<[0])
-    }}
-
-    doxygen{libxsd}: in{libxsd}
-    {
-      in.symbol = '%'
-
-      input = $regex.merge($headers,                         \
-                           '^(.*)$',                         \
-                           "$src_root/xsd/cxx/tree/\\1.hxx", \
-                           ' ')
-    }
-
-    html{footer}: in{footer}
-    {
-      # Extract the copyright notice from the LICENSE file.
-      #
-      # Note that cat is a builtin which means this is both portable and fast.
-      #
-      copyright = $process.run_regex(cat $src_root/LICENSE,    \
-                                     'Copyright \(c\) (.+)\.', \
-                                     '\1')
-    }
+    input = $regex.merge($headers,                         \
+                         '^(.*)$',                         \
+                         "$src_root/xsd/cxx/tree/\\1.hxx", \
+                         ' ')
   }
-  else
-    ../../../: doxytag{+libxsd}
-}
 
-doc{*}: install.subdirs = true
+  html{footer}: in{footer}
+  {
+    # Extract the copyright notice from the LICENSE file.
+    #
+    # Note that cat is a builtin which means this is both portable and fast.
+    #
+    copyright = $process.run_regex(cat $src_root/LICENSE,    \
+                                   'Copyright \(c\) (.+)\.', \
+                                   '\1')
+  }
+}

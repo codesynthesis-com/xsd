@@ -23,9 +23,13 @@ bdep init @target -d libxsd -d libxsd-tests -d xsd-tests -d xsd-examples
 
 ```
 
-To generate the documentation in the `.ps` and `.pdf` formats, `html2ps` and
-`ps2pdf14` programs are required (the latter is from `ghostscript`). A warning
-is issued in the development mode if these programs are not available.
+To generate the documentation in the `.ps` and `.pdf` formats, the `html2ps`
+and `ps2pdf14` programs are required (the latter is from `ghostscript`). A
+warning is issued in the development mode if these programs are not available.
+
+To generate the Doxygen documentation (in `libxsd`) the `doxygen` program is
+required. Currently this functionality is only enabled if `libxsd` is
+initialized with explicit `config.libxsd.doxygen=true`.
 
 To test installation of the XSD compiler, create a separate target
 configuration (it will automatically resolve any build-time dependencies from
