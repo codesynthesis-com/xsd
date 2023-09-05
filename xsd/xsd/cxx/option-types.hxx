@@ -14,10 +14,14 @@ namespace CXX
     enum value
     {
       cxx98,
-      cxx11
+      cxx11,
+      cxx14,
+      cxx17,
+      cxx20,
+      cxx23
     };
 
-    cxx_version (value v = value (0)) : v_ (v) {}
+    cxx_version (value v) : v_ (v) {}
     operator value () const {return v_;}
 
     std::string

@@ -10,7 +10,7 @@ exe{driver}: {hxx cxx}{* -position} {hxx ixx cxx}{position} $libs testscript
 
 <{hxx ixx cxx}{position}>: xsd{position} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-serialization \
        --output-dir $out_base   \

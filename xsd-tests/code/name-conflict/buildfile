@@ -11,7 +11,7 @@ exe{driver}: {hxx cxx}{* -test} {hxx cxx}{test} $libs
 
 <{hxx cxx}{test}>: xsd{test} $xsd
 {{
-  $xsd cxx-tree --std c++11   \
+  $xsd cxx-tree               \
        --root-element-all     \
        --output-dir $out_base \
        $path($<[0])

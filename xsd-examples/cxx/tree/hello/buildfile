@@ -12,7 +12,7 @@ exe{driver}: xml{hello}: test.input = true
 
 <{hxx ixx cxx}{hello}>: xsd{hello} $xsd
 {{
-  $xsd cxx-tree --std c++11   \
+  $xsd cxx-tree               \
        --generate-inline      \
        --output-dir $out_base \
        $path($<[0])

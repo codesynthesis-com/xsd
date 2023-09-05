@@ -12,7 +12,7 @@ exe{driver}: xml{supermen}: test.input = true
 
 <{hxx ixx cxx}{supermen}>: xsd{supermen} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-polymorphic   \
        --generate-serialization \

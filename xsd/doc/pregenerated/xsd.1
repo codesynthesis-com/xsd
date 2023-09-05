@@ -119,12 +119,15 @@ if any, should appear after the corresponding
 .
 .IP "\fB--std\fR \fIversion\fR"
 Specify the C++ standard that the generated code should conform to\. Valid
-values are \fBc++98\fR (default) and \fBc++11\fR\.
+values are \fBc++98\fR, \fBc++11\fR (default), \fBc++14\fR, \fBc++17\fR,
+\fBc++20\fR, and \fBc++23\fR\.
 
 The C++ standard affects various aspects of the generated code that are
 discussed in more detail in various mapping-specific documentation\. Overall,
 when C++11 is selected, the generated code relies on the move semantics and
 uses \fBstd::unique_ptr\fR instead of deprecated \fBstd::auto_ptr\fR\.
+Currently, there is no difference between the C++11 and the later standards
+modes\.
 
 When the C++11 mode is selected, you normally don't need to perform any extra
 steps other than enable C++11 in your C++ compiler, if required\. The XSD
@@ -1292,7 +1295,6 @@ namespace http://www.example.com/xmlns/my
 .br
 .RE
 
-
 The compiler has a number of predefined mapping rules that can be
 presented as the following map files. The string-based XML Schema
 built-in types are mapped to either
@@ -1303,6 +1305,14 @@ depending on the character type selected with the
 .B --char-type
 option
 .RB ( char
+by default). The binary XML Schema types are mapped to either
+.B std::unique_ptr<xml_schema::buffer>
+or
+.B std::auto_ptr<xml_schema::buffer>
+depending on the C++ standard selected with the
+.B --std
+option
+.RB ( c++11
 by default).
 
 .RS
@@ -1382,13 +1392,13 @@ namespace http://www.w3.org/2001/XMLSchema
   QName xml_schema::qname;
 .br
 
-  base64Binary std::auto_ptr<xml_schema::buffer>
+  base64Binary std::[unique|auto]_ptr<xml_schema::buffer>
 .br
-               std::auto_ptr<xml_schema::buffer>;
+               std::[unique|auto]_ptr<xml_schema::buffer>;
 .br
-  hexBinary std::auto_ptr<xml_schema::buffer>
+  hexBinary std::[unique|auto]_ptr<xml_schema::buffer>
 .br
-            std::auto_ptr<xml_schema::buffer>;
+            std::[unique|auto]_ptr<xml_schema::buffer>;
 .br
 
   date xml_schema::date;

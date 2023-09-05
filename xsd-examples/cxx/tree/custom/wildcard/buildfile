@@ -12,7 +12,7 @@ exe{driver}: xml{wildcard}: test.input = true
 
 <{hxx ixx cxx}{wildcard}>: xsd{wildcard} $xsd
 {{
-  $xsd cxx-tree --std c++11                            \
+  $xsd cxx-tree                                        \
        --generate-inline                               \
        --generate-serialization                        \
        --generate-ostream                              \

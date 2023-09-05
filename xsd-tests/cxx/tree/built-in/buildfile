@@ -8,7 +8,7 @@ exe{driver}: {hxx cxx}{* -types} {hxx ixx cxx}{types} $libs testscript
 
 <{hxx ixx cxx}{types}>: xsd{types} $xsd
 {{
-  $xsd cxx-tree --std c++11      \
+  $xsd cxx-tree                  \
        --generate-inline         \
        --generate-ostream        \
        --generate-serialization  \

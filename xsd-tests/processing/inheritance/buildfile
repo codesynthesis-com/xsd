@@ -24,7 +24,7 @@ for nm: 000 001
 
   <{hxx cxx}{$sc}>: xsd{$sc} $xsd
   {{
-    $xsd cxx-tree --std c++11   \
+    $xsd cxx-tree               \
          --root-element-all     \
          --output-dir $out_base \
          $path($<[0])

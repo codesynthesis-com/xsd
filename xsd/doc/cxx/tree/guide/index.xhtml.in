@@ -536,7 +536,7 @@
   </p>
 
   <pre class="terminal">
-$ xsd cxx-tree --std c++11 hello.xsd
+$ xsd cxx-tree hello.xsd
   </pre>
 
   <p>The XSD compiler produces two C++ files: <code>hello.hxx</code> and
@@ -633,7 +633,7 @@ hello (std::istream&amp;);
      select C++98:</p>
 
   <pre class="terminal">
-$ xsd cxx-tree hello.xsd
+$ xsd cxx-tree --std c++98 hello.xsd
   </pre>
 
   <p>Then the parsing function signatures will become:</p>
@@ -726,7 +726,7 @@ Hello, world!
      it with the <code>--generate-serialization</code> options:</p>
 
   <pre class="terminal">
-$ xsd cxx-tree --std c++11 --generate-serialization hello.xsd
+$ xsd cxx-tree --generate-serialization hello.xsd
   </pre>
 
   <p>If we now examine the generated <code>hello.hxx</code> file,
@@ -911,7 +911,7 @@ main (int argc, char* argv[])
      change the type naming scheme:</p>
 
   <pre class="terminal">
-$ xsd cxx-tree --std c++11 --type-naming ucc hello.xsd
+$ xsd cxx-tree --type-naming ucc hello.xsd
   </pre>
 
   <p>The <code>ucc</code> argument to the <code>--type-naming</code>
@@ -978,8 +978,7 @@ hello (std::istream&amp;);
      <code>--type-regex</code> option:</p>
 
   <pre class="terminal">
-$ xsd cxx-tree --std c++11 --type-naming ucc \
-      --type-regex '/ (.+)_t/\u$1/' hello.xsd
+$ xsd cxx-tree --type-naming ucc --type-regex '/ (.+)_t/\u$1/' hello.xsd
   </pre>
 
   <p>This results in the following changes to the generated code:</p>
@@ -1114,8 +1113,7 @@ hello (std::istream&amp;);
      our schema with the <code>--generate-doxygen</code> option:</p>
 
   <pre class="terminal">
-$ xsd cxx-tree --std c++11 --generate-serialization --generate-doxygen \
-      hello.xsd
+$ xsd cxx-tree --generate-serialization --generate-doxygen hello.xsd
   </pre>
 
   <p>Now the generated <code>hello.hxx</code> file contains comments

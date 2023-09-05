@@ -12,7 +12,7 @@ exe{driver}: xml{text}: test.input = true
 
 <{hxx ixx cxx}{text}>: xsd{text} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-serialization \
        --ordered-type-mixed     \

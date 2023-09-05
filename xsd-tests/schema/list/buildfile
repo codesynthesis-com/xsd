@@ -11,7 +11,7 @@ for f: $fs
 {
   <{hxx cxx}{$f}>: xsd{$f} $xsd
   {{
-    $xsd cxx-tree --std c++11                  \
+    $xsd cxx-tree                              \
          --root-element-all                    \
          --output-dir $directory($path($>[0])) \
          $path($<[0])
@@ -25,5 +25,5 @@ for f: $fs
 testscript{*}:
 {
   test           = $xsd
-  test.arguments = cxx-tree --std c++11
+  test.arguments = cxx-tree
 }

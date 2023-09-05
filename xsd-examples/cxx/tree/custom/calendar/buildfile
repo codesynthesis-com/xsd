@@ -16,7 +16,7 @@ exe{driver}: xml{calendar}: test.input = true
 
 <{hxx ixx cxx}{calendar}>: xsd{calendar} $xsd
 {{
-  $xsd cxx-tree --std c++11               \
+  $xsd cxx-tree                           \
        --generate-inline                  \
        --extern-xml-schema xml-schema.xsd \
        --output-dir $out_base             \
@@ -30,7 +30,7 @@ hxx{xml-schema}: $xsd
   # Note that the specified xml-schema.xsd doesn't exist and is only used to
   # deduce the generated header name.
   #
-  $xsd cxx-tree --std c++11                              \
+  $xsd cxx-tree                                          \
        --generate-xml-schema                             \
        --custom-type date                                \
        --hxx-epilogue '#include "xml-schema-custom.hxx"' \

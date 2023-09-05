@@ -17,7 +17,7 @@ exe{driver}: xml{library}: test.input = true
  {hxx     cxx}{library-pimpl}                      \
  {        cxx}{library-driver}>: xsd{library} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --generate-print-impl     \

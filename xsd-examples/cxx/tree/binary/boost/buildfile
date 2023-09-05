@@ -13,7 +13,7 @@ exe{driver}: xml{library}: test.input = true
 
 <{hxx ixx cxx}{library}>: xsd{library} hxx{library-prologue} $xsd
 {{
-  $xsd cxx-tree --std c++11                                  \
+  $xsd cxx-tree                                              \
        --generate-inline                                     \
        --generate-ostream                                    \
        --hxx-prologue-file $path($<[1])                      \

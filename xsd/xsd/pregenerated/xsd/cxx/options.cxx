@@ -266,7 +266,7 @@ namespace CXX
 
   options::
   options ()
-  : std_ (cxx_version::cxx98),
+  : std_ (cxx_version::cxx11),
     std_specified_ (false),
     char_type_ ("char"),
     char_type_specified_ (false),

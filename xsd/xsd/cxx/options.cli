@@ -15,17 +15,19 @@ namespace CXX
   {
     // Language.
     //
-    cxx_version --std = cxx_version::cxx98
+    cxx_version --std = cxx_version::cxx11
     {
       "<version>",
       "Specify the C++ standard that the generated code should conform to.
-       Valid values are \cb{c++98} (default) and \cb{c++11}.
+       Valid values are \cb{c++98}, \cb{c++11} (default), \cb{c++14},
+       \cb{c++17}, \cb{c++20}, and \cb{c++23}.
 
        The C++ standard affects various aspects of the generated code that
        are discussed in more detail in various mapping-specific
        documentation. Overall, when C++11 is selected, the generated
        code relies on the move semantics and uses \cb{std::unique_ptr}
-       instead of deprecated \cb{std::auto_ptr}.
+       instead of deprecated \cb{std::auto_ptr}. Currently, there is no
+       difference between the C++11 and the later standards modes.
 
        When the C++11 mode is selected, you normally don't need to
        perform any extra steps other than enable C++11 in your C++

@@ -24,7 +24,7 @@ for sc: test fail
 
 <{hxx cxx}{test}>: xsd{test} $xsd
 {{
-  $xsd cxx-tree --std c++11   \
+  $xsd cxx-tree               \
        --root-element-all     \
        --output-dir $out_base \
        $path($<[0])
@@ -32,7 +32,7 @@ for sc: test fail
 
 <{hxx cxx}{fail}>: xsd{fail} $xsd
 {{
-  $xsd cxx-tree --std c++11   \
+  $xsd cxx-tree               \
        --root-element-all     \
        --output-dir $out_base \
        $path($<[0]) 2>>?~%EOE%

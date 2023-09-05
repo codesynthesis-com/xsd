@@ -16,7 +16,7 @@ exe{driver}: file{output}: test.stdout = true
  {hxx     cxx}{test-pimpl}                   \
  {        cxx}{test-driver}>: xsd{test} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --generate-print-impl     \

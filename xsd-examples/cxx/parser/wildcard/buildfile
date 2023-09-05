@@ -12,7 +12,7 @@ exe{driver}: xml{email}: test.input = true
 
 <{hxx ixx cxx}{email-pskel}>: xsd{email} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --output-dir $out_base    \

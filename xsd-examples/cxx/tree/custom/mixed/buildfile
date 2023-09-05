@@ -12,7 +12,7 @@ exe{driver}: xml{people}: test.input = true
 
 <{hxx ixx cxx}{people}>: xsd{people} $xsd
 {{
-  $xsd cxx-tree --std c++11                          \
+  $xsd cxx-tree                                      \
        --generate-inline                             \
        --generate-serialization                      \
        --custom-type bio=/bio_base                   \

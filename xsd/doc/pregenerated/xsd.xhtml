@@ -124,14 +124,16 @@
   <dl class="options">
     <dt><code><b>--std</b></code> <code><i>version</i></code></dt>
     <dd>Specify the C++ standard that the generated code should conform to.
-    Valid values are <code><b>c++98</b></code> (default) and
-    <code><b>c++11</b></code>.
+    Valid values are <code><b>c++98</b></code>, <code><b>c++11</b></code>
+    (default), <code><b>c++14</b></code>, <code><b>c++17</b></code>,
+    <code><b>c++20</b></code>, and <code><b>c++23</b></code>.
 
     <p>The C++ standard affects various aspects of the generated code that are
     discussed in more detail in various mapping-specific documentation.
     Overall, when C++11 is selected, the generated code relies on the move
     semantics and uses <code><b>std::unique_ptr</b></code> instead of
-    deprecated <code><b>std::auto_ptr</b></code>.</p>
+    deprecated <code><b>std::auto_ptr</b></code>. Currently, there is no
+    difference between the C++11 and the later standards modes.</p>
 
     <p>When the C++11 mode is selected, you normally don't need to perform any
     extra steps other than enable C++11 in your C++ compiler, if required. The
@@ -1465,7 +1467,11 @@ namespace http://www.example.com/xmlns/my
      built-in types are mapped to either <code><b>std::string</b></code>
      or <code><b>std::wstring</b></code> depending on the character type
      selected with the <code><b>--char-type</b></code> option
-     (<code><b>char</b></code> by default).</p>
+     (<code><b>char</b></code> by default). The binary XML Schema types are
+     mapped to either <code>std::unique_ptr&lt;xml_schema::buffer></code>
+     or <code>std::auto_ptr&lt;xml_schema::buffer></code> depending on the C++
+     standard selected with the <code><b>--std</b></code> option
+     (<code><b>c++11</b></code> by default).</p>
 
   <pre>
 namespace http://www.w3.org/2001/XMLSchema
@@ -1512,10 +1518,10 @@ namespace http://www.w3.org/2001/XMLSchema
 
   QName xml_schema::qname;
 
-  base64Binary std::auto_ptr&lt;xml_schema::buffer>
-               std::auto_ptr&lt;xml_schema::buffer>;
-  hexBinary std::auto_ptr&lt;xml_schema::buffer>
-            std::auto_ptr&lt;xml_schema::buffer>;
+  base64Binary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+               std::[unique|auto]_ptr&lt;xml_schema::buffer>;
+  hexBinary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+            std::[unique|auto]_ptr&lt;xml_schema::buffer>;
 
   date xml_schema::date;
   dateTime xml_schema::date_time;

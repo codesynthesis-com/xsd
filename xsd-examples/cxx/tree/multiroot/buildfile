@@ -10,7 +10,7 @@ exe{driver}: {hxx cxx}{* -protocol} {hxx ixx cxx}{protocol} $libs testscript
 
 <{hxx ixx cxx}{protocol}>: xsd{protocol} $xsd
 {{
-  $xsd cxx-tree --std c++11   \
+  $xsd cxx-tree               \
        --generate-inline      \
        --root-element-all     \
        --output-dir $out_base \

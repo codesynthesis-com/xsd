@@ -15,7 +15,7 @@ for f: $fs
 {
   <{hxx ixx cxx}{$f}>: xsd{$f} $xsd
   {{
-    $xsd cxx-tree --std c++11          \
+    $xsd cxx-tree                      \
          --generate-inline             \
          --generate-serialization      \
          --generate-polymorphic        \

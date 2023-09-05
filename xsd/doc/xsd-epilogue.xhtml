@@ -290,7 +290,11 @@ namespace http://www.example.com/xmlns/my
      built-in types are mapped to either <code><b>std::string</b></code>
      or <code><b>std::wstring</b></code> depending on the character type
      selected with the <code><b>--char-type</b></code> option
-     (<code><b>char</b></code> by default).</p>
+     (<code><b>char</b></code> by default). The binary XML Schema types are
+     mapped to either <code>std::unique_ptr&lt;xml_schema::buffer></code>
+     or <code>std::auto_ptr&lt;xml_schema::buffer></code> depending on the C++
+     standard selected with the <code><b>--std</b></code> option
+     (<code><b>c++11</b></code> by default).</p>
 
   <pre>
 namespace http://www.w3.org/2001/XMLSchema
@@ -337,10 +341,10 @@ namespace http://www.w3.org/2001/XMLSchema
 
   QName xml_schema::qname;
 
-  base64Binary std::auto_ptr&lt;xml_schema::buffer>
-               std::auto_ptr&lt;xml_schema::buffer>;
-  hexBinary std::auto_ptr&lt;xml_schema::buffer>
-            std::auto_ptr&lt;xml_schema::buffer>;
+  base64Binary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+               std::[unique|auto]_ptr&lt;xml_schema::buffer>;
+  hexBinary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+            std::[unique|auto]_ptr&lt;xml_schema::buffer>;
 
   date xml_schema::date;
   dateTime xml_schema::date_time;

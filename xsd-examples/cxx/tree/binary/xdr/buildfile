@@ -15,7 +15,7 @@ exe{driver}: xml{library}: test.input = true
 
 <{hxx ixx cxx}{library}>: xsd{library} $xsd
 {{
-  $xsd cxx-tree --std c++11        \
+  $xsd cxx-tree                    \
        --generate-inline           \
        --generate-ostream          \
        --generate-insertion 'XDR'  \

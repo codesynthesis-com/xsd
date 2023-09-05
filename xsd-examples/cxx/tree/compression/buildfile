@@ -11,7 +11,7 @@ exe{driver}: {hxx cxx}{* -library} {hxx ixx cxx}{library} $libs testscript
 
 <{hxx ixx cxx}{library}>: xsd{library} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-serialization \
        --generate-ostream       \

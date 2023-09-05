@@ -11,7 +11,7 @@ exe{driver}: {hxx cxx}{* -supermen-pskel} {hxx ixx cxx}{supermen-pskel} $libs \
 
 <{hxx ixx cxx}{supermen-pskel}>: xsd{supermen} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --generate-polymorphic    \

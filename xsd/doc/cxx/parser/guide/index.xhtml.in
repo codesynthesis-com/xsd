@@ -553,7 +553,7 @@
   </p>
 
   <pre class="terminal">
-$ xsd cxx-parser --std c++11 --xml-parser expat hello.xsd
+$ xsd cxx-parser --xml-parser expat hello.xsd
   </pre>
 
   <p>The <code>--xml-parser</code> option indicates that we want to
@@ -1494,7 +1494,7 @@ gender ::gender ::gender;
      option to let the XSD compiler know about our type map:</p>
 
   <pre class="terminal">
-$ xsd cxx-parser --std c++11 --type-map people.map people.xsd
+$ xsd cxx-parser --type-map people.map people.xsd
   </pre>
 
   <p>If we now look at the generated <code>people-pskel.hxx</code>,
@@ -1673,10 +1673,10 @@ namespace http://www.w3.org/2001/XMLSchema
 
   QName xml_schema::qname;
 
-  base64Binary std::[auto|unique]_ptr&lt;xml_schema::buffer>
-               std::[auto|unique]_ptr&lt;xml_schema::buffer>;
-  hexBinary std::[auto|unique]_ptr&lt;xml_schema::buffer>
-            std::[auto|unique]_ptr&lt;xml_schema::buffer>;
+  base64Binary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+               std::[unique|auto]_ptr&lt;xml_schema::buffer>;
+  hexBinary std::[unique|auto]_ptr&lt;xml_schema::buffer>
+            std::[unique|auto]_ptr&lt;xml_schema::buffer>;
 
   date xml_schema::date;
   dateTime xml_schema::date_time;
@@ -1742,8 +1742,7 @@ people ::people;
      recompile our schema and move on to implementing the parsers:</p>
 
   <pre class="terminal">
-$ xsd cxx-parser --std c++11 --xml-parser expat --type-map people.map \
-      people.xsd
+$ xsd cxx-parser --xml-parser expat --type-map people.map people.xsd
   </pre>
 
   <p>Here is the implementation of our three parsers in full. One
@@ -2608,14 +2607,14 @@ private:
     <tr>
       <td><code>base64Binary</code></td>
       <td><code>base64_binary_pimpl</code></td>
-      <td><code>std::[auto|unique]_ptr&lt; xml_schema::buffer></code><br/>
+      <td><code>std::[unique|auto]_ptr&lt; xml_schema::buffer></code><br/>
           <a href="#6.3">Section 6.3, "<code>base64Binary</code> and
           <code>hexBinary</code> Parsers"</a></td>
     </tr>
     <tr>
       <td><code>hexBinary</code></td>
       <td><code>hex_binary_pimpl</code></td>
-      <td><code>std::[auto|unique]_ptr&lt; xml_schema::buffer></code><br/>
+      <td><code>std::[unique|auto]_ptr&lt; xml_schema::buffer></code><br/>
           <a href="#6.3">Section 6.3, "<code>base64Binary</code> and
           <code>hexBinary</code> Parsers"</a></td>
     </tr>

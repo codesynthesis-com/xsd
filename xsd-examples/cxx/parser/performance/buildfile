@@ -33,7 +33,7 @@ for p: 'xerces' 'expat'
     parser = $p
   }
   {{
-    $xsd cxx-parser --std c++11            \
+    $xsd cxx-parser                        \
          --generate-inline                 \
          --skel-file-suffix -$parser-pskel \
          --xml-parser $parser              \

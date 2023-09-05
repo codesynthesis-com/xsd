@@ -11,7 +11,7 @@ exe{driver}: {hxx cxx}{* -protocol-pskel} {hxx ixx cxx}{protocol-pskel} $libs \
 
 <{hxx ixx cxx}{protocol-pskel}>: xsd{protocol} map{protocol} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --type-map $path($<[1])   \

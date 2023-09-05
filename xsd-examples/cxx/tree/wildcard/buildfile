@@ -12,7 +12,7 @@ exe{driver}: xml{email}: test.input = true
 
 <{hxx ixx cxx}{email}>: xsd{email} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-wildcard      \
        --generate-serialization \

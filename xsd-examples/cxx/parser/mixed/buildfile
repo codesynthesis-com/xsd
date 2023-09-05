@@ -12,7 +12,7 @@ exe{driver}: xml{text}: test.input = true
 
 <{hxx ixx cxx}{text-pskel}>: xsd{text} map{text} $xsd
 {{
-  $xsd cxx-parser --std c++11    \
+  $xsd cxx-parser                \
        --generate-inline         \
        --skel-file-suffix -pskel \
        --type-map $path($<[1])   \

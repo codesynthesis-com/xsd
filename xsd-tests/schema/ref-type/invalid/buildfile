@@ -8,5 +8,5 @@
 testscript{*}:
 {
   test           = $xsd
-  test.arguments = cxx-tree --std c++11
+  test.arguments = cxx-tree
 }

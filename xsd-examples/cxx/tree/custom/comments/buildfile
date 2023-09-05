@@ -15,7 +15,7 @@ exe{driver}: xml{people}: test.input = true
 
 <{hxx ixx cxx}{people}>: xsd{people} $xsd
 {{
-  $xsd cxx-tree --std c++11               \
+  $xsd cxx-tree                           \
        --generate-inline                  \
        --generate-serialization           \
        --extern-xml-schema xml-schema.xsd \
@@ -30,7 +30,7 @@ hxx{xml-schema}: $xsd
   # Note that the specified xml-schema.xsd doesn't exist and is only used to
   # deduce the generated header name.
   #
-  $xsd cxx-tree --std c++11                              \
+  $xsd cxx-tree                                          \
        --generate-xml-schema                             \
        --generate-serialization                          \
        --custom-type anyType=/type_base                  \

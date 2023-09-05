@@ -381,7 +381,6 @@ namespace http://www.example.com/xmlns/my
 .br
 .RE
 
-
 The compiler has a number of predefined mapping rules that can be
 presented as the following map files. The string-based XML Schema
 built-in types are mapped to either
@@ -392,6 +391,14 @@ depending on the character type selected with the
 .B --char-type
 option
 .RB ( char
+by default). The binary XML Schema types are mapped to either
+.B std::unique_ptr<xml_schema::buffer>
+or
+.B std::auto_ptr<xml_schema::buffer>
+depending on the C++ standard selected with the
+.B --std
+option
+.RB ( c++11
 by default).
 
 .RS
@@ -471,13 +478,13 @@ namespace http://www.w3.org/2001/XMLSchema
   QName xml_schema::qname;
 .br
 
-  base64Binary std::auto_ptr<xml_schema::buffer>
+  base64Binary std::[unique|auto]_ptr<xml_schema::buffer>
 .br
-               std::auto_ptr<xml_schema::buffer>;
+               std::[unique|auto]_ptr<xml_schema::buffer>;
 .br
-  hexBinary std::auto_ptr<xml_schema::buffer>
+  hexBinary std::[unique|auto]_ptr<xml_schema::buffer>
 .br
-            std::auto_ptr<xml_schema::buffer>;
+            std::[unique|auto]_ptr<xml_schema::buffer>;
 .br
 
   date xml_schema::date;

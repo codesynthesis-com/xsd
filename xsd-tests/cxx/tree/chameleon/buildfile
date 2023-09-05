@@ -11,7 +11,7 @@ exe{driver}: file{output}: test.stdout = true
 
 <{hxx ixx cxx}{includer}>: xsd{includer includee} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree               \
        --generate-inline      \
        --generate-ostream     \
        --root-element root    \

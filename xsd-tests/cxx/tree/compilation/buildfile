@@ -8,7 +8,7 @@ exe{driver}: {hxx cxx}{* -test} {hxx ixx cxx}{test} $libs
 
 <{hxx ixx cxx}{test}>: xsd{test} $xsd
 {{
-  $xsd cxx-tree --std c++11     \
+  $xsd cxx-tree                 \
        --generate-inline        \
        --generate-serialization \
        --output-dir $out_base   \
