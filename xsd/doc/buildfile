@@ -77,7 +77,7 @@ if $develop
 #
 {man1 xhtml}{xsd}: dist = ($develop ? pregenerated/ : false)
 
-ops = ../xsd/cxx/cli{options tree/options parser/options}
+ops = ../xsd/cli{options cxx/options cxx/tree/options cxx/parser/options}
 
 man1{xsd}: $ops                     \
            file{xsd-prologue.1      \
@@ -96,19 +96,19 @@ if $develop
        -v date="January $doc_year"      \
        --class CXX::options             \
        --class options                  \
-       --man-prologue-file $path($<[3]) \
-       $path($<[0]) >$o
-
-  $cli --generate-man $man_options      \
-       -v date="January $doc_year"      \
        --man-prologue-file $path($<[4]) \
-       $path($<[1]) >>$o
+       $path($<[1]) >$o
 
   $cli --generate-man $man_options      \
        -v date="January $doc_year"      \
        --man-prologue-file $path($<[5]) \
-       --man-epilogue-file $path($<[6]) \
        $path($<[2]) >>$o
+
+  $cli --generate-man $man_options      \
+       -v date="January $doc_year"      \
+       --man-prologue-file $path($<[6]) \
+       --man-epilogue-file $path($<[7]) \
+       $path($<[3]) >>$o
 
   # If the result differs from the pregenerated version, copy it over.
   #
@@ -132,19 +132,19 @@ if $develop
        -v date="January $doc_year"       \
        --class CXX::options              \
        --class options                   \
-       --html-prologue-file $path($<[3]) \
-       $path($<[0]) >$o
-
-  $cli --generate-html $man_options      \
-       -v date="January $doc_year"       \
        --html-prologue-file $path($<[4]) \
-       $path($<[1]) >>$o
+       $path($<[1]) >$o
 
   $cli --generate-html $man_options      \
        -v date="January $doc_year"       \
        --html-prologue-file $path($<[5]) \
-       --html-epilogue-file $path($<[6]) \
        $path($<[2]) >>$o
+
+  $cli --generate-html $man_options      \
+       -v date="January $doc_year"       \
+       --html-prologue-file $path($<[6]) \
+       --html-epilogue-file $path($<[7]) \
+       $path($<[3]) >>$o
 
   if! diff $src_base/pregenerated/xsd.xhtml $o >-
     cp $o $src_base/pregenerated/xsd.xhtml
