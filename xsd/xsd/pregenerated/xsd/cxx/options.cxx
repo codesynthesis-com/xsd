@@ -361,6 +361,8 @@ namespace CXX
     dep_target_specified_ (false),
     dep_suffix_ (".d"),
     dep_suffix_specified_ (false),
+    dep_file_ (),
+    dep_file_specified_ (false),
     dep_regex_ (),
     dep_regex_specified_ (false)
   {
@@ -527,8 +529,11 @@ namespace CXX
 
     os << "--dep-target <target>        Change the target of the dependency rule." << ::std::endl;
 
-    os << "--dep-suffix <suffix>        Use the provided <suffix> instead of the default" << ::std::endl
-       << "                             .d to construct the name of the dependency file." << ::std::endl;
+    os << "--dep-suffix <suffix>        Use <suffix> instead of the default .d to" << ::std::endl
+       << "                             construct the name of the dependency file." << ::std::endl;
+
+    os << "--dep-file <path>            Use <path> as the generated dependency file path" << ::std::endl
+       << "                             instead of deriving it from the input file name." << ::std::endl;
 
     os << "--dep-regex <regex>          Use the provided expression to construct the name" << ::std::endl
        << "                             of the dependency file." << ::std::endl;
@@ -696,6 +701,9 @@ namespace CXX
       _cli_options_map_["--dep-suffix"] =
       &::cli::thunk< options, NarrowString, &options::dep_suffix_,
         &options::dep_suffix_specified_ >;
+      _cli_options_map_["--dep-file"] =
+      &::cli::thunk< options, NarrowString, &options::dep_file_,
+        &options::dep_file_specified_ >;
       _cli_options_map_["--dep-regex"] =
       &::cli::thunk< options, NarrowString, &options::dep_regex_,
         &options::dep_regex_specified_ >;

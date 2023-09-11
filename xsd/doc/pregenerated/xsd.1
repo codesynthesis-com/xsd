@@ -384,7 +384,8 @@ Generate \fBmake\fR dependency information\. This option triggers the creation
 of the \fB\.d\fR file containing the dependencies of the generated files on
 the main schema file as well as all the schema files that it includes/imports,
 transitively\. This dependency file is then normally included into the main
-\fBmakefile\fR to implement automatic dependency tracking\.
+\fBmakefile\fR to implement automatic dependency tracking\. See also the
+\fB--dep-*\fR options\.
 
 Note also that automatic dependency generation is not supported in the
 file-per-type mode (\fB--file-per-type\fR)\. In this case, all the generated
@@ -405,8 +406,12 @@ directory prefixes\. If you require multiple targets, then you can specify
 them as a single, space-separated argument or you can repeat this option
 multiple times\.
 .IP "\fB--dep-suffix\fR \fIsuffix\fR"
-Use the provided \fIsuffix\fR instead of the default \fB\.d\fR to construct
-the name of the dependency file\.
+Use \fIsuffix\fR instead of the default \fB\.d\fR to construct the name of the
+dependency file\. See also \fB--dep-file\fR\.
+.IP "\fB--dep-file\fR \fIpath\fR"
+Use \fIpath\fR as the generated dependency file path instead of deriving it
+from the input file name\. Write the dependency information to \fBstdout\fR if
+\fIpath\fR is \fB-\fR\. See also \fB--dep-regex\fR\.
 .IP "\fB--dep-regex\fR \fIregex\fR"
 Use the provided expression to construct the name of the dependency file\.
 \fIregex\fR is a Perl-like regular expression in the form

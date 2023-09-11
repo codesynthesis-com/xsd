@@ -313,6 +313,12 @@ namespace CXX
     dep_suffix_specified () const;
 
     const NarrowString&
+    dep_file () const;
+
+    bool
+    dep_file_specified () const;
+
+    const NarrowString&
     dep_regex () const;
 
     bool
@@ -428,6 +434,8 @@ namespace CXX
     bool dep_target_specified_;
     NarrowString dep_suffix_;
     bool dep_suffix_specified_;
+    NarrowString dep_file_;
+    bool dep_file_specified_;
     NarrowString dep_regex_;
     bool dep_regex_specified_;
   };

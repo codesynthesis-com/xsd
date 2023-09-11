@@ -54,6 +54,8 @@ using namespace XSDFrontend::SemanticGraph;
 
 //
 //
+typedef std::wostream WideOutputStream;
+
 typedef std::wifstream WideInputFileStream;
 typedef std::wofstream WideOutputFileStream;
 
@@ -344,9 +346,13 @@ namespace CXX
                       ? "#^(.+?)(\\.[^./\\\\]+)?$#$1" + fwd_suffix + "#"
                       : ops.fwd_regex ());
 
-      Regex dep_expr (ops.dep_regex ().empty ()
-                      ? "#^(.+?)(\\.[^./\\\\]+)?$#$1" + dep_suffix + "#"
-                      : ops.dep_regex ());
+      // @@ This will blow up if --dep-file value contains backslashes (e.g.,
+      //    it's a Windows path).
+      //
+      Regex dep_expr (
+        ops.dep_regex_specified () ? ops.dep_regex () :
+        ops.dep_file_specified () ? "#.+#" + ops.dep_file () + "#" :
+        "#^(.+?)(\\.[^./\\\\]+)?$#$1" + dep_suffix + "#");
 
       if (header && !hxx_expr.match (name))
       {
@@ -396,7 +402,7 @@ namespace CXX
       Path hxx_path (hxx_name);
       Path ixx_path (ixx_name);
       Path fwd_path (fwd_name);
-      Path dep_path (dep_name);
+      Path dep_path (dep_name != "-" ? dep_name : NarrowString ());
       Paths cxx_paths;
 
       if (source)
@@ -457,10 +463,11 @@ namespace CXX
 
       if (!out_dir.empty ())
       {
-        hxx_path = out_dir / hxx_path;
-        ixx_path = out_dir / ixx_path;
-        fwd_path = out_dir / fwd_path;
-        dep_path = out_dir / dep_path;
+        if (!hxx_path.empty ())    hxx_path = out_dir / hxx_path;
+        if (!ixx_path.empty ())    ixx_path = out_dir / ixx_path;
+        if (!fwd_path.empty ())    fwd_path = out_dir / fwd_path;
+        if (!dep_path.empty () &&
+            !dep_path.absolute ()) dep_path = out_dir / dep_path;
 
         for (Paths::iterator i (cxx_paths.begin ());
              i != cxx_paths.end (); ++i)
@@ -472,24 +479,31 @@ namespace CXX
       WideOutputFileStream hxx;
       WideOutputFileStream ixx;
       WideOutputFileStream fwd;
-      WideOutputFileStream dep;
+      WideOutputFileStream depf; // See dep below.
       WideOutputFileStreams cxx;
 
       // DEP
       //
       if (gen_dep)
       {
-        dep.open (dep_path.string ().c_str (), ios_base::out);
-
-        if (!dep.is_open ())
+        if (!dep_path.empty ())
         {
-          wcerr << dep_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          depf.open (dep_path.string ().c_str (), ios_base::out);
+
+          if (!depf.is_open ())
+          {
+            wcerr << dep_path << ": error: unable to open in write mode"
+                  << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (dep_path);
         }
 
-        unlinks.add (dep_path);
         // Note: not adding to file_list.
       }
+
+      WideOutputStream& dep (gen_dep && !dep_path.empty () ? depf : wcout);
 
       // FWD
       //
@@ -683,7 +697,8 @@ namespace CXX
                i != cxx_paths.end (); ++i)
             target += " \\\n" + i->string ();
 
-          target += " \\\n" + dep_path.string ();
+          if (!dep_path.empty ())
+            target += " \\\n" + dep_path.string ();
         }
 
         dep << target.c_str () << ':';

@@ -482,7 +482,8 @@
     dependencies of the generated files on the main schema file as well as all
     the schema files that it includes/imports, transitively. This dependency
     file is then normally included into the main <code><b>makefile</b></code>
-    to implement automatic dependency tracking.
+    to implement automatic dependency tracking. See also the
+    <code><b>--dep-*</b></code> options.
 
     <p>Note also that automatic dependency generation is not supported in the
     file-per-type mode (<code><b>--file-per-type</b></code>). In this case,
@@ -508,8 +509,15 @@
     multiple times.</dd>
 
     <dt><code><b>--dep-suffix</b></code> <code><i>suffix</i></code></dt>
-    <dd>Use the provided <code><i>suffix</i></code> instead of the default
-    <code><b>.d</b></code> to construct the name of the dependency file.</dd>
+    <dd>Use <code><i>suffix</i></code> instead of the default
+    <code><b>.d</b></code> to construct the name of the dependency file. See
+    also <code><b>--dep-file</b></code>.</dd>
+
+    <dt><code><b>--dep-file</b></code> <code><i>path</i></code></dt>
+    <dd>Use <code><i>path</i></code> as the generated dependency file path
+    instead of deriving it from the input file name. Write the dependency
+    information to <code><b>stdout</b></code> if <code><i>path</i></code> is
+    <code><b>-</b></code>. See also <code><b>--dep-regex</b></code>.</dd>
 
     <dt><code><b>--dep-regex</b></code> <code><i>regex</i></code></dt>
     <dd>Use the provided expression to construct the name of the dependency

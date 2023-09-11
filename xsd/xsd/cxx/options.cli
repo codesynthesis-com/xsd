@@ -500,7 +500,7 @@ namespace CXX
        generated files on the main schema file as well as all the schema
        files that it includes/imports, transitively. This dependency file
        is then normally included into the main \cb{makefile} to implement
-       automatic dependency tracking.
+       automatic dependency tracking. See also the \cb{--dep-*} options.
 
        Note also that automatic dependency generation is not supported in
        the file-per-type mode (\cb{--file-per-type}). In this case, all
@@ -536,8 +536,16 @@ namespace CXX
     NarrowString --dep-suffix = ".d"
     {
       "<suffix>",
-      "Use the provided <suffix> instead of the default \cb{.d} to
-       construct the name of the dependency file."
+      "Use <suffix> instead of the default \cb{.d} to construct the name of
+       the dependency file. See also \cb{--dep-file}."
+    };
+
+    NarrowString --dep-file
+    {
+      "<path>",
+      "Use <path> as the generated dependency file path instead of deriving
+       it from the input file name. Write the dependency information to
+       \cb{stdout} if <path> is \cb{-}. See also \cb{--dep-regex}."
     };
 
     NarrowString --dep-regex

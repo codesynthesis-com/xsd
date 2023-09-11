@@ -585,6 +585,18 @@ namespace CXX
   }
 
   inline const NarrowString& options::
+  dep_file () const
+  {
+    return this->dep_file_;
+  }
+
+  inline bool options::
+  dep_file_specified () const
+  {
+    return this->dep_file_specified_;
+  }
+
+  inline const NarrowString& options::
   dep_regex () const
   {
     return this->dep_regex_;
