@@ -2,6 +2,8 @@
 name: xsd-tests
 version: 4.2.0-b.4.z
 project: xsd
+type: tests
+language: c++
 summary: XML Schema to C++ data binding compiler tests
 license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
 description-file: README
