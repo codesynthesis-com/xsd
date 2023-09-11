@@ -733,10 +733,12 @@
     compiled generated code into a static (archive) library.</dd>
 
     <dt><code><b>--file-list</b></code> <code><i>file</i></code></dt>
-    <dd>Write a list of generated C++ files to <code><i>file</i></code>. This
-    option is primarily useful in the file-per-type compilation mode
-    (<code><b>--file-per-type</b></code>) to create a list of generated C++
-    files, for example, as a makefile fragment.</dd>
+    <dd>Write a list of generated C++ files to <code><i>file</i></code> or to
+    <code><b>stdout</b></code> if <code><i>file</i></code> is
+    <code><b>-</b></code>. This option is primarily useful in the
+    file-per-type compilation mode (<code><b>--file-per-type</b></code>) to
+    create a list of generated C++ files, for example, as a makefile
+    fragment.</dd>
 
     <dt><code><b>--file-list-prologue</b></code> <code><i>text</i></code></dt>
     <dd>Insert <code><i>text</i></code> at the beginning of the file list. As

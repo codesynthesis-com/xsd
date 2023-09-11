@@ -1175,7 +1175,8 @@ print_usage (::std::wostream& os, ::cli::usage_para p)
      << "                             into type files instead of schema files when the" << ::std::endl
      << "                             --type-file-regex option is specified." << ::std::endl;
 
-  os << "--file-list <file>           Write a list of generated C++ files to <file>." << ::std::endl;
+  os << "--file-list <file>           Write a list of generated C++ files to <file> or" << ::std::endl
+     << "                             to stdout if <file> is -." << ::std::endl;
 
   os << "--file-list-prologue <text>  Insert <text> at the beginning of the file list." << ::std::endl;
 

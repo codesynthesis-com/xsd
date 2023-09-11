@@ -277,10 +277,10 @@ class options = 0
   NarrowString --file-list
   {
     "<file>",
-    "Write a list of generated C++ files to <file>. This option is primarily
-     useful in the file-per-type compilation mode (\cb{--file-per-type}) to
-     create a list of generated C++ files, for example, as a makefile
-     fragment."
+    "Write a list of generated C++ files to <file> or to \cb{stdout} if
+     <file> is \cb{-}. This option is primarily useful in the file-per-type
+     compilation mode (\cb{--file-per-type}) to create a list of generated
+     C++ files, for example, as a makefile fragment."
   };
 
   NarrowString --file-list-prologue

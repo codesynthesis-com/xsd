@@ -770,15 +770,20 @@ main (int argc, char* argv[])
       try
       {
         OutputFileStream ofs;
-        SemanticGraph::Path path (fl);
-
-        ofs.open (path.string ().c_str (), ios_base::out);
-
-        if (!ofs.is_open ())
+        if (fl != "-")
         {
-          wcerr << path << ": error: unable to open in write mode" << endl;
-          return 1;
+          SemanticGraph::Path path (fl);
+
+          ofs.open (path.string ().c_str (), ios_base::out);
+
+          if (!ofs.is_open ())
+          {
+            wcerr << path << ": error: unable to open in write mode" << endl;
+            return 1;
+          }
         }
+
+        std::ostream& os (ofs.is_open () ? ofs : cout);
 
         NarrowString d (common_ops.file_list_delim ());
         expand_nl (d);
@@ -786,22 +791,22 @@ main (int argc, char* argv[])
         if (NarrowString p = common_ops.file_list_prologue ())
         {
           expand_nl (p);
-          ofs << p;
+          os << p;
         }
 
         for (FileList::iterator i (file_list.begin ()), e (file_list.end ());
              i != e;)
         {
-          ofs << *i;
+          os << *i;
 
           if (++i != e)
-            ofs << d;
+            os << d;
         }
 
         if (NarrowString e = common_ops.file_list_epilogue ())
         {
           expand_nl (e);
-          ofs << e;
+          os << e;
         }
       }
       catch (SemanticGraph::InvalidPath const&)

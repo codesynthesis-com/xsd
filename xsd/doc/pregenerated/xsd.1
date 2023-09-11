@@ -580,9 +580,10 @@ option is primarily useful when trying to minimize the amount of object code
 that is linked to an executable by packaging compiled generated code into a
 static (archive) library\.
 .IP "\fB--file-list\fR \fIfile\fR"
-Write a list of generated C++ files to \fIfile\fR\. This option is primarily
-useful in the file-per-type compilation mode (\fB--file-per-type\fR) to create
-a list of generated C++ files, for example, as a makefile fragment\.
+Write a list of generated C++ files to \fIfile\fR or to \fBstdout\fR if
+\fIfile\fR is \fB-\fR\. This option is primarily useful in the file-per-type
+compilation mode (\fB--file-per-type\fR) to create a list of generated C++
+files, for example, as a makefile fragment\.
 .IP "\fB--file-list-prologue\fR \fItext\fR"
 Insert \fItext\fR at the beginning of the file list\. As a convenience, all
 occurrences of the \fB\en\fR character sequence in \fItext\fR are replaced
