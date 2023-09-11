@@ -608,7 +608,7 @@ Version 2.3.1
     include the GPL banner in each generated file. Instead a short
     notice about a required proprietary license is generated. You
     should not use this option unless you have obtained a proprietary
-    license from Code Synthesis Tools CC.
+    license from Code Synthesis.
 
   * The default encoding for the 'char' character type is now UTF-8.
     To get the previous behavior (local code page via the Xerces-C++
