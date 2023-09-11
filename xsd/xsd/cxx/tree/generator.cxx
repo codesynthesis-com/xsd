@@ -488,7 +488,7 @@ namespace CXX
         }
 
         unlinks.add (dep_path);
-        file_list.push_back (dep_path.string ());
+        // Note: not adding to file_list.
       }
 
       // FWD
