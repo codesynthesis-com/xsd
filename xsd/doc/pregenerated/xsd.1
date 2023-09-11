@@ -584,6 +584,10 @@ Write a list of generated C++ files to \fIfile\fR or to \fBstdout\fR if
 \fIfile\fR is \fB-\fR\. This option is primarily useful in the file-per-type
 compilation mode (\fB--file-per-type\fR) to create a list of generated C++
 files, for example, as a makefile fragment\.
+.IP "\fB--file-list-only\fR"
+Only write the list of C++ files that would be generated without actually
+generating them\. This option only makes sense together with
+\fB--file-list\fR\.
 .IP "\fB--file-list-prologue\fR \fItext\fR"
 Insert \fItext\fR at the beginning of the file list\. As a convenience, all
 occurrences of the \fB\en\fR character sequence in \fItext\fR are replaced

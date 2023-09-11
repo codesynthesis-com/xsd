@@ -231,7 +231,7 @@ namespace CXX
           throw Failed ();
       }
 
-      bool gen_cxx (!ops.generate_dep_only ());
+      bool gen_cxx (!ops.generate_dep_only () && !ops.file_list_only ());
 
       // Process ordered types.
       //
@@ -493,72 +493,88 @@ namespace CXX
 
       // FWD
       //
-      if (gen_cxx && forward)
+      if (forward)
       {
-        fwd.open (fwd_path.string ().c_str (), ios_base::out);
-
-        if (!fwd.is_open ())
+        if (gen_cxx)
         {
-          wcerr << fwd_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          fwd.open (fwd_path.string ().c_str (), ios_base::out);
+
+          if (!fwd.is_open ())
+          {
+            wcerr << fwd_path << ": error: unable to open in write mode" << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (fwd_path);
         }
 
-        unlinks.add (fwd_path);
         file_list.push_back (fwd_path.string ());
       }
 
       // HXX
       //
-      if (gen_cxx && header)
+      if (header)
       {
-        hxx.open (hxx_path.string ().c_str (), ios_base::out);
-
-        if (!hxx.is_open ())
+        if (gen_cxx)
         {
-          wcerr << hxx_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          hxx.open (hxx_path.string ().c_str (), ios_base::out);
+
+          if (!hxx.is_open ())
+          {
+            wcerr << hxx_path << ": error: unable to open in write mode" << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (hxx_path);
         }
 
-        unlinks.add (hxx_path);
         file_list.push_back (hxx_path.string ());
       }
 
       // IXX
       //
-      if (gen_cxx && inline_)
+      if (inline_)
       {
-        ixx.open (ixx_path.string ().c_str (), ios_base::out);
-
-        if (!ixx.is_open ())
+        if (gen_cxx)
         {
-          wcerr << ixx_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          ixx.open (ixx_path.string ().c_str (), ios_base::out);
+
+          if (!ixx.is_open ())
+          {
+            wcerr << ixx_path << ": error: unable to open in write mode" << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (ixx_path);
         }
 
-        unlinks.add (ixx_path);
         file_list.push_back (ixx_path.string ());
       }
 
       // CXX
       //
-      if (gen_cxx && source)
+      if (source)
       {
         for (Paths::iterator i (cxx_paths.begin ());
              i != cxx_paths.end (); ++i)
         {
-          shared_ptr<WideOutputFileStream> s (
-            new (shared) WideOutputFileStream (
-              i->string ().c_str (), ios_base::out));
-
-          if (!s->is_open ())
+          if (gen_cxx)
           {
-            wcerr << *i << ": error: unable to open in write mode" << endl;
-            throw Failed ();
+            shared_ptr<WideOutputFileStream> s (
+              new (shared) WideOutputFileStream (
+                i->string ().c_str (), ios_base::out));
+
+            if (!s->is_open ())
+            {
+              wcerr << *i << ": error: unable to open in write mode" << endl;
+              throw Failed ();
+            }
+
+            cxx.push_back (s);
+            unlinks.add (*i);
           }
 
-          unlinks.add (*i);
           file_list.push_back (i->string ());
-          cxx.push_back (s);
         }
       }
 

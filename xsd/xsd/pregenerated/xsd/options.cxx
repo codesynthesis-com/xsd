@@ -1096,6 +1096,7 @@ options ()
   fat_type_file_ (),
   file_list_ (),
   file_list_specified_ (false),
+  file_list_only_ (),
   file_list_prologue_ (),
   file_list_prologue_specified_ (false),
   file_list_epilogue_ (),
@@ -1178,6 +1179,9 @@ print_usage (::std::wostream& os, ::cli::usage_para p)
   os << "--file-list <file>           Write a list of generated C++ files to <file> or" << ::std::endl
      << "                             to stdout if <file> is -." << ::std::endl;
 
+  os << "--file-list-only             Only write the list of C++ files that would be" << ::std::endl
+     << "                             generated without actually generating them." << ::std::endl;
+
   os << "--file-list-prologue <text>  Insert <text> at the beginning of the file list." << ::std::endl;
 
   os << "--file-list-epilogue <text>  Insert <text> at the end of the file list." << ::std::endl;
@@ -1252,6 +1256,8 @@ struct _cli_options_map_init
     _cli_options_map_["--file-list"] =
     &::cli::thunk< options, NarrowString, &options::file_list_,
       &options::file_list_specified_ >;
+    _cli_options_map_["--file-list-only"] =
+    &::cli::thunk< options, &options::file_list_only_ >;
     _cli_options_map_["--file-list-prologue"] =
     &::cli::thunk< options, NarrowString, &options::file_list_prologue_,
       &options::file_list_prologue_specified_ >;

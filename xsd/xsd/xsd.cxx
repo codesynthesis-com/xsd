@@ -298,6 +298,14 @@ main (int argc, char* argv[])
       ? static_cast<CXX::options&> (*tree_ops)
       : static_cast<CXX::options&> (*parser_ops));
 
+    // Validate options.
+    //
+    if (common_ops.file_list_only () && !common_ops.file_list_specified ())
+    {
+      e << "error: --file-list-only specified without --file-list" << endl;
+      return 1;
+    }
+
     // Disabled warnings.
     //
     WarningSet disabled_w;

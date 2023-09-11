@@ -608,6 +608,9 @@ class options
   bool
   file_list_specified () const;
 
+  const bool&
+  file_list_only () const;
+
   const NarrowString&
   file_list_prologue () const;
 
@@ -678,6 +681,7 @@ class options
   bool fat_type_file_;
   NarrowString file_list_;
   bool file_list_specified_;
+  bool file_list_only_;
   NarrowString file_list_prologue_;
   bool file_list_prologue_specified_;
   NarrowString file_list_epilogue_;

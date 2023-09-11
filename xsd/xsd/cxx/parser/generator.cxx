@@ -231,8 +231,11 @@ namespace CXX
           throw Failed ();
       }
 
+      bool gen_cxx (!ops.file_list_only ());
+
       // Process names.
       //
+      if (gen_cxx)
       {
         NameProcessor proc;
         proc.process (ops, schema, file_path, string_literal_map);
@@ -244,7 +247,7 @@ namespace CXX
 
       // Compute state machine info.
       //
-      if (validation)
+      if (gen_cxx && validation)
       {
         StateProcessor proc;
         proc.process (schema, file_path);
@@ -253,6 +256,7 @@ namespace CXX
       // Read-in type maps.
       //
       TypeMap::Namespaces type_map;
+      if (gen_cxx)
       {
         using namespace TypeMap;
 
@@ -375,6 +379,7 @@ namespace CXX
 
       // Process types.
       //
+      if (gen_cxx)
       {
         TypeProcessor proc;
         proc.process (ops, schema, gen_driver, type_map);
@@ -558,134 +563,164 @@ namespace CXX
 
       if (impl)
       {
-        if (!ops.force_overwrite ())
+        if (gen_cxx)
         {
-          WideInputFileStream tmp (
-            hxx_impl_path.string ().c_str (), ios_base::in);
-
-          if (tmp.is_open ())
+          if (!ops.force_overwrite ())
           {
-            wcerr << hxx_impl_path << ": error: cowardly refusing to " <<
-              "overwrite an existing file" << endl;
+            WideInputFileStream tmp (
+              hxx_impl_path.string ().c_str (), ios_base::in);
+
+            if (tmp.is_open ())
+            {
+              wcerr << hxx_impl_path << ": error: cowardly refusing to " <<
+                "overwrite an existing file" << endl;
+              throw Failed ();
+            }
+
+            tmp.close ();
+          }
+
+          hxx_impl.open (hxx_impl_path.string ().c_str (), ios_base::out);
+
+          if (!hxx_impl.is_open ())
+          {
+            wcerr << hxx_impl_path << ": error: unable to open in write mode"
+                  << endl;
             throw Failed ();
           }
 
-          tmp.close ();
+          unlinks.add (hxx_impl_path);
         }
 
-        hxx_impl.open (hxx_impl_path.string ().c_str (), ios_base::out);
-
-        if (!hxx_impl.is_open ())
-        {
-          wcerr << hxx_impl_path << ": error: unable to open in write mode"
-                << endl;
-          throw Failed ();
-        }
-
-        unlinks.add (hxx_impl_path);
         file_list.push_back (hxx_impl_path.string ());
 
-        if (!ops.force_overwrite ())
+        if (gen_cxx)
         {
-          WideInputFileStream tmp (
-            cxx_impl_path.string ().c_str (), ios_base::in);
-
-          if (tmp.is_open ())
+          if (!ops.force_overwrite ())
           {
-            wcerr << cxx_impl_path << ": error: cowardly refusing to " <<
-              "overwrite an existing file" << endl;
+            WideInputFileStream tmp (
+              cxx_impl_path.string ().c_str (), ios_base::in);
+
+            if (tmp.is_open ())
+            {
+              wcerr << cxx_impl_path << ": error: cowardly refusing to " <<
+                "overwrite an existing file" << endl;
+              throw Failed ();
+            }
+
+            tmp.close ();
+          }
+
+          cxx_impl.open (cxx_impl_path.string ().c_str (), ios_base::out);
+
+          if (!cxx_impl.is_open ())
+          {
+            wcerr << cxx_impl_path << ": error: unable to open in write mode"
+                  << endl;
             throw Failed ();
           }
 
-          tmp.close ();
+          unlinks.add (cxx_impl_path);
         }
 
-        cxx_impl.open (cxx_impl_path.string ().c_str (), ios_base::out);
-
-        if (!cxx_impl.is_open ())
-        {
-          wcerr << cxx_impl_path << ": error: unable to open in write mode"
-                << endl;
-          throw Failed ();
-        }
-
-        unlinks.add (cxx_impl_path);
         file_list.push_back (cxx_impl_path.string ());
       }
 
       if (driver)
       {
-        if (!ops.force_overwrite ())
+        if (gen_cxx)
         {
-          WideInputFileStream tmp (
-            cxx_driver_path.string ().c_str (), ios_base::in);
-
-          if (tmp.is_open ())
+          if (!ops.force_overwrite ())
           {
-            wcerr << cxx_driver_path << ": error: cowardly refusing to " <<
-              "overwrite an existing file" << endl;
+            WideInputFileStream tmp (
+              cxx_driver_path.string ().c_str (), ios_base::in);
+
+            if (tmp.is_open ())
+            {
+              wcerr << cxx_driver_path << ": error: cowardly refusing to " <<
+                "overwrite an existing file" << endl;
+              throw Failed ();
+            }
+
+            tmp.close ();
+          }
+
+          cxx_driver.open (cxx_driver_path.string ().c_str (), ios_base::out);
+
+          if (!cxx_driver.is_open ())
+          {
+            wcerr << cxx_driver_path << ": error: unable to open in write " <<
+              "mode" << endl;
             throw Failed ();
           }
 
-          tmp.close ();
+          unlinks.add (cxx_driver_path);
         }
 
-        cxx_driver.open (cxx_driver_path.string ().c_str (), ios_base::out);
-
-        if (!cxx_driver.is_open ())
-        {
-          wcerr << cxx_driver_path << ": error: unable to open in write " <<
-            "mode" << endl;
-          throw Failed ();
-        }
-
-        unlinks.add (cxx_driver_path);
         file_list.push_back (cxx_driver_path.string ());
       }
 
       // Open the skel files.
       //
-      WideOutputFileStream hxx (hxx_path.string ().c_str (), ios_base::out);
+      WideOutputFileStream hxx;
       WideOutputFileStream ixx;
       WideOutputFileStream cxx;
 
-      if (!hxx.is_open ())
+      if (gen_cxx)
       {
-        wcerr << hxx_path << ": error: unable to open in write mode" << endl;
-        throw Failed ();
+        hxx.open (hxx_path.string ().c_str (), ios_base::out);
+
+        if (!hxx.is_open ())
+        {
+          wcerr << hxx_path << ": error: unable to open in write mode" << endl;
+          throw Failed ();
+        }
+
+        unlinks.add (hxx_path);
       }
 
-      unlinks.add (hxx_path);
       file_list.push_back (hxx_path.string ());
 
       if (inline_)
       {
-        ixx.open (ixx_path.string ().c_str (), ios_base::out);
-
-        if (!ixx.is_open ())
+        if (gen_cxx)
         {
-          wcerr << ixx_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          ixx.open (ixx_path.string ().c_str (), ios_base::out);
+
+          if (!ixx.is_open ())
+          {
+            wcerr << ixx_path << ": error: unable to open in write mode"
+                  << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (ixx_path);
         }
 
-        unlinks.add (ixx_path);
         file_list.push_back (ixx_path.string ());
       }
 
-
       if (source)
       {
-        cxx.open (cxx_path.string ().c_str (), ios_base::out);
-
-        if (!cxx.is_open ())
+        if (gen_cxx)
         {
-          wcerr << cxx_path << ": error: unable to open in write mode" << endl;
-          throw Failed ();
+          cxx.open (cxx_path.string ().c_str (), ios_base::out);
+
+          if (!cxx.is_open ())
+          {
+            wcerr << cxx_path << ": error: unable to open in write mode"
+                  << endl;
+            throw Failed ();
+          }
+
+          unlinks.add (cxx_path);
         }
 
-        unlinks.add (cxx_path);
         file_list.push_back (cxx_path.string ());
       }
+
+      if (!gen_cxx)
+        return 0;
 
       // Print copyright and license.
       //

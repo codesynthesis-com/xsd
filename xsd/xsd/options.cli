@@ -283,6 +283,13 @@ class options = 0
      C++ files, for example, as a makefile fragment."
   };
 
+  bool --file-list-only
+  {
+    "Only write the list of C++ files that would be generated without
+     actually generating them. This option only makes sense together with
+     \cb{--file-list}."
+  }
+
   NarrowString --file-list-prologue
   {
     "<text>",

@@ -495,6 +495,12 @@ file_list_specified () const
   return this->file_list_specified_;
 }
 
+inline const bool& options::
+file_list_only () const
+{
+  return this->file_list_only_;
+}
+
 inline const NarrowString& options::
 file_list_prologue () const
 {
