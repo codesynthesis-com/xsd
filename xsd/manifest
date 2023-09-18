@@ -22,3 +22,131 @@ depends: libxerces-c ^3.0.0
 depends: * cli ^1.2.0- ? ($config.xsd.develop)
 tests: * xsd-tests == $
 examples: * xsd-examples == $
+
+# Binary distribution packages. Overall notes:
+#
+# - Link dependencies that don't come from system packages statically.
+#
+# - We suppress generating binary packages for dependecies (libcutl,
+#   libxsd-frontend) with --recursive=auto since they are linked statically.
+#
+# - For archives we strip the default compiler name from metadata since
+#   it's unimportant (we link the C++ runtime statically).
+
+# Note that the Xerces-C++ package is in the unsupported `universe` section on
+# Ubuntu so we have a separate configuration for it where we build Xerces-C++
+# ourselves.
+#
+bindist-debian-builds: bindist
+bindist-debian-build-include: linux_debian*-**
+bindist-debian-build-exclude: **
+bindist-debian-build-config:
+\
++bpkg.bindist.debian:
++bbot.bindist.upload:
+bpkg.bindist.debian:--recursive=auto
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+?sys:libxerces-c
+\
+
+bindist-ubuntu-builds: bindist
+bindist-ubuntu-build-include: linux_ubuntu*-**
+bindist-ubuntu-build-exclude: **
+bindist-ubuntu-build-config:
+\
++bpkg.bindist.debian:
++bbot.bindist.upload:
+bpkg.bindist.debian:--recursive=auto
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+?sys:libicuuc
+?sys:libicui18n
+\
+
+# Note that there is no Xerces-C++ package in RHEL (only in EPEL) so we
+# have a separate configuration for RHEL.
+#
+bindist-fedora-builds: bindist
+bindist-fedora-build-include: linux_fedora*-**
+bindist-fedora-build-exclude: **
+bindist-fedora-build-config:
+\
++bpkg.bindist.fedora:
++bbot.bindist.upload:
+bpkg.bindist.fedora:--recursive=auto
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+?sys:libxerces-c
+\
+
+bindist-rhel-builds: bindist
+bindist-rhel-build-include: linux_rhel*-**
+bindist-rhel-build-exclude: **
+bindist-rhel-build-config:
+\
++bpkg.bindist.fedora:
++bbot.bindist.upload:
+bpkg.bindist.fedora:--recursive=auto
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+?sys:libicuuc
+?sys:libicui18n
+\
+
+# Note: use static runtime since the DLL runtime is not universally
+# pre-installed.
+#
+bindist-windows-builds: bindist
+bindist-windows-build-include: windows*-**
+bindist-windows-build-exclude: **
+bindist-windows-build-config:
+\
++bpkg.bindist.archive:
++bbot.bindist.upload:
+bpkg.bindist.archive:--recursive=auto
+bpkg.bindist.archive:--archive-lang-impl=cc=
+bpkg.bindist.archive:config.install.relocatable=true
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+bpkg.create:config.cc.coptions+="/MT"
+b.create:config.cc.coptions="/W2 /O2"
+\
+
+# Note that /usr/lib/libc++.1.dylib is pre-installed and appears to be
+# reasonably compatible (even forward-compatible) so we don't bother
+# with linking it statically for now.
+#
+bindist-macos-builds: bindist
+bindist-macos-build-include: macos*-**
+bindist-macos-build-exclude: **
+bindist-macos-build-config:
+\
++bpkg.bindist.archive:
++bbot.bindist.upload:
+bpkg.bindist.archive:--recursive=auto
+bpkg.bindist.archive:--archive-lang-impl=cc=
+bpkg.bindist.archive:config.install.relocatable=true
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+b.create:config.cc.coptions="-Wall -O3"
+\
+
+# Generic linux package (built using oldest Debian we support).
+#
+# Note: update glibc version in metadata if changing build configuration.
+#
+bindist-linux-builds: bindist
+bindist-linux-build-include: linux_debian_11-gcc_10.2-bindist
+bindist-linux-build-exclude: **
+bindist-linux-build-config:
+\
++bpkg.bindist.archive:
++bbot.bindist.upload:
+bpkg.bindist.archive:--recursive=auto
+bpkg.bindist.archive:--archive-build-meta=linux-glibc2.31
+bpkg.bindist.archive:config.install.relocatable=true
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+config.cc.loptions+="-static-libstdc++ -static-libgcc"
+\
