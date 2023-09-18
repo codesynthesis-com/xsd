@@ -25,6 +25,8 @@ tests: libxsd-tests == $
 #   available. Similarly, we pass optimization options where appropriate.
 #
 # - Build as C++11 for maximum compatibility (this is a C++11 codebase).
+#
+# - For archives adjust metadata since this is a binless library.
 
 bindist-debian-builds: bindist
 bindist-debian-build-include: linux_debian*-**
@@ -72,6 +74,7 @@ bindist-windows-build-config:
 \
 +bpkg.bindist.archive:
 +bbot.bindist.upload:
+bpkg.bindist.archive:--archive-build-meta=windows
 bpkg.bindist.archive:config.install.relocatable=true
 b.create:config.cc.coptions="/W2 /O2"
 b.create:config.cxx.std=c++11
@@ -84,14 +87,13 @@ bindist-macos-build-config:
 \
 +bpkg.bindist.archive:
 +bbot.bindist.upload:
+bpkg.bindist.archive:--archive-build-meta=macos
 bpkg.bindist.archive:config.install.relocatable=true
 b.create:config.cc.coptions="-Wall -O3"
 b.create:config.cxx.std=c++11
 \
 
 # Generic linux package (built using oldest Debian we support).
-#
-# - Drop archive metadata since this is a binless library.
 #
 bindist-linux-builds: bindist
 bindist-linux-build-include: linux_debian_11-gcc_10.2-bindist
@@ -100,8 +102,8 @@ bindist-linux-build-config:
 \
 +bpkg.bindist.archive:
 +bbot.bindist.upload:
+bpkg.bindist.archive:--archive-build-meta=linux
 bpkg.bindist.archive:config.install.relocatable=true
-bpkg.bindist.archive:--archive-build-meta=
 b.create:config.cxx.std=c++11
 ?sys:libxerces-c
 ?sys:libexpat
