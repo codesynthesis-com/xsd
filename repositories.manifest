@@ -11,7 +11,7 @@ location: https://git.build2.org/packaging/xerces-c/xerces-c.git##HEAD
 
 :
 role: prerequisite
-location: https://git.build2.org/packaging/expat/expat.git##HEAD
+location: https://git.build2.org/packaging/expat/expat.git#2.5.0+1
 
 :
 role: prerequisite
