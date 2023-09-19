@@ -38,5 +38,6 @@ bindist-debian-build-config:
 +bpkg.bindist.debian:
 +bbot.bindist.upload:
 bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libxerces-c
 \
