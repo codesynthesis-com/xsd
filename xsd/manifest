@@ -56,3 +56,14 @@ bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libxerces-c
 \
+
+bindist-rhel-builds: bindist
+bindist-rhel-build-include: linux_rhel*-**
+bindist-rhel-build-exclude: **
+bindist-rhel-build-config:
+\
++bpkg.bindist.fedora:
++bbot.bindist.upload:
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+\
