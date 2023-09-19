@@ -22,3 +22,21 @@ depends: libxerces-c ^3.0.0
 depends: * cli ^1.2.0- ? ($config.xsd.develop)
 tests: * xsd-tests == $
 examples: * xsd-examples == $
+
+# Binary distribution packages. Overall notes:
+#
+# - Link dependencies that don't come from system packages statically.
+#
+# @@ TMP: bpkg.bindist.debian:--recursive=none
+
+bindist-debian-builds: bindist
+bindist-debian-build-include: linux_debian*-**
+bindist-debian-build-include: linux_ubuntu*-**
+bindist-debian-build-exclude: **
+bindist-debian-build-config:
+\
++bpkg.bindist.debian:
++bbot.bindist.upload:
+bpkg.create:config.bin.lib=static
+?sys:libxerces-c
+\
