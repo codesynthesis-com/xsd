@@ -66,4 +66,6 @@ bindist-rhel-build-config:
 +bbot.bindist.upload:
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
+?sys:libicuuc
+?sys:libicui18n
 \
