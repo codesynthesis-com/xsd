@@ -28,10 +28,12 @@ examples: * xsd-examples == $
 # - Link dependencies that don't come from system packages statically.
 #
 # @@ TMP: bpkg.bindist.debian:--recursive=none
+#
+# @@ TODO: verify not linking static libxerces-c in -tests/examples.
 
 bindist-debian-builds: bindist
 bindist-debian-build-include: linux_debian*-**
-bindist-debian-build-include: linux_ubuntu*-**
+#bindist-debian-build-include: linux_ubuntu*-**
 bindist-debian-build-exclude: **
 bindist-debian-build-config:
 \
@@ -40,6 +42,21 @@ bindist-debian-build-config:
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libxerces-c
+\
+
+# @@ TMP (or maybe not).
+#
+bindist-ubuntu-builds: bindist
+bindist-ubuntu-build-include: linux_ubuntu*-**
+bindist-ubuntu-build-exclude: **
+bindist-ubuntu-build-config:
+\
++bpkg.bindist.debian:
++bbot.bindist.upload:
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+?sys:libicuuc
+?sys:libicui18n
 \
 
 # Note that there is no Xerces-C++ package in RHEL (only in EPEL) so we
