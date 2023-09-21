@@ -28,7 +28,7 @@ examples: * xsd-examples == $
 # - Link dependencies that don't come from system packages statically.
 #
 # - We suppress generating binary packages for dependecies (libcutl,
-#   libxsd-frontend) with --recursive=none since they are linked statically.
+#   libxsd-frontend) with --recursive=auto since they are linked statically.
 #
 # @@ TMP: bpkg.bindist.debian:--recursive=none
 #         bpkg.bindist.fedora:--recursive=none
@@ -86,6 +86,7 @@ bindist-rhel-build-config:
 \
 +bpkg.bindist.fedora:
 +bbot.bindist.upload:
+bpkg.bindist.fedora:--recursive=auto
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicuuc
