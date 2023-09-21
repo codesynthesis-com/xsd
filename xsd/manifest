@@ -85,7 +85,7 @@ bindist-rhel-build-config:
 \
 +bpkg.bindist.fedora:
 +bbot.bindist.upload:
-bpkg.bindist.debian:--recursive=none
+bpkg.bindist.fedora:--recursive=none
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicuuc
