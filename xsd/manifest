@@ -115,6 +115,10 @@ bpkg.create:config.cc.coptions+="/MT"
 b.create:config.cc.coptions="/W2 /O2"
 \
 
+# Note that /usr/lib/libc++.1.dylib is pre-installed and appears to be
+# reasonably compatible (even forward-compatible) so we don't bother
+# with linking it statically for now.
+#
 bindist-macos-builds: bindist
 bindist-macos-build-include: macos*-**
 bindist-macos-build-exclude: **
@@ -127,5 +131,25 @@ bpkg.bindist.archive:--archive-lang-impl=cc=
 bpkg.bindist.archive:config.install.relocatable=true
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
+b.create:config.cc.coptions="-Wall -O3"
+\
+
+# Generic linux package (built using oldest Debian we support).
+#
+# Note: update glibc version in metadata if changing build configuration.
+#
+bindist-linux-builds: bindist
+bindist-linux-build-include: linux_debian_11-gcc_10.2-bindist
+bindist-linux-build-exclude: **
+bindist-linux-build-config:
+\
++bpkg.bindist.archive:
++bbot.bindist.upload:
+bpkg.bindist.archive:--recursive=auto
+bpkg.bindist.archive:--archive-build-meta=linux-glibc2.31
+bpkg.bindist.archive:config.install.relocatable=true
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+bpkg.create:config.cc.loptions="-static-libstdc++ -static-libgcc"
 b.create:config.cc.coptions="-Wall -O3"
 \
