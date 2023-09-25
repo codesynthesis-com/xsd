@@ -150,6 +150,5 @@ bpkg.bindist.archive:--archive-build-meta=linux-glibc2.31
 bpkg.bindist.archive:config.install.relocatable=true
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
-bpkg.create:config.cc.loptions="-static-libstdc++ -static-libgcc"
-b.create:config.cc.coptions="-Wall -O3"
+config.cc.loptions+="-static-libstdc++ -static-libgcc"
 \
