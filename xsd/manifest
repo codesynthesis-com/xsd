@@ -96,6 +96,9 @@ bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicui18n
 \
 
+# Note: use static runtime since the DLL runtime is not necessarily
+# pre-installed.
+#
 bindist-windows-builds: bindist
 bindist-windows-build-include: windows*-**
 bindist-windows-build-exclude: **
@@ -108,5 +111,6 @@ bpkg.bindist.archive:--archive-lang-impl=cc=
 bpkg.bindist.archive:config.install.relocatable=true
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
+bpkg.create:config.cc.coptions="/MT /W2 /O2"
 b.create:config.cc.coptions="/W2 /O2"
 \
