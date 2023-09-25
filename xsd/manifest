@@ -30,10 +30,8 @@ examples: * xsd-examples == $
 # - We suppress generating binary packages for dependecies (libcutl,
 #   libxsd-frontend) with --recursive=auto since they are linked statically.
 #
-# - For archives we strip the default compiler name from metadata since we
-#   link statically and it's unimportant.
-#
-# @@ TODO: verify not linking static libxerces-c in -tests/examples.
+# - For archives we strip the default compiler name from metadata since
+#   it's unimportant (we link the C++ runtime statically).
 
 # Note that the Xerces-C++ package is in the unsupported `universe` section on
 # Ubuntu so we have a separate configuration for it where we build Xerces-C++
