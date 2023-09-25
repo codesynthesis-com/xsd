@@ -30,6 +30,9 @@ examples: * xsd-examples == $
 # - We suppress generating binary packages for dependecies (libcutl,
 #   libxsd-frontend) with --recursive=auto since they are linked statically.
 #
+# - For archives we strip the default compiler name from metadata since we
+#   link statically and it's unimportant.
+#
 # @@ TODO: verify not linking static libxerces-c in -tests/examples.
 
 # Note that the Xerces-C++ package is in the unsupported `universe` section on
@@ -91,4 +94,19 @@ bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicuuc
 ?sys:libicui18n
+\
+
+bindist-windows-builds: bindist
+bindist-windows-build-include: windows*-**
+bindist-windows-build-exclude: **
+bindist-windows-build-config:
+\
++bpkg.bindist.archive:
++bbot.bindist.upload:
+bpkg.bindist.archive:--recursive=auto
+bpkg.bindist.archive:--archive-lang-impl=cc=
+bpkg.bindist.archive:config.install.relocatable=true
+bpkg.create:config.bin.lib=static
+bpkg.create:config.bin.liba.lib="shared static"
+b.create:config.cc.coptions="/W2 /O2"
 \
