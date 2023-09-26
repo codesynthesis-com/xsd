@@ -12,11 +12,11 @@ exe{driver}: xml{contacts}: test.input = true
 
 <{hxx ixx cxx}{contacts}>: xsd{contacts} $xsd
 {{
-  $xsd cxx-tree                                         \
-       --generate-inline                                \
-        --custom-type contact=/contact_base             \
-        --hxx-epilogue '#include "contacts-custom.hxx"' \
-       --output-dir $out_base                           \
+  $xsd cxx-tree                                        \
+       --generate-inline                               \
+       --custom-type contact=/contact_base             \
+       --hxx-epilogue '#include "contacts-custom.hxx"' \
+       --output-dir $out_base                          \
        $path($<[0])
 }}
 
