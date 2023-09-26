@@ -102,6 +102,36 @@ namespace CXX
       L"xor",
       L"xor_eq"
     };
+
+    // Note: excluding "identifiers with special meaning" in certain contexts
+    // ("final", "override") since they shouldn't cause any issues.
+    //
+    wchar_t const* keywords_cxx11[] = {
+      L"alignas",
+      L"alignof",
+      L"char16_t",
+      L"char32_t",
+      L"constexpr",
+      L"decltype",
+      L"noexcept",
+      L"nullptr",
+      L"static_assert",
+      L"thread_local"
+    };
+
+    // Note: excluding "identifiers with special meaning" in certain contexts
+    // ("import", "module") since they shouldn't cause any issues.
+    //
+    wchar_t const* keywords_cxx20[] = {
+      L"char8_t",
+      L"concept",
+      L"consteval",
+      L"constinit",
+      L"co_await",
+      L"co_return",
+      L"co_yield",
+      L"requires"
+    };
   }
 
   // Context
@@ -268,8 +298,21 @@ namespace CXX
 
     // Populate the keyword set.
     //
-    for (size_t i (0); i < sizeof (keywords) / sizeof (char*); ++i)
+    for (size_t i (0); i < sizeof (keywords) / sizeof (wchar_t*); ++i)
       keyword_set_.insert (keywords[i]);
+
+    if (std >= cxx_version::cxx11)
+    {
+      for (size_t i (0); i < sizeof (keywords_cxx11) / sizeof (wchar_t*); ++i)
+        keyword_set_.insert (keywords_cxx11[i]);
+    }
+
+    if (std >= cxx_version::cxx20)
+    {
+      for (size_t i (0); i < sizeof (keywords_cxx20) / sizeof (wchar_t*); ++i)
+        keyword_set_.insert (keywords_cxx20[i]);
+    }
+
   }
 
   String Context::
