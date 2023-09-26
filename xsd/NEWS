@@ -1,10 +1,55 @@
-Version 4.1.0
+Version 4.2.0
+
+  * In this version we have switched to the build2 build system. For the
+    step-by-step instructions on how to build XSD from source on all the
+    major platforms, see:
+
+    https://codesynthesis.com/products/xsd/doc/install-build2.xhtml
+
+  * In this version we have changed the default C++ standard that is used
+    by the generated code from C++98 to C++11. While you can still request
+    C++98 with the --std=c++98 option, note that this is the last release
+    that supports the C++98 standard and the next release will require C++11
+    or later (in fact, building the XSD compiler itself already requires
+    C++11 or later). Note also that the --std option now recognizes the
+    c++14, c++17, c++20, and c++23 additional values.
+
+  * This version will be the last release that supports Xerces-C++ earlier
+    than 3.1.0 and the next release will require Xerces-C++ 3.1.0 or later.
+
+  * New --file-list-only option that allows only writing the list of C++
+    files that would be generated without actually generating them.
+
+  * The --file-list option now recognize the `-` value as a request to write
+    to stdout.
+
+  * New --dep-file option that allows specifying the dependency file name.
+    It also allows writing the dependency information to stdout by specifying
+    `-` as this option's value.
+
+  * This version contains a large number of bug fixes and minor improvements
+    that have accumulated over the years.
 
 C++/Tree
 
-  * Support for abstract XML Schema types. The corresponding C++ classes
-    now have _clone() declared pure virtual which prevents construction
-    of their instances.
+  * Support for abstract XML Schema types. The corresponding C++ classes now
+    have the _clone() member function declared pure virtual which prevents
+    the construction of instances of such types.
+
+  * New base_string() accessors in the xml_schema::{string,uri} types that
+    return the underlying string.
+
+  * Support for `ucc` (upper-camel-case) value in the --function-naming
+    option.
+
+  * New C++/Tree `secure` example (xsd-examples/cxx/tree/secure/) shows how
+    to perform more secure XML parsing by disabling the XML External Entity
+    (XXE) Processing. See the accompanying README file for details.
+
+Version 4.1.0
+
+  * This version was never released. It was skipped due to a minor versioning
+    scheme adjustment in the pre-release component when migrating to build2.
 
 Version 4.0.0
 
