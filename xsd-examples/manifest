@@ -7,9 +7,9 @@ language: c++
 summary: XML Schema to C++ data binding compiler examples
 license: Unlicence
 description-file: README.md
-url: https://www.codesynthesis.com/projects/xsd/
-doc-url: https://www.codesynthesis.com/projects/xsd/
-src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd-examples/
+url: https://www.codesynthesis.com/products/xsd/
+doc-url: https://www.codesynthesis.com/products/xsd/
+src-url: https://git.codesynthesis.com/cgit/xsd/xsd/
 email: xsd-users@codesynthesis.com ; Mailing list
 depends: * build2 >= 0.16.0
 depends: * bpkg >= 0.16.0

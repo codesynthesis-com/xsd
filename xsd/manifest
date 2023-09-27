@@ -8,9 +8,9 @@ topics: C++, XML, XML Schema, XML parser, source code generation
 description-file: README.md
 package-description-file: PACKAGE-README.md
 changes-file: NEWS
-url: https://www.codesynthesis.com/projects/xsd/
-doc-url: https://www.codesynthesis.com/projects/xsd/
-src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd/
+url: https://www.codesynthesis.com/products/xsd/
+doc-url: https://www.codesynthesis.com/products/xsd/
+src-url: https://git.codesynthesis.com/cgit/xsd/xsd/
 email: xsd-users@codesynthesis.com ; Mailing list
 build-warning-email: builds@codesynthesis.com
 requires: host
