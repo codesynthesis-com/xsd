@@ -12,9 +12,18 @@ binary packages, refer to the [XSD project
 page](https://codesynthesis.com/products/xsd/).
 
 NOTE: the steps described below are more appropriate for the development of
-XSD as opposed to consumption. If you just want to use XSD, see [Installing
-XSD with `build2`](https://codesynthesis.com/products/xsd/doc/install-build2.xhtml)
-for the step-by-step instructions.
+XSD as opposed to consumption. In case you just want to use XSD:
+
+* If you want to use a binary package, see the [XSD download
+  page](https://codesynthesis.com/products/xsd/download.xhtml).
+
+* If you want to build XSD from source and use the result from a project that
+  uses a build system other than `build2`, then see [Installing XSD with
+  `build2`](https://codesynthesis.com/products/xsd/doc/install-build2.xhtml)
+  for the step-by-step instructions.
+
+* If you want to use XSD from a project that uses `build2` as the build
+  system, then see the accompanying `PACKAGE-README.md` file.
 
 The development setup for XSD uses two build configurations, for example:
 
