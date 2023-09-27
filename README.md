@@ -43,3 +43,11 @@ bdep init @install -d xsd
 
 b install: ../xsd-install/xsd/
 ```
+
+The checked out `libxsd/xsd/cxx/version.hxx` will be overwritten during the
+in-source build but these changes must be ignored. To do this automatically,
+run:
+
+```
+git update-index --assume-unchanged libxsd/xsd/cxx/version.hxx
+```
