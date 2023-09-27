@@ -1,4 +1,4 @@
 # file      : buildfile
 # license   : not copyrighted - public domain
 
-./: {*/ -build/} doc{README} legal{UNLICENSE} manifest
+./: {*/ -build/} doc{README.md} legal{UNLICENSE} manifest

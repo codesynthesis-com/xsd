@@ -6,7 +6,7 @@ type: examples
 language: c++
 summary: XML Schema to C++ data binding compiler examples
 license: Unlicence
-description-file: README
+description-file: README.md
 url: https://www.codesynthesis.com/projects/xsd/
 doc-url: https://www.codesynthesis.com/projects/xsd/
 src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/xsd-examples/

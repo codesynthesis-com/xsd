@@ -1,4 +1,4 @@
 # file      : buildfile
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-./: {*/ -build/} doc{README} legal{GPLv2 LICENSE FLOSSE} manifest
+./: {*/ -build/} doc{README.md} legal{GPLv2 LICENSE FLOSSE} manifest

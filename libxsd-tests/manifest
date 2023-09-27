@@ -6,7 +6,7 @@ type: tests
 language: c++
 summary: XML Schema to C++ data binding compiler runtime library tests
 license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
-description-file: README
+description-file: README.md
 url: https://www.codesynthesis.com/projects/xsd/
 doc-url: https://www.codesynthesis.com/projects/xsd/
 src-url: https://git.codesynthesis.com/cgit/xsd/xsd/tree/libxsd-tests/

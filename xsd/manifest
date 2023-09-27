@@ -5,7 +5,7 @@ language: c++
 summary: XML Schema to C++ data binding compiler
 license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
 topics: C++, XML, XML Schema, XML parser, source code generation
-description-file: README
+description-file: README.md
 package-description-file: PACKAGE-README.md
 changes-file: NEWS
 url: https://www.codesynthesis.com/projects/xsd/
