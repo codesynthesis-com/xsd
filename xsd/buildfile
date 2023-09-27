@@ -1,9 +1,11 @@
 # file      : buildfile
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-./: {*/ -build/} doc{INSTALL NEWS README} legal{GPLv2 LICENSE FLOSSE} manifest
+./: {*/ -build/} \
+    doc{README PACKAGE-README.md NEWS} \
+    legal{GPLv2 LICENSE FLOSSE} \
+    manifest
 
-# Don't install tests or the INSTALL file.
+# Don't install tests.
 #
-tests/:          install = false
-doc{INSTALL}@./: install = false
+tests/: install = false
