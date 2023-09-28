@@ -1,6 +1,6 @@
 : 1
 name: xsd
-version: 4.2.0-b.4.z
+version: 4.2.0
 language: c++
 summary: XML Schema to C++ data binding compiler
 license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS exception
