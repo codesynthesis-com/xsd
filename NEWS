@@ -36,6 +36,12 @@ C++/Tree
     have the _clone() member function declared pure virtual which prevents
     the construction of instances of such types.
 
+    Note that if after upgrading to this version you start getting C++
+    compile errors in the generated code with diagnostics saying that a
+    type cannot be instantiated because _clone() is pure virtual, then
+    it's a strong indication that this type (or its base) is polymorphic
+    and needs to be marked as such (see --polymorphic-type* options).
+
   * New base_string() accessors in the xml_schema::{string,uri} types that
     return the underlying string.
 
