@@ -28,6 +28,8 @@ tests: libxsd-tests == $
 # - Build as C++11 for maximum compatibility (this is a C++11 codebase).
 #
 # - For archives adjust metadata since this is a binless library.
+#
+# - We disable warning emails for configurations that build Xerces-C++.
 
 bindist-debian-builds: bindist
 bindist-debian-build-include: linux_debian*-**
@@ -67,6 +69,7 @@ bindist-rhel-build-config:
 b.create:config.cxx.std=c++11
 ?sys:libexpat
 \
+#bindist-rhel-build-error-email: builds@codesynthesis.com
 
 bindist-windows-builds: bindist
 bindist-windows-build-include: windows*-**
@@ -80,6 +83,7 @@ bpkg.bindist.archive:config.install.relocatable=true
 b.create:config.cc.coptions="/W2 /O2"
 b.create:config.cxx.std=c++11
 \
+#bindist-windows-build-error-email: builds@codesynthesis.com
 
 bindist-macos-builds: bindist
 bindist-macos-build-include: macos*-**
@@ -93,6 +97,7 @@ bpkg.bindist.archive:config.install.relocatable=true
 b.create:config.cc.coptions="-Wall -O3"
 b.create:config.cxx.std=c++11
 \
+#bindist-macos-build-error-email: builds@codesynthesis.com
 
 # Generic linux package (built using oldest Debian we support).
 #

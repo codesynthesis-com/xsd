@@ -33,6 +33,8 @@ examples: * xsd-examples == $
 #
 # - For archives we strip the default compiler name from metadata since
 #   it's unimportant (we link the C++ runtime statically).
+#
+# - We disable warning emails for configurations that build Xerces-C++.
 
 # Note that the Xerces-C++ package is in the unsupported `universe` section on
 # Ubuntu so we have a separate configuration for it where we build Xerces-C++
@@ -64,6 +66,7 @@ bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicuuc
 ?sys:libicui18n
 \
+#bindist-ubuntu-build-error-email: builds@codesynthesis.com
 
 # Note that there is no Xerces-C++ package in RHEL (only in EPEL) so we
 # have a separate configuration for RHEL.
@@ -94,6 +97,7 @@ bpkg.create:config.bin.liba.lib="shared static"
 ?sys:libicuuc
 ?sys:libicui18n
 \
+#bindist-rhel-build-error-email: builds@codesynthesis.com
 
 # Note: use static runtime since the DLL runtime is not universally
 # pre-installed.
@@ -113,6 +117,7 @@ bpkg.create:config.bin.liba.lib="shared static"
 bpkg.create:config.cc.coptions+="/MT"
 b.create:config.cc.coptions="/W2 /O2"
 \
+#bindist-windows-build-error-email: builds@codesynthesis.com
 
 # Note that /usr/lib/libc++.1.dylib is pre-installed and appears to be
 # reasonably compatible (even forward-compatible) so we don't bother
@@ -132,6 +137,7 @@ bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 b.create:config.cc.coptions="-Wall -O3"
 \
+#bindist-macos-build-error-email: builds@codesynthesis.com
 
 # Generic linux package (built using oldest Debian we support).
 #
@@ -151,3 +157,4 @@ bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 config.cc.loptions+="-static-libstdc++ -static-libgcc"
 \
+#bindist-linux-build-error-email: builds@codesynthesis.com
