@@ -141,20 +141,22 @@ b.create:config.cc.coptions="-Wall -O3"
 
 # Generic linux package (built using oldest Debian we support).
 #
-# Note: update glibc version in metadata if changing build configuration.
+# Note: update glibc version if changing build configuration.
 #
-bindist-linux-builds: bindist
-bindist-linux-build-include: linux_debian_11-gcc_10.2-bindist
-bindist-linux-build-exclude: **
-bindist-linux-build-config:
+bindist-linux-glibc2.31-builds: bindist
+bindist-linux-glibc2.31-build-include: linux_debian_11-gcc_10.2-bindist
+bindist-linux-glibc2.31-build-exclude: **
+bindist-linux-glibc2.31-build-config:
 \
 +bpkg.bindist.archive:
 +bbot.bindist.upload:
 bpkg.bindist.archive:--recursive=auto
-bpkg.bindist.archive:--archive-build-meta=linux-glibc2.31
+bpkg.bindist.archive:--archive-no-os
+bpkg.bindist.archive:--archive-lang-impl=cc=
+bpkg.bindist.archive:--archive-build-meta=+linux-glibc2.31
 bpkg.bindist.archive:config.install.relocatable=true
 bpkg.create:config.bin.lib=static
 bpkg.create:config.bin.liba.lib="shared static"
 config.cc.loptions+="-static-libstdc++ -static-libgcc"
 \
-#bindist-linux-build-error-email: builds@codesynthesis.com
+#bindist-linux-glibc2.31-build-error-email: builds@codesynthesis.com
