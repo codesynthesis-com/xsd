@@ -1,0 +1,9 @@
+: 1
+name: libxsd
+version: 4.2.0
+type: lib,binless
+language: c++
+project: xsd
+summary: XML Schema to C++ data binding compiler runtime library
+license: other: GPL-2.0-only with Xerces-C++ linking exception and FLOSS\
+ exception

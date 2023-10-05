@@ -1,0 +1,8 @@
+: 1
+name: xsd-examples
+version: 4.2.0
+type: examples
+language: c++
+project: xsd
+summary: XML Schema to C++ data binding compiler examples
+license: Unlicence
