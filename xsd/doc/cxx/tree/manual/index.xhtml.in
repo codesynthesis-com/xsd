@@ -8,7 +8,7 @@
   <meta name="copyright" content="&#169; @copyright@"/>
   <meta name="keywords" content="xsd,xml,schema,c++,mapping,data,binding,tree,serialization,guide,manual,examples"/>
   <meta name="description" content="C++/Tree Mapping User Manual"/>
-  <meta name="revision" content="4.1.0"/>
+  <meta name="revision" content="@doc_version@"/>
 
   <link rel="stylesheet" type="text/css" href="../../../default.css" />
 
@@ -441,9 +441,9 @@
      called C++/Tree.
   </p>
 
-  <p>Revision 4.1.0<br/> <!-- Remember to change revision in other places -->
+  <p>Revision @doc_version@<br/>
      This revision of the manual describes the C++/Tree
-     mapping as implemented by CodeSynthesis XSD version 4.1.0.
+     mapping as implemented by CodeSynthesis XSD version @doc_version@.
   </p>
 
   <p>This document is available in the following formats:

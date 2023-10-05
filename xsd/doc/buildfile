@@ -27,6 +27,12 @@ svg{*}: extension = svg
 
 ./: css{default} xsd{custom-literals} {png svg}{**}
 
+# Note: doc_version is also used in the man pages and the manual.
+#
+doc_version = [string] "$version.major.$version.minor.$version.patch"
+if $version.pre_release
+  doc_version += "-$version.pre_release_string"
+
 # Man pages.
 #
 
@@ -51,10 +57,6 @@ pregenerated/{man1 xhtml}{*}: dist = (!$develop)
 
 if $develop
 {
-  doc_version = [string] "$version.major.$version.minor.$version.patch"
-  if $version.pre_release
-    doc_version += "-$version.pre_release_string"
-
   # Let's take the last four-digit number to cover 2000-2021,2022.
   #
   doc_year = $regex.replace($copyright, '.+[-, ]([0-9][0-9][0-9][0-9]) .+', '\1')
