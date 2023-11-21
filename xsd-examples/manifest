@@ -1,6 +1,6 @@
 : 1
 name: xsd-examples
-version: 4.2.0
+version: 4.2.1-a.0.z
 project: xsd
 type: examples
 language: c++
