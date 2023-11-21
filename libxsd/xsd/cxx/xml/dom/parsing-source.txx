@@ -105,7 +105,10 @@ namespace xsd
                const properties<C>& prop,
                unsigned long flags)
         {
-          using namespace xercesc;
+          // Note: explicitly qualifying everything with xerces:: to avoid
+          // conflicts with MSXML.
+          //
+          using xercesc::XMLUni;
 
           // Instantiate the DOM parser.
           //
@@ -115,13 +118,14 @@ namespace xsd
 
           // Get an implementation of the Load-Store (LS) interface.
           //
-          DOMImplementation* impl (
-            DOMImplementationRegistry::getDOMImplementation (ls_id));
+          xercesc::DOMImplementation* impl (
+            xercesc::DOMImplementationRegistry::getDOMImplementation (ls_id));
 
-          XSD_DOM_AUTO_PTR<DOMLSParser> parser (
-            impl->createLSParser (DOMImplementationLS::MODE_SYNCHRONOUS, 0));
+          XSD_DOM_AUTO_PTR<xercesc::DOMLSParser> parser (
+            impl->createLSParser (
+              xercesc::DOMImplementationLS::MODE_SYNCHRONOUS, 0));
 
-          DOMConfiguration* conf (parser->getDomConfig ());
+          xercesc::DOMConfiguration* conf (parser->getDomConfig ());
 
           // Discard comment nodes in the document.
           //
@@ -216,7 +220,7 @@ namespace xsd
 
           xercesc::Wrapper4InputSource wrap (&is, false);
 
-          XSD_DOM_AUTO_PTR<DOMDocument> doc;
+          XSD_DOM_AUTO_PTR<xercesc::DOMDocument> doc;
           try
           {
             doc.reset (parser->parse (&wrap));
@@ -249,7 +253,10 @@ namespace xsd
                const properties<C>& prop,
                unsigned long flags)
         {
-          using namespace xercesc;
+          // Note: explicitly qualifying everything with xerces:: to avoid
+          // conflicts with MSXML.
+          //
+          using xercesc::XMLUni;
 
           // Instantiate the DOM parser.
           //
@@ -259,13 +266,14 @@ namespace xsd
 
           // Get an implementation of the Load-Store (LS) interface.
           //
-          DOMImplementation* impl (
-            DOMImplementationRegistry::getDOMImplementation (ls_id));
+          xercesc::DOMImplementation* impl (
+            xercesc::DOMImplementationRegistry::getDOMImplementation (ls_id));
 
-          XSD_DOM_AUTO_PTR<DOMLSParser> parser (
-            impl->createLSParser(DOMImplementationLS::MODE_SYNCHRONOUS, 0));
+          XSD_DOM_AUTO_PTR<xercesc::DOMLSParser> parser (
+            impl->createLSParser(
+              xercesc::DOMImplementationLS::MODE_SYNCHRONOUS, 0));
 
-          DOMConfiguration* conf (parser->getDomConfig ());
+          xercesc::DOMConfiguration* conf (parser->getDomConfig ());
 
           // Discard comment nodes in the document.
           //
@@ -359,7 +367,7 @@ namespace xsd
           bits::error_handler_proxy<C> ehp (eh);
           conf->setParameter (XMLUni::fgDOMErrorHandler, &ehp);
 
-          XSD_DOM_AUTO_PTR<DOMDocument> doc;
+          XSD_DOM_AUTO_PTR<xercesc::DOMDocument> doc;
           try
           {
             doc.reset (parser->parseURI (string (uri).c_str ()));

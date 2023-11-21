@@ -109,7 +109,10 @@ namespace xsd
         add_namespaces (xercesc::DOMElement& el,
                         const namespace_infomap<C>& map)
         {
-          using namespace xercesc;
+          // Note: explicitly qualifying everything with xerces:: to avoid
+          // conflicts with MSXML.
+          //
+          using xercesc::XMLUni;
 
           typedef std::basic_string<C> string;
           typedef namespace_infomap<C> infomap;
@@ -159,14 +162,14 @@ namespace xsd
               //
               if (!i->second.name.empty ())
                 el.setAttributeNS (
-                  xercesc::XMLUni::fgXMLNSURIName,
+                  XMLUni::fgXMLNSURIName,
                   xml::string (xmlns_prefix).c_str (),
                   xml::string (i->second.name).c_str ());
             }
             else
             {
               el.setAttributeNS (
-                xercesc::XMLUni::fgXMLNSURIName,
+                XMLUni::fgXMLNSURIName,
                 xml::string (xmlns_prefix + colon + i->first).c_str (),
                 xml::string (i->second.name).c_str ());
             }
@@ -236,7 +239,8 @@ namespace xsd
                    const namespace_infomap<C>& map,
                    unsigned long)
         {
-          using namespace xercesc;
+          // Note: explicitly qualifying everything with xerces:: to avoid
+          // conflicts with MSXML.
 
           typedef std::basic_string<C> string;
           typedef namespace_infomap<C> infomap;
@@ -268,10 +272,10 @@ namespace xsd
                               xercesc::chLatin_S,
                               xercesc::chNull};
 
-          DOMImplementation* impl (
-            DOMImplementationRegistry::getDOMImplementation (ls));
+          xercesc::DOMImplementation* impl (
+            xercesc::DOMImplementationRegistry::getDOMImplementation (ls));
 
-          XSD_DOM_AUTO_PTR<DOMDocument> doc (
+          XSD_DOM_AUTO_PTR<xercesc::DOMDocument> doc (
             impl->createDocument (
               (ns.empty () ? 0 : xml::string (ns).c_str ()),
               xml::string ((prefix.empty ()
@@ -293,21 +297,24 @@ namespace xsd
                    xercesc::DOMErrorHandler& eh,
                    unsigned long flags)
         {
-          using namespace xercesc;
+          // Note: explicitly qualifying everything with xerces:: to avoid
+          // conflicts with MSXML.
+          //
+          using xercesc::XMLUni;
 
           const XMLCh ls[] = {xercesc::chLatin_L,
                               xercesc::chLatin_S,
                               xercesc::chNull};
 
-          DOMImplementation* impl (
-            DOMImplementationRegistry::getDOMImplementation (ls));
+          xercesc::DOMImplementation* impl (
+            xercesc::DOMImplementationRegistry::getDOMImplementation (ls));
 
           bits::error_handler_proxy<C> ehp (eh);
 
-          XSD_DOM_AUTO_PTR<DOMLSSerializer> writer (
+          XSD_DOM_AUTO_PTR<xercesc::DOMLSSerializer> writer (
             impl->createLSSerializer ());
 
-          DOMConfiguration* conf (writer->getDomConfig ());
+          xercesc::DOMConfiguration* conf (writer->getDomConfig ());
 
           conf->setParameter (XMLUni::fgDOMErrorHandler, &ehp);
 
@@ -334,7 +341,7 @@ namespace xsd
               conf->canSetParameter (XMLUni::fgDOMXMLDeclaration, false))
             conf->setParameter (XMLUni::fgDOMXMLDeclaration, false);
 
-          XSD_DOM_AUTO_PTR<DOMLSOutput> out (impl->createLSOutput ());
+          XSD_DOM_AUTO_PTR<xercesc::DOMLSOutput> out (impl->createLSOutput ());
 
           out->setEncoding (xml::string (encoding).c_str ());
           out->setByteStream (&target);
