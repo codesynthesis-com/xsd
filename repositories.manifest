@@ -7,7 +7,8 @@ location: https://git.build2.org/packaging/zlib/zlib.git##HEAD
 
 :
 role: prerequisite
-location: https://git.build2.org/packaging/xerces-c/xerces-c.git##HEAD
+#location: https://git.build2.org/packaging/xerces-c/xerces-c.git##HEAD
+location: https://git.build2.org/packaging/xerces-c/xerces-c.git#3.3.0
 
 :
 role: prerequisite
