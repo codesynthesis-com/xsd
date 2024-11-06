@@ -72,7 +72,7 @@ b.create:config.cxx.std=c++11
 #bindist-rhel-build-error-email: builds@codesynthesis.com
 
 bindist-windows-builds: bindist
-bindist-windows-build-include: windows*-**
+bindist-windows-build-include: windows*-msvc**
 bindist-windows-build-exclude: **
 bindist-windows-build-config:
 \

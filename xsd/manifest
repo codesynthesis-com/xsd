@@ -103,7 +103,7 @@ bpkg.create:config.bin.liba.lib="shared static"
 # pre-installed.
 #
 bindist-windows-builds: bindist
-bindist-windows-build-include: windows*-**
+bindist-windows-build-include: windows*-msvc**
 bindist-windows-build-exclude: **
 bindist-windows-build-config:
 \
