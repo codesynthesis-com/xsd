@@ -16,7 +16,7 @@ XSD consists of several packages with the main ones being `xsd` (the XML
 Schema to C++ compiler) and `libxsd` (the runtime library). There are also
 several `*-tests` packages as well as `xsd-examples`.
 
-When specifying dependencies on XSD packages in your project, the `xsd`
+When specifying dependencies on the XSD packages in your project, the `xsd`
 package should be a build-time dependency. The `libxsd` library is
 header-only and because it can be used either with Xerces-C++ or
 Expat as the underlying XML parser, it does not have a dependency on
