@@ -1,6 +1,7 @@
 // file      : cxx/parser/expat/basic/driver.cxx
 // copyright : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
+#include <ios>
 #include <iostream>
 
 // Define XSD_CXX11 since we include libxsd headers directly.
@@ -36,8 +37,8 @@ class hello_pimpl: public parser::non_validating::complex_content<char>
 {
 public:
   hello_pimpl (string_pskel& greeting, string_pskel& name)
-      : greeting_parser_ (&greeting),
-        name_parser_ (&name) {}
+      : greeting_parser_ (greeting),
+        name_parser_ (name) {}
 
 private:
   virtual bool
@@ -48,8 +49,8 @@ private:
   virtual bool
   _end_element_impl (const ro_string<char>&, const ro_string<char>&);
 
-  string_pskel* greeting_parser_;
-  string_pskel* name_parser_;
+  string_pskel& greeting_parser_;
+  string_pskel& name_parser_;
 };
 
 bool hello_pimpl::
@@ -64,21 +65,15 @@ _start_element_impl (const ro_string<char>& ns,
 
   if (n == "greeting" && ns.empty ())
   {
-    context_.top ().parser_ = greeting_parser_;
-
-    if (greeting_parser_)
-      greeting_parser_->pre ();
-
+    context_.top ().parser_ = &greeting_parser_;
+    greeting_parser_.pre ();
     return true;
   }
 
   if (n == "name" && ns.empty ())
   {
-    context_.top ().parser_ = name_parser_;
-
-    if (name_parser_)
-      name_parser_->pre ();
-
+    context_.top ().parser_ = &name_parser_;
+    name_parser_.pre ();
     return true;
   }
 
@@ -93,13 +88,13 @@ _end_element_impl (const ro_string<char>& ns, const ro_string<char>& n)
 
   if (n == "greeting" && ns.empty ())
   {
-    cout << n << ' ' << greeting_parser_->post_string () << endl;
+    cout << n << ' ' << greeting_parser_.post_string () << endl;
     return true;
   }
 
   if (n == "name" && ns.empty ())
   {
-    cout << n << ' ' << name_parser_->post_string () << endl;
+    cout << n << ' ' << name_parser_.post_string () << endl;
     return true;
   }
 
@@ -117,10 +112,25 @@ main (int argc, char* argv[])
 {
   assert (argc == 2);
 
-  parser::non_validating::string_pimpl<char> string_p;
-  hello_pimpl hello_p (string_p, string_p);
+  try
+  {
+    parser::non_validating::string_pimpl<char> string_p;
+    hello_pimpl hello_p (string_p, string_p);
 
-  parser::expat::document<char>  doc_p (hello_p, "hello");
+    parser::expat::document<char>  doc_p (hello_p, "hello");
 
-  doc_p.parse (argv[1]);
+    doc_p.parse (argv[1]);
+  }
+  catch (const parser::exception<char>& e)
+  {
+    cerr << e << endl;
+    return 1;
+  }
+  catch (const ios_base::failure&)
+  {
+    cerr << argv[1] << ": unable to open or read failure" << endl;
+    return 1;
+  }
+
+  return 0;
 }

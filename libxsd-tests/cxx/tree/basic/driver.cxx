@@ -47,21 +47,31 @@ main (int argc, char* argv[])
 {
   assert (argc == 2);
 
-  xml::auto_initializer ai;
-
-  tree::error_handler<char> h;
-  tree::properties<char> ps;
-
-  XSD_DOM_AUTO_PTR<xercesc::DOMDocument> d (
-    xml::dom::parse<char> (argv[1], h, ps, 0 /* flags */));
-
-  h.throw_if_failed<tree::parsing<char>> (); // Abort on error.
-
-  xml::dom::parser<char> p (*d->getDocumentElement (), true, false, false);
-  for (; p.more_content (); p.next_content (false /* text */))
+  try
   {
-    const xercesc::DOMElement&      i (p.cur_element ());
-    const xml::qualified_name<char> n (xml::dom::name<char> (i));
-    cout << n.name () << ' ' << tree::text_content<char> (i) << endl;
+    xml::auto_initializer ai;
+
+    tree::error_handler<char> h;
+    tree::properties<char> ps;
+
+    XSD_DOM_AUTO_PTR<xercesc::DOMDocument> d (
+      xml::dom::parse<char> (argv[1], h, ps, 0 /* flags */));
+
+    h.throw_if_failed<tree::parsing<char>> (); // Abort on error.
+
+    xml::dom::parser<char> p (*d->getDocumentElement (), true, false, false);
+    for (; p.more_content (); p.next_content (false /* text */))
+    {
+      const xercesc::DOMElement&      i (p.cur_element ());
+      const xml::qualified_name<char> n (xml::dom::name<char> (i));
+      cout << n.name () << ' ' << tree::text_content<char> (i) << endl;
+    }
   }
+  catch (const tree::exception<char>& e)
+  {
+    cerr << e << endl;
+    return 1;
+  }
+
+  return 0;
 }
