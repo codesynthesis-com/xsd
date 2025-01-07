@@ -1,4 +1,15 @@
 # file      : tests/buildfile
 # license   : GNU GPL v2 + exceptions; see accompanying LICENSE file
 
-./: testscript $xsd
+./: testscript
+
+# @@ TMP: redo when we have a better way (test=$xsde maybe?)
+#
+# Avoid cleaning exe{xsd} through this dependency.
+#
+# Note that otherwise the executable will be cleaned by the bbot worker at the
+# end of the bpkg.test step while running `b clean(xsd/tests/)`. That would be
+# prematurely, since the not yet tested xsd-tests and xsd-examples packages
+# also depend on it.
+#
+./: $xsd: clean = false
