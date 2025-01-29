@@ -8,8 +8,7 @@ import libs += libxerces-c%lib{xerces-c}
 ops = options cxx/options cxx/parser/options cxx/tree/options
 
 ./: exe{xsd}: {hxx ixx txx cxx}{** -version -{$ops} -pregenerated/**} \
-              {hxx}{version}                                          \
-              $libs
+              {hxx}{version}
 
 # Target metadata, see also --build2-metadata in xsd.cxx.
 #
@@ -114,6 +113,8 @@ if $develop
 
 #
 ##
+
+exe{xsd}: $libs
 
 # Pass the copyright notice extracted from the LICENSE file.
 #
