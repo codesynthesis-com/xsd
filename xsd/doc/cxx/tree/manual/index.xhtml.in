@@ -432,7 +432,7 @@
 
   <h2><a name="0.1">About This Document</a></h2>
 
-  <p>This document describes the mapping of W3C XML Schema
+  <p>This document describes the mapping of W3C XML Schema 1.0
      to the C++ programming language as implemented by
      <a href="https://www.codesynthesis.com/products/xsd">CodeSynthesis
      XSD</a> - an XML Schema to C++ data binding compiler. The mapping
@@ -487,7 +487,7 @@
 
   <h1><a name="1">1 Introduction</a></h1>
 
-  <p>C++/Tree is a W3C XML Schema to C++ mapping that represents the
+  <p>C++/Tree is a W3C XML Schema 1.0 to C++ mapping that represents the
      data stored in XML as a statically-typed, vocabulary-specific
      object model. Based on a formal description of an XML vocabulary
      (schema), the C++/Tree mapping produces a tree-like data structure

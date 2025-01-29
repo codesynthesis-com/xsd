@@ -325,8 +325,8 @@
   <h1><a name="1">1 Introduction</a></h1>
 
   <p>Welcome to CodeSynthesis XSD and the C++/Tree mapping. XSD is a
-     cross-platform W3C XML Schema to C++ data binding compiler. C++/Tree
-     is a W3C XML Schema to C++ mapping that represents the data stored
+     cross-platform W3C XML Schema 1.0 to C++ data binding compiler. C++/Tree
+     is an XML Schema 1.0 to C++ mapping that represents the data stored
      in XML as a statically-typed, vocabulary-specific object model.
   </p>
 

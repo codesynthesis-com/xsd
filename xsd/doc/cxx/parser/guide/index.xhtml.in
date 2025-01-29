@@ -371,8 +371,8 @@
   <h1><a name="1">1 Introduction</a></h1>
 
   <p>Welcome to CodeSynthesis XSD and the C++/Parser mapping. XSD is a
-     cross-platform W3C XML Schema to C++ data binding compiler. C++/Parser
-     is a W3C XML Schema to C++ mapping that represents an XML vocabulary
+     cross-platform W3C XML Schema 1.0 to C++ data binding compiler. C++/Parser
+     is an XML Schema 1.0 to C++ mapping that represents an XML vocabulary
      as a set of parser skeletons which you can implement to perform XML
      processing as required by your application logic.
   </p>
@@ -1976,7 +1976,7 @@ age:    28
   <h2><a name="5.4">5.4 XML Schema Validation</a></h2>
 
   <p>The C++/Parser mapping provides support for validating a
-     commonly-used subset of W3C XML Schema in the generated code.
+     commonly-used subset of W3C XML Schema 1.0 in the generated code.
      For the list of supported XML Schema constructs refer to
      <a href="#A">Appendix A, "Supported XML Schema Constructs"</a>.</p>
 
@@ -4075,7 +4075,7 @@ namespace xml_schema
   <h1><a name="A">Appendix A &mdash; Supported XML Schema Constructs</a></h1>
 
   <p>The C++/Parser mapping supports validation of the following W3C XML
-     Schema constructs in the generated code.</p>
+     Schema 1.0 constructs in the generated code.</p>
 
   <!-- border="1" is necessary for html2ps -->
   <table id="features" border="1">
