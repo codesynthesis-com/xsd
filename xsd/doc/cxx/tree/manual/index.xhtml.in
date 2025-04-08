@@ -3180,7 +3180,7 @@ f (object&amp; o)
   <pre class="xml">
 &lt;complexType name="object">
   &lt;sequence>
-    &lt;element name="member" type="string" minOccurs="unbounded"/>
+    &lt;element name="member" type="string" maxOccurs="unbounded"/>
   &lt;/sequence>
 &lt;/complexType>
   </pre>
@@ -4558,7 +4558,7 @@ f (object&amp; o, const xercesc::DOMElement&amp; e)
   <pre class="xml">
 &lt;complexType name="object">
   &lt;sequence>
-    &lt;any namespace="##other" minOccurs="unbounded"/>
+    &lt;any namespace="##other" maxOccurs="unbounded"/>
   &lt;/sequence>
 &lt;/complexType>
   </pre>
