@@ -6,7 +6,7 @@ test.arguments += test.xml
 : all-combinations
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -114,7 +114,7 @@ test.arguments += test.xml
 : required-not-present
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -141,7 +141,7 @@ test.arguments += test.xml
 : absent
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -164,7 +164,7 @@ test.arguments += test.xml
 : unexpected
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">

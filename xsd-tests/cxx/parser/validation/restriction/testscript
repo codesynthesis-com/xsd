@@ -6,7 +6,7 @@ test.arguments += test.xml
 : valid
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -46,7 +46,7 @@ test.arguments += test.xml
 : invalid1
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -68,7 +68,7 @@ test.arguments += test.xml
 : invalid2
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -91,7 +91,7 @@ test.arguments += test.xml
 : invalid3
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -118,7 +118,7 @@ test.arguments += test.xml
 : invalid4
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">
@@ -139,7 +139,7 @@ test.arguments += test.xml
 : invalid5
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="test test.xsd">

@@ -6,7 +6,7 @@ test.arguments += test.xml
 : valid
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:o="other"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -68,7 +68,7 @@ test.arguments += test.xml
 : absent1
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:o="other"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,7 +92,7 @@ test.arguments += test.xml
 : absent2
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:o="other"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -130,7 +130,7 @@ test.arguments += test.xml
 : absent3
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:o="other"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -156,7 +156,7 @@ test.arguments += test.xml
 : absent4
 :
 {
-  cat <<EOI >=test.xml;
+  cat <<EOI >=test.xml
     <t:root xmlns:t="test"
             xmlns:o="other"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

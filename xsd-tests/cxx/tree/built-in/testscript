@@ -4,7 +4,7 @@
 : types
 :
 {
-  cat <<EOI >=elements.xml;
+  cat <<EOI >=elements.xml
     <?xml version="1.0" encoding="UTF-8"?>
     <test:elements
       xmlns:test="http://www.codesynthesis.com/xmlns/test"
@@ -91,7 +91,7 @@
     </test:elements>
     EOI
 
-  cat <<EOI >=attributes.xml;
+  cat <<EOI >=attributes.xml
     <?xml version="1.0" encoding="UTF-8"?>
     <test:attributes
       xmlns:test="http://www.codesynthesis.com/xmlns/test"
@@ -167,7 +167,7 @@
     />
     EOI
 
-  cat <<EOI >=inherited.xml;
+  cat <<EOI >=inherited.xml
     <?xml version="1.0" encoding="UTF-8"?>
     <test:inherited
       xmlns:test="http://www.codesynthesis.com/xmlns/test"
@@ -254,7 +254,7 @@
     </test:inherited>
     EOI
 
-  ln -s $src_base/types.xsd ./;
+  ln -s $src_base/types.xsd ./
 
   $* elements.xml attributes.xml inherited.xml 2>>EOE
     elements:

@@ -4,7 +4,7 @@
 : basic
 :
 {
-  cat <<EOI >=hello.xsd;
+  cat <<EOI >=hello.xsd
     <?xml version="1.0"?>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
@@ -50,7 +50,7 @@
     </xsd:schema>
     EOI
 
-  cat <<EOI >=hello.xml;
+  cat <<EOI >=hello.xml
     <?xml version="1.0"?>
     <hello xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="hello.xsd">

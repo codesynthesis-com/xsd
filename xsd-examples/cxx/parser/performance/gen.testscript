@@ -4,6 +4,6 @@
 : 50k
 :
 {
-  $* 317 test-50k.xml &test-50k.xml;
+  $* 317 test-50k.xml &test-50k.xml
   cat test-50k.xml >>>$src_base/test-50k.xml
 }

@@ -104,7 +104,6 @@ if $develop
      diff $di $i >- && \
      diff $dc $c >-
     exit
-  end
 
   cp $h $dh
   cp $i $di
