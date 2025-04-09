@@ -15,8 +15,8 @@ email: xsd-users@codesynthesis.com ; Mailing list
 build-warning-email: builds@codesynthesis.com
 requires: host
 requires: c++11
-depends: * build2 >= 0.16.0
-depends: * bpkg >= 0.16.0
+depends: * build2 >= 0.18.0-
+depends: * bpkg >= 0.18.0-
 depends: libxsd-frontend ^2.1.0
 depends: libcutl ^1.11.0
 depends: libxerces-c ^3.0.0

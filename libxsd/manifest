@@ -15,8 +15,8 @@ doc-url: https://www.codesynthesis.com/products/xsd/
 src-url: https://git.codesynthesis.com/cgit/xsd/xsd/
 email: xsd-users@codesynthesis.com ; Mailing list
 build-warning-email: builds@codesynthesis.com
-depends: * build2 >= 0.16.0
-depends: * bpkg >= 0.16.0
+depends: * build2 >= 0.18.0-
+depends: * bpkg >= 0.18.0-
 tests: libxsd-tests == $
 
 # Binary distribution packages. Overall notes:
